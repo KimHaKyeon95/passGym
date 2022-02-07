@@ -1,14 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./routes/common/Home";
-
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
-  );
+  return <div>passgym</div>;
 }
 
 export default App;
