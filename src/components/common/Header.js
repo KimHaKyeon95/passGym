@@ -1,10 +1,19 @@
 import Logo from "../../images/logo.png";
 import styles from "../../css/common/Header.module.css";
 import { Link } from "react-router-dom";
+import { Button, Container, Row, Col } from "react-bootstrap";
 
 function Header() {
   return (
     <div>
+      <Container>
+        <Row>
+          <Col>
+            <Button variant="secondary">버튼</Button>
+          </Col>
+        </Row>
+      </Container>
+
       <div className={styles.login__menu}>
         <div className={styles.login__container}>
           <Link to={"/login"} className={styles.loginBtn}>
