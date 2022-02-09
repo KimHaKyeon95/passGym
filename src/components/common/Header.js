@@ -1,7 +1,6 @@
 import Logo from "../../images/dumbbell.png";
-import styles from "../../css/common/Header.module.css";
 import { Link } from "react-router-dom";
-import { Button, Container, Row, Col, Navbar, Nav } from "react-bootstrap";
+import { Button, Container, Navbar, Nav } from "react-bootstrap";
 
 function Header() {
   return (
