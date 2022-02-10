@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/common/Home";
 import Login from "./routes/common/Login";
+import "./css/common/index.css";
 
 function App() {
   return (

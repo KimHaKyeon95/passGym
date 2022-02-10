@@ -4,7 +4,7 @@ function Home() {
   return (
     <div>
       <Header />
-      <body>메인 바디</body>
+      <section>메인 바디</section>
       <Footer />
     </div>
   );
