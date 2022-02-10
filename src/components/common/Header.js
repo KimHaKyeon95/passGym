@@ -5,7 +5,7 @@ import { Button, Container, Navbar, Nav } from "react-bootstrap";
 function Header() {
   return (
     <div>
-      <Navbar expand="lg" bg="dark" variant="dark">
+      <Navbar expand="sm" bg="dark" variant="dark">
         <Container>
           <Link to={"/"} className="navbar-brand">
             패스짐&nbsp;&nbsp;

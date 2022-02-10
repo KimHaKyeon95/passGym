@@ -1,13 +1,11 @@
+import { Container } from "react-bootstrap";
 import "../../css/common/footer.css";
+import logo from "../../images/footer-up.png";
 
 function Footer() {
   return (
-    <>
-      <img
-        className="footer__leaf"
-        src="./images/footer-up.png"
-        alt="footer-log"
-      />
+    <footer className="footer">
+      <img className="footer__leaf" src={logo} alt="footer-log" />
       <div className="footer__info">
         <div className="footer__logo">
           <h3>패 스 짐</h3>
@@ -28,7 +26,7 @@ function Footer() {
         </div>
       </div>
       <div className="copyright">Copyright ⓒ passGym. All rights reserved.</div>
-    </>
+    </footer>
   );
 }
 
