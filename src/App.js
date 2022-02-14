@@ -5,6 +5,7 @@ import Home from "./routes/common/Home";
 import Login from "./routes/common/Login";
 import Gymdetail from "./routes/common/Gymdetail";
 import "./css/common/index.css";
+import Ownersignup from "./routes/owner/Ownersignup";
 
 function App() {
   return (
@@ -19,6 +20,12 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/gym/:ownerNo" element={<Gymdetail />} />
+        </Routes>
+        <Routes>
+          <Route path="/ownersignup" element={<Ownersignup />} />
+        </Routes>
+        <Routes>
+          <Route path="/login" element={<Login />} />
         </Routes>
       </section>
       <Footer />
