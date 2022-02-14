@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import "../../css/common/footer.css";
 import logo from "../../images/footer-up.png";
 
