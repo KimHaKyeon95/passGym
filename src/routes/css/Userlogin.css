@@ -1,0 +1,22 @@
+.userlogin {
+  display: flex;
+  justify-content: center;
+  padding: 30px, 0px;
+}
+
+.userlogin__form {
+  width: 460px;
+}
+
+.userlogin__id,
+.userlogin__pwd {
+  width: 100%;
+  margin: 10px;
+}
+.userlogin__submitBtn,
+.userlogin__findBtn,
+.userlogin__usersignupBtn,
+.userlogin__ownersignupBtn {
+  width: 50%;
+  margin: 10px;
+}

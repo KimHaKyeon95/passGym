@@ -1,0 +1,50 @@
+.usersignup {
+  display: flex;
+  justify-content: center;
+  padding: 30px, 0px;
+}
+
+.usersignup__form {
+  width: 460px;
+}
+
+.usersignup__id,
+.usersignup__password,
+.usersignup__phone,
+.usersignup__address {
+  display: flex;
+  width: 100%;
+}
+
+.usersignup__idemail,
+.usersingup__pwd,
+.usersignup__pwdChk,
+.usersignup__name,
+.usersignup__phoneNo,
+.phoneNoVarifCode,
+.usersignup__zipcode,
+.usersignup__addr,
+.usersignup__addr2 {
+  width: 100%;
+  margin: 0px 10px 10px;
+}
+
+.usersignup__iddupchkbtn,
+.usersignup__phonenovarifbtn,
+.usersignup__zipcodebtn {
+  display: flex;
+  width: 100px;
+  margin: 0px 10px 10px;
+  height: 38px;
+}
+
+.usersignup__submitBtn {
+  display: flex;
+  width: 100%;
+  margin: 0px 10px 10px;
+  height: 38px;
+}
+
+.msg {
+  font-size: 0.8em;
+}
