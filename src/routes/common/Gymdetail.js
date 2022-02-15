@@ -8,16 +8,17 @@ import {
   Button,
   Form,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 function Gymdetail() {
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
+  const [SelectedPass, setSelectedPass] = useState();
 
   const getGym = () => {
     const json = {
       data: {
-        gyms: {
+        gym: {
           ownerNo: 1,
           name: "비타민 헬스장",
           phoneNo: "032-151-4845",
@@ -25,16 +26,38 @@ function Gymdetail() {
           addrDetail: "지동 포레스트 311호",
           avgStar: 3.0,
           distance: 0.5,
+          introduce: "우리 헬스장은 뛰어난 트레이너들이 있습니다.",
+          notice: "기구는 한번에 하나씩",
+          operatingTime: "평일 06:00 ~ 20:00 / 공휴일 09:00 ~ 18:00",
+          operatingProgram: "크로스핏",
+          extraService: "운동복 세탁",
+          etc: "",
+          passes: [
+            { passNo: 1, passName: "1개월권", passPrice: 30000 },
+            { passNo: 2, passName: "3개월권", passPrice: 50000 },
+            { passNo: 3, passName: "6개월권", passPrice: 100000 },
+          ],
         },
       },
     };
-    setGym(json.data.gyms);
+    setGym(json.data.gym);
     setLoading(false);
+  };
+
+  const onPassChange = (event) => {
+    setSelectedPass(() => event.target.value);
+  };
+
+  //session에 passNo 저장
+  const onPaymentClick = () => {
+    sessionStorage.setItem("ownerNo", Gym.ownerNo);
+    sessionStorage.setItem("passNo", SelectedPass);
   };
 
   useEffect(() => {
     getGym();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -44,13 +67,14 @@ function Gymdetail() {
       ) : (
         <Container>
           <Row className="justify-content-md-center justify-content-xs-center">
-            <Col lg={{ span: 4, offset: 1 }} md={{ span: 6, offset: 0 }}>
+            <Col lg={{ span: 4 }} md={{ span: 6, offset: 0 }}>
               <Image
                 fluid
                 style={{
                   objectFit: "cover",
                   overflow: "hidden",
                   maxHeight: "400px",
+                  paddingRight: "20px",
                 }}
                 src={require("../../images/" + ownerNo + ".jpg")}
               ></Image>
@@ -89,43 +113,82 @@ function Gymdetail() {
               </Row>
               <Row style={{ margin: "10px 0" }}>
                 <Col>
-                  <Form.Select>
+                  <Form.Select onChange={onPassChange}>
                     <option>옵션 선택</option>
-                    <option>passName + " " + passPrice + "원"</option>
+                    {Gym.passes.map((pass) => (
+                      <option key={pass.passNo} value={pass.passNo}>
+                        {pass.passName + ": " + pass.passPrice + "원"}
+                      </option>
+                    ))}
                   </Form.Select>
                 </Col>
               </Row>
               <Row style={{ margin: "10px 0" }}>
-                <Col>
-                  <Button>결제하기</Button>
-                </Col>
+                <Link to={"/payment/" + ownerNo}>
+                  <Col>
+                    <Button onClick={onPaymentClick}>결제하기</Button>
+                  </Col>
+                </Link>
               </Row>
             </Col>
           </Row>
+
           <Row>
-            <Col offset="10">Introduce</Col>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
+              Introduce
+            </Col>
           </Row>
-          <hr />
           <Row>
-            <Col xs lg="8">
+            <Col md={{ span: 10, offset: 1 }}>{Gym.introduce}</Col>
+          </Row>
+
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
               Notice
             </Col>
           </Row>
-          <hr />
           <Row>
-            <Col>Operating Time</Col>
+            <Col md={{ span: 10, offset: 1 }}>{Gym.notice}</Col>
           </Row>
-          <hr />
+
           <Row>
-            <Col>Operating Program</Col>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
+              Operating Time
+            </Col>
+            <Col md={{ span: 10, offset: 1 }}>{Gym.operatingTime}</Col>
           </Row>
-          <hr />
+
           <Row>
-            <Col>Extra Service</Col>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
+              Operating Program
+            </Col>
           </Row>
-          <hr />
           <Row>
-            <Col>etc</Col>
+            <Col md={{ span: 10, offset: 1 }}>{Gym.operatingProgram}</Col>
+          </Row>
+
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
+              Extra Service
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>{Gym.extraService}</Col>
+          </Row>
+
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <hr />
+              etc
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>{Gym.etc}</Col>
           </Row>
         </Container>
       )}

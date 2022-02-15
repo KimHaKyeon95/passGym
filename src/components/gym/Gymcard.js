@@ -16,16 +16,15 @@ function Gymcard({ ownerNo, name, addr, avgStar, distance }) {
             style={{ objectFit: "cover", overflow: "hidden" }}
             src={require("../../images/" + ownerNo + ".jpg")}
           />
-          <Card.Body>
+          <Card.Body style={{ paddingTop: "2px" }}>
+            <Card.Text style={{ marginBottom: "0" }}>no.{ownerNo} </Card.Text>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
-              <span>ownerNo : {ownerNo}</span>
+              <span>★{avgStar}</span>
               <br />
-              <span>addr : {addr}</span>
+              <span>{addr}</span>
               <br />
-              <span>avgStar : {avgStar}</span>
-              <br />
-              <span>distance : {distance}</span>
+              <span>거리 : {distance} km</span>
             </Card.Text>
           </Card.Body>
         </Card>
