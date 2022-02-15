@@ -1,12 +1,11 @@
-import Header from "../../components/common/Header";
-import Footer from "../../components/common/Footer";
+import Gymcards from "../../components/gym/Gymcards";
 function Home() {
   return (
-    <div>
-      <Header />
-      <body>메인 바디</body>
-      <Footer />
-    </div>
+    <>
+      <Gymcards type="zzim" />
+      <Gymcards type="star" />
+      <Gymcards type="distance" />
+    </>
   );
 }
 
