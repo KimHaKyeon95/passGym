@@ -4,9 +4,11 @@ import Footer from "./components/common/Footer";
 import Home from "./routes/common/Home";
 import Login from "./routes/common/Login";
 import Gymdetail from "./routes/common/Gymdetail";
-import "./css/common/index.css";
 import Ownersignup from "./routes/owner/Ownersignup";
+import "./css/common/index.css";
+import Payment from "./routes/users/payment";
 import GymRegist from "./routes/owner/GymRegist";
+
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/login" element={<Login />} />
+        </Routes>
+        <Routes>
+          <Route path="/payment/:ownerNo" element={<Payment />} />
         </Routes>
       </section>
       <Footer />

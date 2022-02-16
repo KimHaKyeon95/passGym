@@ -1,4 +1,4 @@
-import { Container, Row, Spinner } from "react-bootstrap";
+import { Container, Row, Spinner, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import Gymcard from "../../components/gym/Gymcard";
 function Gymcards({ type }) {
@@ -29,6 +29,27 @@ function Gymcards({ type }) {
             avgStar: 2.0,
             distance: 3.0,
           },
+          {
+            ownerNo: 4,
+            name: "지동 체육관",
+            addr: "서울시 지동",
+            avgStar: 4.0,
+            distance: 1.0,
+          },
+          {
+            ownerNo: 5,
+            name: "쇠질",
+            addr: "부천시 원미구",
+            avgStar: 1.0,
+            distance: 4.0,
+          },
+          {
+            ownerNo: 6,
+            name: "프로틴",
+            addr: "광주시 북구",
+            avgStar: 3.0,
+            distance: 10.0,
+          },
         ],
       },
     };
@@ -46,7 +67,9 @@ function Gymcards({ type }) {
         </Spinner>
       ) : (
         <Container style={{ marginBottom: "50px" }}>
-          <h4 style={{ padding: "10px 10px" }}>{type}</h4>
+          <Row>
+            <Col style={{ margin: "10px", fontSize: "24px" }}>{type}</Col>
+          </Row>
           <Row xs={2} md={3} lg={4} className="g-4">
             {gyms.map((gym) => (
               <Gymcard
