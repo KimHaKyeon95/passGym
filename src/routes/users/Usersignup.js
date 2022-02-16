@@ -4,6 +4,8 @@ import "../css/Usersignup.css";
 import { Button, Form } from "react-bootstrap";
 import PostcodeModal from "../../components/owener/PostcodeModal";
 import HorizonLine from "../common/HorizonLine";
+import kakao from "../../images/kakao.png";
+import naver from "../../images/naver.png";
 
 function Usersignup() {
   const [id, setId] = React.useState("");
@@ -116,6 +118,7 @@ function Usersignup() {
   //비밀번호 실시간 체크
   function onPwdHandler(event) {
     const { name, value } = event.target;
+    console.log(name);
     const nextValues = {
       // ...password,
       ...pwd,
@@ -123,27 +126,47 @@ function Usersignup() {
     };
     // setPassword(nextValues);
     setPwd(nextValues);
-    console.log("nextValues:", nextValues);
+    console.log("nextValues:", JSON.parse(nextValues));
     const nextResult = {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
-    // console.log("result:", nextResult.result);
+    console.log("result:", nextResult.result);
     if (!nextResult.result) {
       setPwdChkResult({
         resultMsg: "8~10자리 숫자와 영어 조합으로 입력하세요.",
       });
       setResults({ ...chkResults, pwdChkResult: 0 });
+    } else {
+      setPwdChkResult({
+        resultMsg: "",
+      });
     }
+  }
+
+  function onPwdChkHandler(event) {
+    // setPwdChk(event.target.value);
+    // const value = onPwdHandler.value;
+    // const nextValues = onPwdHandler.nextValues;
+    const nextResult = {
+      result: onPwdRegexChkHandler(value),
+      resultMsg: "",
+    };
+    const { name, value } = event.target;
+    const nextValues = {
+      ...pwdChk,
+      [name]: value,
+    };
+    setPwdChk(nextValues);
     if (name === "pwd") {
       if (value === "") {
-        // console.log("비밀번호 입력안함:", value);
+        console.log("비밀번호 입력안함:", value);
         setPwdChkMsg({ msg: "비밀번호를 입력하세요." });
-      } else if (value != nextValues.pwdChk) {
-        // console.log("비밀번호 일치안함:", value);
+      } else if (value != nextValues) {
+        console.log("비밀번호 일치안함:", value);
         setPwdChkMsg({ msg: "비밀번호가 일치하지 않습니다." });
       } else {
-        // console.log("비밀번호 일치함:", value);
+        console.log("비밀번호 일치함:", value);
         setPwdChkMsg({ msg: "비밀번호가 일치합니다." });
         setResults({ ...chkResults, pwdChkResult: 1 });
       }
@@ -152,7 +175,7 @@ function Usersignup() {
       if (value === "") {
         // console.log("비밀번호 입력안함:", value);
         setPwdChkMsg({ msg: "비밀번호를 입력하세요." });
-      } else if (value != nextValues.pwdChk) {
+      } else if (value != nextValues) {
         // console.log("비밀번호 일치안함:", value);
         setPwdChkMsg({ msg: "비밀번호가 일치하지 않습니다." });
       } else {
@@ -248,7 +271,6 @@ function Usersignup() {
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
-                // value={password.pwd}
                 value={pwd}
                 type="password"
                 placeholder="비밀번호"
@@ -261,8 +283,7 @@ function Usersignup() {
             >
               <Form.Control
                 name="pwdChk"
-                onChange={onPwdHandler}
-                // value={password.pwdChk}
+                onChange={onPwdChkHandler}
                 value={pwdChk}
                 type="password"
                 placeholder="비밀번호 확인"
@@ -365,6 +386,14 @@ function Usersignup() {
             회원가입
           </Button>
           <HorizonLine text="SNS 회원가입"></HorizonLine>
+          <Button>
+            <img src={kakao} />
+            <span>카카오톡 회원가입</span>
+          </Button>
+          <Button>
+            <img src={naver} />
+            <span>네이버 회원가입</span>
+          </Button>
         </Form>
       </div>
     </div>

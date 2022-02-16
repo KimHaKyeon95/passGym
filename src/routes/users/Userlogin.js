@@ -4,6 +4,8 @@ import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/Userlogin.css";
 import { KAKAO_AUTH_URL } from "./Oauth";
 import HorizonLine from "./../common/HorizonLine";
+import kakao from "../../images/kakao.png";
+import naver from "../../images/naver.png";
 
 function Userlogin() {
   const [id, setId] = React.useState("");
@@ -97,11 +99,11 @@ function Userlogin() {
             </Button>
             <HorizonLine text="SNS 로그인"></HorizonLine>
             <Button href={KAKAO_AUTH_URL}>
-              <img src="../../images/kakao.png"></img>
+              <img src={kakao} />
               <span>카카오톡 로그인</span>
             </Button>
             <Button>
-              <img src="../../images/naver.png"></img>
+              <img src={naver} />
               <span>네이버 로그인</span>
             </Button>
             <HorizonLine text="회원가입"></HorizonLine>
