@@ -6,17 +6,36 @@
 
 .userlogin__form {
   width: 460px;
+  max-width: 100%;
 }
 
 .userlogin__id,
 .userlogin__pwd {
-  width: 100%;
+  /* width: 100%;
+  margin: 10px; */
+  display: flex;
+  flex-direction: center;
+  /* width: 312px !important; */
+  width: auto;
+  height: 48px;
   margin: 10px;
+  /* margin-top: 0 !important; */
+  /* border: 1px solid darkslategray; */
 }
+
 .userlogin__submitBtn,
 .userlogin__findBtn,
 .userlogin__usersignupBtn,
 .userlogin__ownersignupBtn {
   width: 50%;
   margin: 10px;
+}
+
+.radioBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* background-color: antiquewhite; */
+  border-color: black;
+  color: darkslategray;
 }

@@ -1,16 +1,18 @@
 import React from "react";
 import axios from "axios";
 import "../css/Usersignup.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import PostcodeModal from "../../components/owener/PostcodeModal";
+import HorizonLine from "../common/HorizonLine";
 
 function Usersignup() {
   const [id, setId] = React.useState("");
-  const [password, setPassword] = React.useState({
-    pwd: "",
-    pwdChk: "",
-  });
+  // const [password, setPassword] = React.useState({
+  //   pwd: "",
+  //   pwdChk: "",
+  // });
+  const [pwd, setPwd] = React.useState("");
+  const [pwdChk, setPwdChk] = React.useState("");
   const [name, setName] = React.useState("");
   const [phoneNo, setPhoneNo] = React.useState("");
   const [phoneNoVarifCode, setPhoneNoVarifCode] = React.useState("");
@@ -22,11 +24,12 @@ function Usersignup() {
   const [postcodeModalShow, setPostcodeModalShow] = React.useState(false);
 
   const [chkResults, setResults] = React.useState({
+    idChkResult: 0,
     idDupChkResult: 0,
     pwdChkResult: 0,
   });
 
-  const [idChkResult, setIdChkResult] = React.useState({
+  const [idRegexChkResult, setIdRegexChkResult] = React.useState({
     result: false,
     resultMsg: "",
   });
@@ -47,7 +50,7 @@ function Usersignup() {
   function onIdRegexChkHandler(value) {
     const regex =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    setIdChkResult({ result: regex.test(value) });
+    setIdRegexChkResult({ result: regex.test(value) });
     return regex.test(value);
   }
 
@@ -59,6 +62,26 @@ function Usersignup() {
     };
     setId(nextValues.id);
     // console.log(nextValues.id);
+
+    const nextResult = {
+      result: onIdRegexChkHandler(value),
+      resultMsg: "",
+    };
+
+    if (!nextResult.result) {
+      setIdRegexChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
+      setResults({ ...chkResults, idChkResult: 0 });
+      setIdChkMsg({ msg: "" });
+      // setResults({ ...chkResults, idDupChkResult: 0 });
+    } else {
+      if (response.id === nextValues.id) {
+        setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
+        setResults({ ...chkResults, idDupChkResult: 0 });
+      } else {
+        setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+        setResults({ ...chkResults, idDupChkResult: 1 });
+      }
+    }
   }
 
   //테스트
@@ -66,18 +89,20 @@ function Usersignup() {
     id: "id1@naver.com",
   };
 
-  function onIdDupChk(event) {
-    if (!idChkResult.result) {
-      setIdChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
-    }
-    if (response.id === id) {
-      setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
-      setResults({ ...chkResults, idDupChkResult: 0 });
-    } else {
-      setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-      setResults({ ...chkResults, idDupChkResult: 1 });
-    }
-  }
+  // function onIdDupChk(event) {
+  //   if (!idChkResult.result) {
+  //     setIdChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
+  //     setIdChkMsg({ msg: "" });
+  //   } else {
+  //     if (response.id === id) {
+  //       setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
+  //       setResults({ ...chkResults, idDupChkResult: 0 });
+  //     } else {
+  //       setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+  //       setResults({ ...chkResults, idDupChkResult: 1 });
+  //     }
+  //   }
+  // }
 
   //비밀번호 형식 체크
   function onPwdRegexChkHandler(value) {
@@ -92,15 +117,18 @@ function Usersignup() {
   function onPwdHandler(event) {
     const { name, value } = event.target;
     const nextValues = {
-      ...password,
+      // ...password,
+      ...pwd,
       [name]: value,
     };
-    setPassword(nextValues);
-
+    // setPassword(nextValues);
+    setPwd(nextValues);
+    console.log("nextValues:", nextValues);
     const nextResult = {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
+    // console.log("result:", nextResult.result);
     if (!nextResult.result) {
       setPwdChkResult({
         resultMsg: "8~10자리 숫자와 영어 조합으로 입력하세요.",
@@ -145,10 +173,8 @@ function Usersignup() {
   }
 
   function onPhoneNoHandler(event) {
-    console.log(event);
-    const regex = /^[0-9\b -]{0, 13}$/;
-    if (!regex.test(event.target.value)) {
-      console.log("if", regex.test(event.target.value));
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(event.target.value)) {
       setPhoneNo(event.target.value);
     }
   }
@@ -178,32 +204,26 @@ function Usersignup() {
   }
 
   function onSubmitHandler(event) {
-    const submitInfo = Object.assign(id, password, name, phoneNo, address);
-    // const forSubmitConfirm = Object.assign(chkResults);
-    let submitUrl = "http://localhost:3001/usersignup/singup";
-    if (chkResults.idDupChkResult === 1 && chkResults.pwdChkResult === 1) {
+    const submitInfo = Object.assign(id, pwd, name, phoneNo, address);
+    const forSubmitConfirm = Object.assign(
+      chkResults.idChkResult,
+      chkResults.idDupChkResult,
+      chkResults.pwdChkResult
+    );
+    let submitUrl = "http://localhost:3000/usersignup/signup";
+    if (forSubmitConfirm === 1) {
       axios.post(submitUrl, submitInfo);
     } else {
       alert("가입 실패하였습니다.");
+      event.preventDefault();
     }
-    event.preventDefault();
-
-    let signupInfo = {
-      id,
-      //pwd,
-      name,
-      phoneNo,
-      // address.zipcode,
-      // address.addr1,
-      // address.addr2,
-    };
   }
 
   return (
     <div>
       <div className="usersignup">
         <Form className="usersignup__form">
-          <h1>사용자 회원가입</h1>
+          <h1 className="h1__title">사용자 회원가입</h1>
           <div className="usersignup__id">
             <Form.Group
               className="usersignup__idemail"
@@ -216,19 +236,20 @@ function Usersignup() {
                 // type="email"
                 placeholder="아이디(이메일)"
               />
+              <div className="msg">{idRegexChkResult.resultMsg}</div>
               <div className="msg">{idChkMsg.msg}</div>
-              <div className="msg">{idChkResult.resultMsg}</div>
             </Form.Group>
-            <Button onClick={onIdDupChk} className="usersignup__iddupchkbtn">
+            {/* <Button onClick={onIdDupChk} className="usersignup__iddupchkbtn">
               아이디 중복확인
-            </Button>
+            </Button> */}
           </div>
           <div className="usersignup__password">
             <Form.Group className="usersignup__pwd" controlId="usersignup__pwd">
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
-                value={password.pwd}
+                // value={password.pwd}
+                value={pwd}
                 type="password"
                 placeholder="비밀번호"
                 required
@@ -241,13 +262,14 @@ function Usersignup() {
               <Form.Control
                 name="pwdChk"
                 onChange={onPwdHandler}
-                value={password.pwdChk}
+                // value={password.pwdChk}
+                value={pwdChk}
                 type="password"
                 placeholder="비밀번호 확인"
                 required
               />
-              <div className="msg">{pwdChkMsg.msg}</div>
               <div className="msg">{pwdChkResult.resultMsg}</div>
+              <div className="msg">{pwdChkMsg.msg}</div>
             </Form.Group>
           </div>
           <Form.Group className="usersignup__name" controlId="usersignup__name">
@@ -268,6 +290,7 @@ function Usersignup() {
                 name="phoneNo"
                 onChange={onPhoneNoHandler}
                 value={phoneNo}
+                type="text"
                 placeholder="휴대전화번호"
               />
             </Form.Group>
@@ -341,6 +364,7 @@ function Usersignup() {
           >
             회원가입
           </Button>
+          <HorizonLine text="SNS 회원가입"></HorizonLine>
         </Form>
       </div>
     </div>

@@ -2,6 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/Userlogin.css";
+import { KAKAO_AUTH_URL } from "./Oauth";
+import HorizonLine from "./../common/HorizonLine";
 
 function Userlogin() {
   const [id, setId] = React.useState("");
@@ -24,8 +26,15 @@ function Userlogin() {
   function onPwdHandler(event) {
     setPwd(event.target.value);
   }
-
+  //테스트
+  let response = {
+    id: "id1@naver.com",
+    pwd: "p1",
+  };
   function onSubmitHandler(event) {
+    const submitInfo = Object.assign(id, pwd);
+    let submitUrl = "http://localhost:3000/userlogin/login";
+    console.log(event.target.value);
     event.preventDefault();
   }
 
@@ -34,17 +43,18 @@ function Userlogin() {
       <div className="userlogin">
         <Form className="userlogin__form">
           <>
-            <ButtonGroup>
+            <ButtonGroup className="radioBtn">
               {radios.map((radio, idx) => (
                 <ToggleButton
                   key={idx}
                   id={`radio-${idx}`}
                   type="radio"
-                  variant={idx % 2 ? "outline-success" : "outline-danger"}
+                  variant={idx % 2 ? "outline-primary" : "outline-danger"}
                   name="radio"
                   value={radio.value}
                   checked={radioValue === radio.value}
                   onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  style={{ backgroundColor: "darkslategray" }}
                 >
                   {radio.name}
                 </ToggleButton>
@@ -85,6 +95,16 @@ function Userlogin() {
             <Button className="userlogin__findBtn" variant="primary">
               이메일/비밀번호 찾기
             </Button>
+            <HorizonLine text="SNS 로그인"></HorizonLine>
+            <Button href={KAKAO_AUTH_URL}>
+              <img src="../../images/kakao.png"></img>
+              <span>카카오톡 로그인</span>
+            </Button>
+            <Button>
+              <img src="../../images/naver.png"></img>
+              <span>네이버 로그인</span>
+            </Button>
+            <HorizonLine text="회원가입"></HorizonLine>
             <Button className="userlogin__usersignupBtn" variant="primary">
               사용자 회원가입
             </Button>
