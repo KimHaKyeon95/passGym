@@ -6,6 +6,7 @@ import Login from "./routes/common/Login";
 import Gymdetail from "./routes/common/Gymdetail";
 import "./css/common/index.css";
 import Ownersignup from "./routes/owner/Ownersignup";
+import GymRegist from "./routes/owner/GymRegist";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/ownersignup" element={<Ownersignup />} />
+        </Routes>
+        <Routes>
+          <Route path="/ownersignup/gymregist" element={<GymRegist />} />
         </Routes>
         <Routes>
           <Route path="/login" element={<Login />} />
