@@ -57,14 +57,15 @@ function Usersignup() {
   }
 
   function onIdHandler(event) {
-    const { name, value } = event.target;
-    const nextValues = {
-      ...id,
-      [name]: value,
-    };
-    setId(nextValues.id);
+    // const { name, value } = event.target;
+    // const nextValues = {
+    //   ...id,
+    //   [name]: value,
+    // };
+    // setId(nextValues.id);
     // console.log(nextValues.id);
-
+    const value = event.target.value;
+    setId(value);
     const nextResult = {
       result: onIdRegexChkHandler(value),
       resultMsg: "",
@@ -76,7 +77,7 @@ function Usersignup() {
       setIdChkMsg({ msg: "" });
       // setResults({ ...chkResults, idDupChkResult: 0 });
     } else {
-      if (response.id === nextValues.id) {
+      if (response.id === value) {
         setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
         setResults({ ...chkResults, idDupChkResult: 0 });
       } else {
@@ -117,16 +118,19 @@ function Usersignup() {
 
   //비밀번호 실시간 체크
   function onPwdHandler(event) {
-    const { name, value } = event.target;
-    console.log(name);
-    const nextValues = {
-      // ...password,
-      ...pwd,
-      [name]: value,
-    };
-    // setPassword(nextValues);
-    setPwd(nextValues);
-    console.log("nextValues:", JSON.parse(nextValues));
+    //  const {value } = event.target;
+    // const name = event.target.name;
+    const value = event.target.value;
+    // // console.log(name);
+    // const nextValues = {
+    //   // ...password,
+    //   // ...pwd,
+    //   [name]: value,
+    // };
+    // // setPassword(nextValues);
+    // setPwd(nextValues);
+    setPwd(value);
+    // console.log("nextValues:", nextValues.pwd);
     const nextResult = {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
@@ -152,30 +156,18 @@ function Usersignup() {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
-    const { name, value } = event.target;
-    const nextValues = {
-      ...pwdChk,
-      [name]: value,
-    };
-    setPwdChk(nextValues);
+    // const { name, value } = event.target;
+    // const nextValues = {
+    //   ...pwdChk,
+    //   [name]: value,
+    // };
+    const value = event.target.value;
+    setPwdChk(value);
     if (name === "pwd") {
-      if (value === "") {
-        console.log("비밀번호 입력안함:", value);
-        setPwdChkMsg({ msg: "비밀번호를 입력하세요." });
-      } else if (value != nextValues) {
-        console.log("비밀번호 일치안함:", value);
-        setPwdChkMsg({ msg: "비밀번호가 일치하지 않습니다." });
-      } else {
-        console.log("비밀번호 일치함:", value);
-        setPwdChkMsg({ msg: "비밀번호가 일치합니다." });
-        setResults({ ...chkResults, pwdChkResult: 1 });
-      }
-    }
-    if (name === "pwdChk") {
       if (value === "") {
         // console.log("비밀번호 입력안함:", value);
         setPwdChkMsg({ msg: "비밀번호를 입력하세요." });
-      } else if (value != nextValues) {
+      } else if (value != name) {
         // console.log("비밀번호 일치안함:", value);
         setPwdChkMsg({ msg: "비밀번호가 일치하지 않습니다." });
       } else {
@@ -184,7 +176,20 @@ function Usersignup() {
         setResults({ ...chkResults, pwdChkResult: 1 });
       }
     }
-    if (nextResult.result && nextValues.pwd === nextValues.pwdChk) {
+    if (name === "pwdChk") {
+      if (value === "") {
+        // console.log("비밀번호 입력안함:", value);
+        setPwdChkMsg({ msg: "비밀번호를 입력하세요." });
+      } else if (value != name) {
+        // console.log("비밀번호 일치안함:", value);
+        setPwdChkMsg({ msg: "비밀번호가 일치하지 않습니다." });
+      } else {
+        // console.log("비밀번호 일치함:", value);
+        setPwdChkMsg({ msg: "비밀번호가 일치합니다." });
+        setResults({ ...chkResults, pwdChkResult: 1 });
+      }
+    }
+    if (nextResult.result && pwd === pwdChk) {
       setResults({ chkResults, pwdChkResult: 1 });
     } else {
       setResults({ chkResults, pwdChkResult: 0 });
