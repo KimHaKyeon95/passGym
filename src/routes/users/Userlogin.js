@@ -51,12 +51,11 @@ function Userlogin() {
                   key={idx}
                   id={`radio-${idx}`}
                   type="radio"
-                  variant={idx % 2 ? "outline-primary" : "outline-danger"}
+                  variant={idx % 2 ? "outline-dark" : "outline-dark"}
                   name="radio"
                   value={radio.value}
                   checked={radioValue === radio.value}
                   onChange={(e) => setRadioValue(e.currentTarget.value)}
-                  style={{ backgroundColor: "darkslategray" }}
                 >
                   {radio.name}
                 </ToggleButton>
@@ -72,6 +71,7 @@ function Userlogin() {
                 value={id}
                 type="email"
                 placeholder="아이디(이메일)"
+                required
               />
               {/* <div className="msg">{idChkMsg.msg}</div> */}
               {/* <div className="msg">{idChkResult.resultMsg}</div> */}
@@ -88,29 +88,30 @@ function Userlogin() {
             </Form.Group>
             <Button
               className="userlogin__submitBtn"
-              variant="primary"
+              variant="outline-dark"
               type="submit"
               onSubmit={onSubmitHandler}
             >
               로그인
             </Button>
-            <Button className="userlogin__findBtn" variant="primary">
+            <Button className="userlogin__findBtn" variant="link">
               이메일/비밀번호 찾기
             </Button>
             <HorizonLine text="SNS 로그인"></HorizonLine>
-            <Button href={KAKAO_AUTH_URL}>
+            <Button href={KAKAO_AUTH_URL} className="snsBtn" variant="link">
               <img src={kakao} />
-              <span>카카오톡 로그인</span>
             </Button>
-            <Button>
+            <Button className="snsBtn" variant="link">
               <img src={naver} />
-              <span>네이버 로그인</span>
             </Button>
             <HorizonLine text="회원가입"></HorizonLine>
-            <Button className="userlogin__usersignupBtn" variant="primary">
+            <Button className="userlogin__usersignupBtn" variant="outline-dark">
               사용자 회원가입
             </Button>
-            <Button className="userlogin__ownersignupBtn" variant="primary">
+            <Button
+              className="userlogin__ownersignupBtn"
+              variant="outline-dark"
+            >
               사업자 회원가입
             </Button>
           </div>

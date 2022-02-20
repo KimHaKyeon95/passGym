@@ -1,7 +1,7 @@
 .usersignup {
-  display: block;
+  display: flex;
   justify-content: center;
-  /* padding: 30px, 0px; */
+  padding: 0 30px;
   margin: 0 auto;
   max-width: 768px;
   min-width: 460px;
@@ -9,84 +9,52 @@
 
 .h1__title {
   text-align: center;
+  margin: 30px;
+  padding: 10px;
 }
 
 .usersignup__form {
   width: 460px;
 }
 
-.usersignup__id,
-.usersignup__password,
-.usersignup__phone,
-.usersignup__address {
-  display: flex;
+.usersignup__email,
+.usersignup__pwdchk {
+  /* display: flex; */
+  margin-bottom: 2em;
 }
-
-.usersingup__pwd,
-.usersignup__pwdChk,
+.usersignup__pwd,
 .usersignup__name,
-.phoneNoVarifCode,
+.usersignup__phoneNo,
+.usersignup__phoneNoVarifCode,
+.usersignup__zipcode,
 .usersignup__addr,
 .usersignup__addr2 {
-  /* display: block;
-  position: relative;
-  width: 100%;
-  height: 51px;
-  border: solid 1px #f6f5ef;
-  /* padding: 10px 110px 10px 14px; */
-  background: #fff;
-  /* vertical-align: top; */
-  /*margin: 20px; */
-  display: flex;
-  flex-direction: center;
-  /* width: 312px !important; */
-  width: auto;
-  height: 48px;
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
-.usersignup__idemail,
-.usersignup__phoneNo,
-.usersignup__zipcode {
-  display: block;
-  flex-direction: center;
-  width: 70% !important;
-  height: 51px;
-  margin: 20px;
-  /* margin-top: 0 !important; */
-  /* border: 1px solid darkslategray; */
-}
-
-.usersignup__iddupchkbtn,
-.usersignup__phonenovarifbtn,
-.usersignup__zipcodebtn {
+.usersignup__phonenovarifbtn {
   display: inline-block;
-  /* width: 100px; */
-  margin: 0px 10px 10px;
-  height: 38px;
-  /* display: flex;
-  width: 30%;
-  height: 48px;
-  background-color: #f6f5ef;
-  border: 1px solid #f6f5ef;
-  border-radius: 4px;
-  font-size: 12px;
-  color: darkslategray; */
-  cursor: pointer;
 }
 
 .usersignup__submitBtn {
   display: flex;
   width: 100%;
-  /* margin: 10px; */
+  margin-bottom: 2em;
   padding: 15px 0 15px;
-  font-size: 18px;
+  /* font-size: 18px; */
   font-weight: 700;
   text-align: center;
-  background-color: #28adea;
-  cursor: pointer;
+  /* background-color: #28adea; */
 }
 
 .msg {
-  font-size: 0.8em;
+  margin-top: 9px;
+  margin-bottom: -2px;
+  margin-left: 9px;
+}
+
+.snsBtn {
+  display: inline-block;
+  width: 60vw;
+  height: 60vh;
 }
