@@ -1,15 +1,17 @@
 package com.passgym.owner.entity;
 
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.passgym.gym.entity.Gym;
-import com.passgym.ownerqna.entity.OwnerQna;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter

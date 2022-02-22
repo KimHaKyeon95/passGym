@@ -3,16 +3,20 @@ package com.passgym.pass.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.passgym.gym.entity.Gym;
 import com.passgym.gympass.entity.GymPass;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 @Getter
 @Setter

@@ -3,10 +3,19 @@ package com.passgym.pass.entity;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.passgym.gym.entity.Gym;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Embeddable
 public class PassPK implements Serializable {
 

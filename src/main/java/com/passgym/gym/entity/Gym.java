@@ -2,9 +2,18 @@ package com.passgym.gym.entity;
 
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,7 +56,7 @@ public class Gym {
 	
 //	private List<PaymentMethod> paymentMethods;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="owner_no")
 	private List<Pass> passes;
 
