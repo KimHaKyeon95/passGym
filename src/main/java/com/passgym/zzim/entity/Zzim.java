@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import com.passgym.gym.entity.Gym;
 import com.passgym.user.entity.User;
 
-@Entity
 public class Zzim {
+
 
 	private User user;
 	private Gym gym;

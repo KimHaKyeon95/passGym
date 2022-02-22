@@ -1,48 +1,26 @@
 package com.passgym.paymentmethod.entity;
 
-import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table
 public class PaymentMethod {
+
+	@Id
 	private int ownerNo;
 	private int paymentType;
 	private String apiKey;
 	
-	public PaymentMethod() {}
 
-	public PaymentMethod(int ownerNo, int paymentType, String apiKey) {
-		super();
-		this.ownerNo = ownerNo;
-		this.paymentType = paymentType;
-		this.apiKey = apiKey;
-	}
-
-	public int getOwnerNo() {
-		return ownerNo;
-	}
-
-	public void setOwnerNo(int ownerNo) {
-		this.ownerNo = ownerNo;
-	}
-
-	public int getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(int paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	public String getApiKey() {
-		return apiKey;
-	}
-
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	@Override
-	public String toString() {
-		return "PaymentMethod [ownerNo=" + ownerNo + ", paymentType=" + paymentType + ", apiKey=" + apiKey + "]";
-	}
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-@Entity
 public class UserQna {
 	private int qnaNo;
 	private String title;

@@ -1,38 +1,23 @@
 package com.passgym.star.entity;
 
-import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table
 public class Star {
+
+	@Id
 	private String paymentNo;
 	private int star;
-	
-	public Star() {}
-
-	public Star(String paymentNo, int star) {
-		super();
-		this.paymentNo = paymentNo;
-		this.star = star;
-	}
-
-	public String getPaymentNo() {
-		return paymentNo;
-	}
-
-	public void setPaymentNo(String paymentNo) {
-		this.paymentNo = paymentNo;
-	}
-
-	public int getStar() {
-		return star;
-	}
-
-	public void setStar(int star) {
-		this.star = star;
-	}
-
-	@Override
-	public String toString() {
-		return "Star [paymentNo=" + paymentNo + ", star=" + star + "]";
-	}
 }
