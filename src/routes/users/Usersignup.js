@@ -2,10 +2,11 @@ import React from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import PostcodeModal from "../../components/owener/PostcodeModal";
-import HorizonLine from "../common/HorizonLine";
-import kakao from "../../images/kakao.png";
-import naver from "../../images/naver.png";
-import "../css/Usersignup.css";
+// import HorizonLine from "../common/HorizonLine";
+// import kakao from "../../images/kakao.png";
+// import naver from "../../images/naver.png";
+import "../css/usersignup.css";
+import { Navigate } from "react-router";
 
 function Usersignup() {
   const [id, setId] = React.useState("");
@@ -60,19 +61,30 @@ function Usersignup() {
       resultMsg: "",
     };
 
+    let idDupChkUrl = "http://localhost:3000/usersignup/iddupchk";
+
     if (!nextResult.result) {
       setIdRegexChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
       setResults({ ...chkResults, idChkResult: 0 });
       setIdChkMsg({ msg: "" });
-      // setResults({ ...chkResults, idDupChkResult: 0 });
+      setResults({ ...chkResults, idDupChkResult: 0 });
     } else {
-      if (response.id === value) {
-        setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
-        setResults({ ...chkResults, idDupChkResult: 0 });
-      } else {
-        setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-        setResults({ ...chkResults, idDupChkResult: 1 });
-      }
+      setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+      setResults({ ...chkResults, idDupChkResult: 1 });
+      // axios
+      //   .get(idDupChkUrl, id)
+      //   .then((res) => {
+      //     if (res.id === value) {
+      //       setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
+      //       setResults({ ...chkResults, idDupChkResult: 0 });
+      //     } else {
+      //       setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+      //       setResults({ ...chkResults, idDupChkResult: 1 });
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     alert(error.res.status);
+      //   });
     }
   }
 
@@ -98,7 +110,7 @@ function Usersignup() {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
-    console.log("result:", nextResult.result);
+    // console.log("result:", nextResult.result);
     if (!nextResult.result) {
       setPwdChkResult({
         resultMsg: "8~10자리 숫자와 영어 조합으로 입력하세요.",
@@ -177,18 +189,38 @@ function Usersignup() {
   }
 
   function onSubmitHandler(event) {
-    const submitInfo = Object.assign(id, pwd, name, phoneNo, address);
-    const forSubmitConfirm = Object.assign(
-      chkResults.idChkResult,
-      chkResults.idDupChkResult,
-      chkResults.pwdChkResult
-    );
+    const submitInfo = [
+      id,
+      pwd,
+      name,
+      phoneNo,
+      address.zipCode,
+      address.addr,
+      address.addr2,
+    ];
+    // console.log(submitInfo);
     let submitUrl = "http://localhost:3000/usersignup/signup";
-    if (forSubmitConfirm === 1) {
-      axios.post(submitUrl, submitInfo);
+    if (
+      (chkResults.idChkResult,
+      chkResults.idDupChkResult,
+      chkResults.pwdChkResult === 1)
+    ) {
+      event.preventDefault();
+      Navigate("/login");
+      // axios
+      //   .post(submitUrl, submitInfo)
+      //   .then(() => {
+      //     sessionStorage.setItem("id", submitInfo.id);
+      //     Navigate("/login");
+      //   })
+      //   .catch((error) => {
+      //     if (error.response) {
+      //       alert(error.response.status);
+      //       event.preventDefault();
+      //     }
+      // });
     } else {
       alert("가입 실패하였습니다.");
-      event.preventDefault();
     }
   }
 
@@ -207,10 +239,11 @@ function Usersignup() {
                 onChange={onIdHandler}
                 value={id}
                 placeholder="아이디(이메일)"
-                size="lg"
               />
-              <div className="msg">{idRegexChkResult.resultMsg}</div>
-              <div className="msg">{idChkMsg.msg}</div>
+              <Form.Text className="msg">
+                {idRegexChkResult.resultMsg}
+              </Form.Text>
+              <Form.Text className="msg">{idChkMsg.msg}</Form.Text>
             </Form.Group>
           </div>
           <div className="usersignup__password">
@@ -222,7 +255,6 @@ function Usersignup() {
                 type="password"
                 placeholder="비밀번호"
                 required
-                size="lg"
               />
             </Form.Group>
             <Form.Group
@@ -236,11 +268,10 @@ function Usersignup() {
                 type="password"
                 placeholder="비밀번호 확인"
                 required
-                size="lg"
               />
+              <Form.Text className="msg">{pwdChkResult.resultMsg}</Form.Text>
+              <Form.Text className="msg">{pwdChkMsg.msg}</Form.Text>
             </Form.Group>
-            <div className="msg">{pwdChkResult.resultMsg}</div>
-            <div className="msg">{pwdChkMsg.msg}</div>
           </div>
           <Form.Group className="usersignup__name" controlId="usersignup__name">
             <Form.Control
@@ -249,7 +280,6 @@ function Usersignup() {
               value={name}
               placeholder="이름"
               required
-              size="lg"
             />
           </Form.Group>
           <div className="usersignup__phone">
@@ -261,14 +291,14 @@ function Usersignup() {
                 name="phoneNo"
                 onChange={onPhoneNoHandler}
                 value={phoneNo}
-                type="text"
+                // type="text"
                 placeholder="휴대전화번호"
-                size="lg"
               />
             </Form.Group>
             <Button
               onClick={onPhoneNoVarifHandler}
               className="usersignup__phonenovarifbtn"
+              variant="outline-dark"
             >
               인증
             </Button>
@@ -281,7 +311,6 @@ function Usersignup() {
                 onChange={onPhoneNoVarifCodeHandler}
                 value={phoneNoVarifCode}
                 placeholder="인증번호"
-                size="lg"
               />
             </Form.Group>
           </div>
@@ -295,7 +324,6 @@ function Usersignup() {
                 placeholder="우편번호"
                 readOnly
                 required
-                size="lg"
               />
             </Form.Group>
             <PostcodeModal
@@ -308,7 +336,7 @@ function Usersignup() {
             <Button
               className="usersignup__zipcodebtn"
               onClick={() => setPostcodeModalShow(true)}
-              variant="primary"
+              variant="outline-dark"
             >
               검색
             </Button>
@@ -321,18 +349,13 @@ function Usersignup() {
                 placeholder="주소"
                 readOnly
                 required
-                size="lg"
               />
             </Form.Group>
             <Form.Group
               className="usersignup__addr2"
               controlId="usersignup__addr2"
             >
-              <Form.Control
-                value={address.addr2}
-                placeholder="상세주소"
-                size="lg"
-              />
+              <Form.Control value={address.addr2} placeholder="상세주소" />
             </Form.Group>
           </div>
           <Button
@@ -343,13 +366,13 @@ function Usersignup() {
           >
             회원가입
           </Button>
-          <HorizonLine text="SNS 회원가입"></HorizonLine>
+          {/* <HorizonLine text="SNS 회원가입"></HorizonLine>
           <Button className="snsBtn" variant="link">
             <img src={kakao} />
           </Button>
           <Button className="snsBtn" variant="link">
             <img src={naver} />
-          </Button>
+          </Button> */}
         </Form>
       </div>
     </div>

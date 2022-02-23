@@ -7,7 +7,7 @@ import Usersignup from "./routes/users/Usersignup";
 import Gymdetail from "./routes/common/Gymdetail";
 import "./css/common/index.css";
 import Ownersignup from "./routes/owner/Ownersignup";
-import Userlogin from "./routes/users/Userlogin";
+import SearchIdPwd from "./routes/common/SearchIdPwd";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/usersignup" element={<Usersignup />} />
         </Routes>
         <Routes>
-          <Route path="/userlogin" element={<Userlogin />} />
+          <Route path="/searchidpwd" element={<SearchIdPwd />} />
         </Routes>
       </section>
       <Footer />

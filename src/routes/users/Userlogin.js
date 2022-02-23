@@ -1,9 +1,11 @@
 import React from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/Userlogin.css";
 import { KAKAO_AUTH_URL } from "./Oauth";
 import HorizonLine from "./../common/HorizonLine";
+import imageCompression from "browser-image-compression";
 import kakao from "../../images/kakao.png";
 import naver from "../../images/naver.png";
 
@@ -33,11 +35,28 @@ function Userlogin() {
     id: "id1@naver.com",
     pwd: "p1",
   };
+
   function onSubmitHandler(event) {
+    console.log("login button clicked");
     const submitInfo = Object.assign(id, pwd);
-    let submitUrl = "http://localhost:3000/userlogin/login";
-    console.log(event.target.value);
-    event.preventDefault();
+    let userSubmitUrl = "http://localhost:3000/userlogin/login";
+    let ownerSubmitUrl = "http://localhost:3000/ownerlogin/login";
+    if (radios.value == 1) {
+      axios
+        .post(userSubmitUrl, submitInfo)
+        .then((res) => console.Console.log(res))
+        .catch();
+      event.preventDefault();
+      console.log(radios.value, radios.name, submitInfo);
+    } else if (radios.value == 2) {
+      axios
+        .post(ownerSubmitUrl, submitInfo)
+        .then((res) => console.Console.log(res))
+        .catch();
+    } else {
+      alert("로그인에 실패하였습니다.");
+      event.preventDefault();
+    }
   }
 
   return (
