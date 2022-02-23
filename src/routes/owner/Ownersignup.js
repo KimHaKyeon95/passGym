@@ -85,7 +85,7 @@ function Ownersignup() {
     //   event.preventDefault();
     // }
     
-    const idDupChk = (event) => {
+    const idDupChk = () => {
       let idDupChkUrl = "http://localhost:8082/passgym/ownersignup/iddupchk";
       if(!(chkIdResult.result)){
         setValues({...values, id: ""})

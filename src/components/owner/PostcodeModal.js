@@ -4,23 +4,10 @@ import DaumPostcode from 'react-daum-postcode';
 
 const Postcode = (props) => {
 
-  const { kakao } = window;
-  let yLocation = "";
-  let xLocation = ""; 
-  function getLocation(extraAddress){
-    //kakao map API를 활용하여 위도 경도를 반환하는 함수
-    let addr = extraAddress;
-    //입력된 주소를 통해 좌표를 검색한다
-    let geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(addr, function(result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            yLocation = result[0].y;
-            xLocation = result[0].x;  
-        } 
-    });
-}
-
   const handleComplete = (data) => {
+    const { kakao } = window;
+    let yLocation = "";
+    let xLocation = ""; 
     let extraAddress = ''; 
     
     if (data.addressType === 'R') {
@@ -31,13 +18,24 @@ const Postcode = (props) => {
         extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
       }
     }
-    getLocation(extraAddress);
 
-     
-    props.setValues({zipCode: data.zonecode,
-                      addr: data.address,
-                      lat: yLocation,
-                      lon: xLocation });
+    let addr = extraAddress;
+    //입력된 주소를 통해 좌표를 검색한다
+    let geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(addr, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            yLocation = result[0].y;
+            xLocation = result[0].x;  
+            console.log(yLocation + ":" + xLocation);
+            props.setValues({zipCode: data.zonecode,
+              addr: data.address,
+              lat: yLocation,
+              lon: xLocation });
+        } 
+    });
+
+    
+    
     props.onHide();
   }
 
