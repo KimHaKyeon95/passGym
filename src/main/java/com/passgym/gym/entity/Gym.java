@@ -59,5 +59,4 @@ public class Gym {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="owner_no")
 	private List<Pass> passes;
-
 }

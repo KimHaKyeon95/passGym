@@ -50,11 +50,10 @@ public class GymPass {
 	private int pauseCount;
 	private int pauseDate;
 	private int status;
-	private int remain;//남은일수
-
-//	@OneToOne
-//	private Payment payment;
-//	private Star star;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="payment_no")
+	private Star star;
 	
 
 }
