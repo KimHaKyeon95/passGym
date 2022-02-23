@@ -1,5 +1,6 @@
 package com.passgym.gym;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ import org.springframework.test.annotation.Commit;
 import com.passgym.gym.entity.Gym;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
+import com.passgym.payment.entity.Payment;
 import com.passgym.repository.GymRepository;
 @SpringBootTest
 public class GymRepositoryTests {
@@ -59,5 +61,19 @@ public class GymRepositoryTests {
         passes.add(pass);
 		g.setPasses(passes);
 		gymRepository.save(g);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void gymDetailTest() {
+		String ownerNo = "1111111111";
+		Optional<Gym> optGym = gymRepository.findById(ownerNo);
+		assertTrue(optGym.isPresent());
+		Gym gym = optGym.get();
+		logger.info(gym.getName());
+		for(Pass p: gym.getPasses()) {
+			logger.info(p.getPassName());
+		}
 	}
 }
