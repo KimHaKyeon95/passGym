@@ -14,7 +14,6 @@ function Gymdetail() {
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
   const [SelectedPass, setSelectedPass] = useState();
-
   const getGym = () => {
     const json = {
       data: {
@@ -25,7 +24,6 @@ function Gymdetail() {
           addr: "수원시 팔달구",
           addrDetail: "지동 포레스트 311호",
           avgStar: 3.0,
-          distance: 0.5,
           introduce: "우리 헬스장은 뛰어난 트레이너들이 있습니다.",
           notice: "기구는 한번에 하나씩",
           operatingTime: "평일 06:00 ~ 20:00 / 공휴일 09:00 ~ 18:00",
@@ -103,9 +101,6 @@ function Gymdetail() {
               </Row>
               <Row>
                 <Col>{Gym.phoneNo}</Col>
-              </Row>
-              <Row style={{ paddingTop: "10px" }}>
-                <Col>현재 위치와의 거리 : {Gym.distance} Km</Col>
               </Row>
               <hr />
               <Row style={{ margin: "10px 0" }}>

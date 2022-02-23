@@ -8,15 +8,13 @@ import {
   Form,
   Spinner,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Payment() {
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
-  const [User, setUser] = useState({});
   const [Gym, setGym] = useState({});
-  const [Pass, setPass] = useState({});
-  const getPaymentInfo = () => {};
+  const [selectedPass, setSelectedPass] = useState();
 
   const getGym = () => {
     const json = {
@@ -49,6 +47,7 @@ function Payment() {
 
   useEffect(() => {
     getGym();
+    setSelectedPass(sessionStorage.getItem("passNo"));
   }, []);
 
   return (
@@ -103,7 +102,7 @@ function Payment() {
               </Row>
               <Row style={{ margin: "10px 0" }}>
                 <Col>
-                  <Form.Select>
+                  <Form.Select value={selectedPass}>
                     <option>옵션 선택</option>
                     {Gym.passes.map((pass) => (
                       <option key={pass.passNo} value={pass.passNo}>
@@ -115,7 +114,9 @@ function Payment() {
               </Row>
               <Row style={{ margin: "10px 0" }}>
                 <Col>
-                  <Button>결제하기</Button>
+                  <Link to="/mypage">
+                    <Button>결제하기</Button>
+                  </Link>
                 </Col>
               </Row>
             </Col>

@@ -6,7 +6,8 @@ import Login from "./routes/common/Login";
 import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
 import "./css/common/index.css";
-import Payment from "./routes/users/payment";
+import Payment from "./routes/users/Payment";
+import Mypage from "./routes/users/Mypage";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/payment/:ownerNo" element={<Payment />} />
+        </Routes>
+        <Routes>
+          <Route path="/mypage/" element={<Mypage />} />
         </Routes>
       </section>
       <Footer />
