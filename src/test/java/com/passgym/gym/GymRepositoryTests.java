@@ -67,7 +67,7 @@ public class GymRepositoryTests {
 	@Transactional
 	@Commit
 	void gymDetailTest() {
-		String ownerNo = "1111111111";
+		String ownerNo = "1";
 		Optional<Gym> optGym = gymRepository.findById(ownerNo);
 		assertTrue(optGym.isPresent());
 		Gym gym = optGym.get();
