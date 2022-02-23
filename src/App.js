@@ -5,9 +5,12 @@ import Home from "./routes/common/Home";
 import Login from "./routes/common/Login";
 import Usersignup from "./routes/users/Usersignup";
 import Gymdetail from "./routes/common/Gymdetail";
-import "./css/common/index.css";
 import Ownersignup from "./routes/owner/Ownersignup";
 import SearchIdPwd from "./routes/common/SearchIdPwd";
+import "./css/common/index.css";
+import Payment from "./routes/users/payment";
+import GymRegist from "./routes/owner/GymRegist";
+
 
 function App() {
   return (
@@ -31,6 +34,12 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/searchidpwd" element={<SearchIdPwd />} />
+        </Routes>
+        <Routes>
+          <Route path="/ownersignup/gymregist" element={<GymRegist />} />
+        </Routes>
+        <Routes>
+          <Route path="/payment/:ownerNo" element={<Payment />} />
         </Routes>
       </section>
       <Footer />
