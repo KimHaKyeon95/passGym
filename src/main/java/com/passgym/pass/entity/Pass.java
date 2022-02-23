@@ -25,7 +25,6 @@ import lombok.Setter;
 @Table(name="Pass")
 @Entity
 public class Pass {
-
 	@EmbeddedId
 	private PassPK passPk;
 
@@ -42,18 +41,8 @@ public class Pass {
 	@JoinColumn(name="owner_no", insertable = false, updatable = false)
 	private Gym gym;
 
-
 	@OneToMany
 	@JoinColumn(name="owner_no", insertable = false, updatable = false)
 	@JoinColumn(name="pass_no", insertable = false, updatable = false)
 	private List<GymPass> gympasses;
-
-
-
-
-	//private List<User> users; 
-
-
-
-
 }
