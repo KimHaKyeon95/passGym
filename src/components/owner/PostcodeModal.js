@@ -32,9 +32,8 @@ const Postcode = (props) => {
       }
     }
     getLocation(extraAddress);
-    let lat = yLocation;
-    let lon = xLocation;
-    console.log(lat + " : " + lon);
+
+     
     props.setValues({zipCode: data.zonecode,
                       addr: data.address,
                       lat: yLocation,

@@ -195,6 +195,7 @@ function GymRegist(){
                             value={gymInfo.endMinute}
                             dangerouslySetInnerHTML={{__html: minuteHtml}}>
                 </Form.Select>);
+
     }
 
     return(
