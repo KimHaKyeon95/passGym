@@ -1,10 +1,10 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-import Header from "../../components/common/Header";
-import Footer from "../../components/common/Footer";
 import "../css/GymRegist.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import GymEquipList from "../../components/owner/GymEquipList";
+import PassList from "../../components/owner/PassList";
+import { Route, Routes } from "react-router-dom";
+import Login from "../common/Login";
 
 function GymRegist(){
     sessionStorage.setItem("id", "id123");
@@ -15,18 +15,25 @@ function GymRegist(){
         refFile: "",
         previewUrl: ""
     });
+
     const [gymInfo, setGymInfo] = useState({
         phoneNo: "",
+        addr: sessionStorage.getItem("addr"),
+        addrDetail: sessionStorage.getItem("addrDetail"),
         introduce: "",
         notice: "",
-
+        startHour: "",
+        startMinute: "",
+        endHour: "",
+        endMinute: "",
+        program: "",
+        etc: ""
     })
 
-    const [passInfo, setPassInfo] = useState({
-
-    })
+    const [countList, setCountList] = useState([]);
 
     let uploadFile;
+    // const formData = new FormData(document.getElementsByClassName("gym__regist-form")[0]);
     const formData = new FormData();
     const onRefFileChange = (event) => {
         let reader = new FileReader();
@@ -56,20 +63,60 @@ function GymRegist(){
         }
     }
 
+    const onChange = (event) => {
+        const {name, value} = event.target;
+        let nextGymValue = {
+            ...gymInfo,
+            [name] : value
+        }
+        setGymInfo(nextGymValue);
+        event.preventDefault();
+    }
 
     const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
         uploadFile = fileState.refFile;
-        formData.append('files', uploadFile);
+        formData.append("files", uploadFile);
+        formData.append("gymInfo", gymInfo);
+        formData.append("passes", countList); 
 
-        //formData내부 확인
-        for (let key of formData.keys()) {
-            console.log(key);
-        }
-        for (let value of formData.values()) {
-            console.log(value);
-        }
-        
+    //     formData.forEach(function(value, key){
+    //        console.log(key + ":" + value);
+    //    })
+
+       let submitUrl = "http://localhost:3000/ownersignup/gymregist";
+       axios.post(submitUrl, formData).then(() => {
+            event.preventDefault();
+       }).catch((error) => {
+            alert(error.response.status);
+       });
         event.preventDefault();
+    }
+
+    
+    const passComponentPlus = () => {
+        let countArr = [...countList]
+        let idx = countArr.length;
+        let data = {
+                    passNo: idx, 
+                    passName: "", 
+                    passPrice: 0, 
+                    passDate: "", 
+                    passMonth: 0, 
+                    pauseCount: 0, 
+                    pauseDate: 0
+                    }; 
+        countArr[idx] = data;
+        console.log(countArr);
+        setCountList(countArr);
+    }
+
+    const passComponentMinus = () => {
+        let countArr = [...countList]
+        let idx = countArr.length;
+        idx--;
+        countArr.pop(idx);
+        console.log(countArr);
+        setCountList(countArr);
     }
 
     const RenderRepImg = () => {
@@ -82,7 +129,7 @@ function GymRegist(){
         );
     }
 
-    const TimeHour = () => {
+    const TimeStartHour = () => {
         let hourHtml = "";
         for(let i = 0; i <= 9; i++){
             hourHtml += `<option value=${i}>0${i}</option>`;
@@ -90,21 +137,63 @@ function GymRegist(){
         for(let i = 10; i <= 23; i++){
             hourHtml += `<option value=${i}>${i}</option>`;
         }
-        return (<Form.Select className="gym__operationtime-hour" aria-label="Default select example" 
+        return (<Form.Select name="startHour"
+                            onChange={onChange}
+                            className="gym__operationtimes-start-hour" 
+                            aria-label="Default select example" 
+                            value={gymInfo.startHour}
                             dangerouslySetInnerHTML={{__html: hourHtml}}>
                 </Form.Select>);
     }
 
-    const TimeMinute = () => {
+    const TimeStartMinute = () => {
         let minuteHtml = "";
-        for(let i = 0; i <= 9; i++){
-            minuteHtml += `<option value=${i}>0${i}</option>`;
+        for(let i = 0; i <= 1; i++){
+            minuteHtml += `<option value=${i*5}>0${i*5}</option>`;
         }
-        for(let i = 10; i <= 59; i++){
-            minuteHtml += `<option value=${i}>${i}</option>`;
+        for(let i = 2; i <= 11; i++){
+            minuteHtml += `<option value=${i*5}>${i*5}</option>`;
         }
-        return (<Form.Select className="gym__operationtime-minute" aria-label="Default select example" 
+        return (<Form.Select name="startMinute"
+                            onChange={onChange}
+                            className="gym__operationtime-start-minute" 
+                            aria-label="Default select example" 
+                            value={gymInfo.startMinute}
                             dangerouslySetInnerHTML={{__html: minuteHtml}} >
+                </Form.Select>);
+    }
+
+    const TimeEndHour = () => {
+        let hourHtml = "";
+        for(let i = 0; i <= 9; i++){
+            hourHtml += `<option value=${i}>0${i}</option>`;
+        }
+        for(let i = 10; i <= 23; i++){
+            hourHtml += `<option value=${i}>${i}</option>`;
+        }
+        return (<Form.Select name="endHour" 
+                            onChange={onChange}
+                            className="gym__operationtimes-end-hour" 
+                            aria-label="Default select example" 
+                            value={gymInfo.endHour}
+                            dangerouslySetInnerHTML={{__html: hourHtml}}>
+                </Form.Select>);
+    }
+
+    const TimeEndMinute = () => {
+        let minuteHtml = "";
+        for(let i = 0; i <= 1; i++){
+            minuteHtml += `<option value=${i*5}>0${i*5}</option>`;
+        }
+        for(let i = 2; i <= 11; i++){
+            minuteHtml += `<option value=${i*5}>${i*5}</option>`;
+        }
+        return (<Form.Select name="endMinute"
+                            onChange={onChange}
+                            className="gym__operationtime-end-minute" 
+                            aria-label="Default select example" 
+                            value={gymInfo.endMinute}
+                            dangerouslySetInnerHTML={{__html: minuteHtml}}>
                 </Form.Select>);
     }
 
@@ -123,71 +212,29 @@ function GymRegist(){
                 <Form.Control type="file" className="gym__regist-detail-img" onChange={onDetailFileChange} multiple/>
             </Form.Group> 
             <div className="img__box"></div>
-            <Form.Group controlId="gym__regist-phone-no">
-                <Form.Control className="gym__regist-phone-no" placeholder="전화번호" />
-            </Form.Group>          
-            <Form.Label>주소</Form.Label>
-            <Form.Group className="gym__addr">   
-                <Form.Control className="gym__addr" value={sessionStorage.getItem("addr")} readOnly/>
-            </Form.Group>
-            <Form.Group className="gym__addr-detail">
-                <Form.Control className="gym__addr-detail" value={sessionStorage.getItem("addrDetail")} readOnly/>
-            </Form.Group>
-            <Form.Group className="gym__info">
-                <Form.Control className="gym__info" as="textarea" row={2} placeholder="업체 소개" />
-            </Form.Group>
-            <Form.Group className="gym__notice">
-                <Form.Control className="gym__notice" as="textarea" row={2} placeholder="공지 사항" />
-            </Form.Group>
-            <Form.Label>회원권 입력</Form.Label>
-            <Form.Group className="gym__pass">
-                <Form.Group className="gym__pass-no">
-                    <Form.Control className="gym__pass-no" placeholder="회원권 번호" />
-                </Form.Group>
-                <Form.Group className="gym__pass-name">
-                    <Form.Control className="gym__pass-name" placeholder="회원권 이름" />
-                </Form.Group>
-                <Form.Group className="gym__pass-price">
-                    <Form.Control className="gym__pass-price" placeholder="회원권 가격" />
-                </Form.Group>
-                <Form.Group className="gym__pass-date">
-                    <Form.Control className="gym__pass-date" placeholder="생성 일자" />
-                </Form.Group>
-                <Form.Group className="gym__pass-month">
-                    <Form.Control className="gym__pass-month" placeholder="회원권 기간" />
-                </Form.Group>
-                <Form.Group className="gym__pause-count">
-                    <Form.Control className="gym__pass-pause-count" placeholder="일시정지 가능 횟수" />
-                </Form.Group>
-                <Form.Group className="gym__pause-date">
-                    <Form.Control className="gym__pass-pause-date" placeholder="일시정지 가능 일수" />
-                </Form.Group>
-            </Form.Group>
-            <div className="pass__btn">
-                <Button className="pass__plus">+</Button>
-                <Button className="pass__minus">-</Button>
-            </div>
+            <Form.Control name="phoneNo" onChange={onChange} className="gym__regist-phone-no" placeholder="전화번호" />                 
+            <Form.Label>주소</Form.Label>            
+            <Form.Control name="addr" onChange={onChange} className="gym__addr" value={sessionStorage.getItem("addr")} required readOnly/>       
+            <Form.Control name="addrDetail" onChange={onChange} className="gym__addr-detail" value={sessionStorage.getItem("addrDetail")} required readOnly/>        
+            <Form.Control name="introduce" onChange={onChange} className="gym__info" as="textarea" row={2} placeholder="업체 소개" required />
+            <Form.Control name="notice" onChange={onChange} className="gym__notice" as="textarea" row={2} placeholder="공지 사항"/>
+            <Form.Label>회원권 입력</Form.Label>           
+            <PassList countList={countList}/>
+                <Button className="pass__plus" 
+                        onClick={passComponentPlus}>+</Button>
+                <Button className="pass__minus"
+                        onClick={passComponentMinus}>-</Button>
             <Form.Group className="gym__operating-time">
                 <Form.Label>운영시간</Form.Label>
                 <Row>
-                    <Col><TimeHour /></Col>:<Col><TimeMinute/></Col>
+                    <Col><TimeStartHour /></Col>:<Col><TimeStartMinute/></Col>
                     ~
-                    <Col><TimeHour /></Col>:<Col><TimeMinute/></Col>
+                    <Col><TimeEndHour /></Col>:<Col><TimeEndMinute/></Col>
                 </Row>
             </Form.Group>
-            <Form.Group className="gym__operating-program">
-                <Form.Control className="gym__operating-program" as="textarea" row={2} placeholder="운영 프로그램" />
-            </Form.Group>
-            <Form.Label column sm={4}>운동기구 선택</Form.Label>
-            <Form.Group className="gym__equip-list" >
-                <Col sm={6} >   
-                <GymEquipList/>
-                </Col>
-            </Form.Group>
-            <Form.Group className="gym__etc">
-                <Form.Control className="gym__etc" placeholder="기타 사항" />
-            </Form.Group>
-            <Button className="gym__submit-btn" onClick={onSubmit} >등록</Button>
+            <Form.Control name="program" onChange={onChange} className="gym__operating-program" as="textarea" row={2} placeholder="운영 프로그램"/>
+            <Form.Control name="etc" onChange={onChange} className="gym__etc" placeholder="기타 사항" />
+            <Button className="gym__submit-btn" onClick={onSubmit} type="submit">등록</Button>
             </Form>
             </div>
         </div>

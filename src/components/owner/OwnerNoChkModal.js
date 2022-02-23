@@ -20,7 +20,33 @@ const ownerInfoInput = (event) => {
   setOwnerInfo(nextInfo);
 }
 
-const ownerInfoSubmit = () => {
+// 실제사용
+// const ownerInfoSubmit = () => {
+//     let ownerChkUrl = 
+//     "https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey="+
+//     "yeWTleWFMbrdJHGNZ46UuS0YS5oxQIUTzI10VMS68rhvPvEOg6awer3deybNn5OvMayF29zNgt83UrDj7tBrZw%3D%3D";
+//     axios.post(ownerChkUrl, 
+//       {
+//         "businesses": [
+//           ownerInfo
+//         ]
+//       })
+//       .then((response) => {
+//         if(response.data.data[0].valid == "01"){
+//             alert("사업자 인증 완료");
+//             props.setResults({ownerNoChkResult: 1});
+//             props.setValues({ownerNo: ownerInfo.b_no,
+//                             ownerName: ownerInfo.p_nm});
+//             props.onHide();
+//         }else{
+//             alert("사업자 등록이 되어있지 않습니다.");
+//             props.setResults({ownerNoChkResult: 0});
+//         }
+//     })
+//   }
+
+//테스트용
+  const ownerInfoSubmit = () => {
     let ownerChkUrl = 
     "https://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey="+
     "yeWTleWFMbrdJHGNZ46UuS0YS5oxQIUTzI10VMS68rhvPvEOg6awer3deybNn5OvMayF29zNgt83UrDj7tBrZw%3D%3D";
@@ -38,8 +64,11 @@ const ownerInfoSubmit = () => {
                             ownerName: ownerInfo.p_nm});
             props.onHide();
         }else{
-            alert("사업자 등록이 되어있지 않습니다.");
-            props.setResults({ownerNoChkResult: 0});
+            alert("사업자 인증 완료.");
+            props.setResults({ownerNoChkResult: 1});
+            props.setValues({ownerNo: ownerInfo.b_no,
+                            ownerName: ownerInfo.p_nm});
+            props.onHide();
         }
     })
   }

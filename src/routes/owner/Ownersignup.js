@@ -1,11 +1,9 @@
-import Header from "../../components/common/Header";
-import Footer from "../../components/common/Footer";
 import "../css/Ownersignup.css";
 import {Button, Form} from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import OwnerNoChkModal from "../../components/owner/OwnerNoChkModal";
-import PostcodeModal  from "../../components/owner/PostcodeModal";
+import PostcodeModal from "../../components/owner/PostcodeModal";
 import { Link } from "react-router-dom";
 
 function Ownersignup() {
@@ -24,7 +22,9 @@ function Ownersignup() {
   const [ownerAddr, setOwnerAddr] = useState({
     zipCode: "",
     addr: "",
-    addrDetail: ""
+    addrDetail: "",
+    lat: "",
+    lon: ""
   });
 
   const [chkResults, setResults] = useState({
@@ -59,47 +59,54 @@ function Ownersignup() {
     //알파벳 대소문자 또는 숫자로 시작하고 끝나며 4~10자리
     setChkIdResult({result: regExp.test(event.target.value)});
   }
+
   const [chkIdResult, setChkIdResult] = useState({
     result: false
   })
-    //테스트용
-    let response = {
-      "id": "id123"
-    };
+    // //테스트용
+    // let response = {
+    //   "id": "id123"
+    // };
   
-    const idDupChk = (event) => { 
-      console.log(chkIdResult.result);
-      if(!(chkIdResult.result)){
-        alert("4~10자리의 영문과 숫자조합을 입력해주세요");
-      }else{
-        if(response.id === values.id){
-          alert("이미 존재하는 아이디입니다.");
-          setValues({...values, id: "",})
-          setResults({...chkResults, idDupChkResult: 0})
-        }else{
-          alert("사용가능한 아이디입니다.");
-          setResults({...chkResults, idDupChkResult: 1,})
-        }
-      }
-      event.preventDefault();
-    }
-    
-    // const idDupChk = (event) => {
-    //   let idDupChkUrl = "http://localhost:3000/ownersignup/iddupchk"
+    // const idDupChk = (event) => { 
+    //   console.log(chkIdResult.result);
     //   if(!(chkIdResult.result)){
-    //     alert("4~10자리의 영문과 숫자조합을 입력해주세요.");
+    //     alert("4~10자리의 영문과 숫자조합을 입력해주세요");
     //   }else{
-    //     axios.get(idDupChkUrl, {
-    //       param: {
-    //         id: values.id
-    //       }
-    //     }).then((response) => {
-    //       console.log(response);
-    //     }).catch((error) => {
-    //       alert(error.response.status);
-    //     })
+    //     if(response.id === values.id){
+    //       alert("이미 존재하는 아이디입니다.");
+    //       setValues({...values, id: "",});
+    //       setResults({...chkResults, idDupChkResult: 0});
+    //     }else{
+    //       alert("사용가능한 아이디입니다.");
+    //       setResults({...chkResults, idDupChkResult: 1,});
+    //     }
     //   }
+    //   event.preventDefault();
     // }
+    
+    const idDupChk = (event) => {
+      let idDupChkUrl = "http://localhost:8082/passgym/ownersignup/iddupchk";
+      if(!(chkIdResult.result)){
+        setValues({...values, id: ""})
+        alert("4~10자리의 영문과 숫자조합을 입력해주세요.");
+      }else{
+        axios.get(idDupChkUrl, {
+          params: {
+            id: values.id
+          }
+        }).then((response) => {
+          if(response.data === "ok"){
+            alert("사용가능한 아이디입니다.");
+          }else{
+            setValues({...values, id: ""})
+            alert("이미 존재하는 아이디입니다.");
+          }
+        }).catch((error) => {
+          alert(error.status);
+        })
+      }
+    }
 
   //비밀번호 형식 체크
   const checkPassword = (value) => {
@@ -166,32 +173,75 @@ function Ownersignup() {
     setOwnerAddr(nextAddrValues);
   }
 
+  
 
   function onSubmit(event){
     const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
     const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
     console.log(submitInfo);
-    console.log(forSubmitConfirm);
-    let submitUrl = "http://localhost:3000/ownersignup/signup";
+    let submitUrl = "http://localhost:8082/passgym/ownersignup/signup";
     if(forSubmitConfirm.idDupChkResult, 
       forSubmitConfirm.ownerNoChkResult, 
       forSubmitConfirm.pwdChkResult === 1){
       axios.post(submitUrl, submitInfo)
-      .then(() => { //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
-        sessionStorage.setItem("id", submitInfo.id);
-        sessionStorage.setItem("addr", submitInfo.addr);
-        sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
+      .then((response) => { //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
+        if(response.data === "OwnerNo is exists"){
+          alert("이미 존재하는 사업자입니다.");
+          event.preventDefault();
+        }else{
+          sessionStorage.setItem("id", submitInfo.id);
+          sessionStorage.setItem("addr", submitInfo.addr);
+          sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
+          // window.location.href = "ownersignup/gymregist";
+        }
       }
       ).catch((error) => {
       if(error.response){
-        alert(error.response.status);
-        event.preventDefault(); //새로고침 막음
+          alert(error.response.status);
+          event.preventDefault(); //새로고침 막음
         }
       })
     } else {
       alert("가입 실패");
     }
   }
+
+  // 테스트용
+  // function onSubmit(event){
+  //   const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
+  //   let testData = {
+  //     "id":"id123",
+  //     "pwd":"kw630916",
+  //     "pwdChk":"kw630916",
+  //     "ownerNo":"7838101646",
+  //     "ownerName":"전민규",
+  //     "zipCode":"15020",
+  //     "addr":"경기 시흥시 함송로 8",
+  //     "addrDetail":"ㅁㅁㅁㅁ"
+  //   }
+  //   const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
+  //   let submitUrl = "http://localhost:8082/passgym/ownersignup/signup";
+  //   // if(forSubmitConfirm.idDupChkResult, 
+  //   //   forSubmitConfirm.ownerNoChkResult, 
+  //   //   forSubmitConfirm.pwdChkResult === 1){
+  //     axios.post(submitUrl, testData)
+  //     .then((response) => { //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
+  //       sessionStorage.setItem("id", submitInfo.id);
+  //       sessionStorage.setItem("addr", submitInfo.addr);
+  //       sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
+  //     }
+  //     ).catch((error) => {
+  //     if(error.response){
+  //         alert(error.response.status);
+  //         event.preventDefault(); //새로고침 막음
+  //       }
+  //     })
+  //   // } else {
+  //   //   alert("가입 실패");
+  //   // }
+  // }
+
+  
 
 
   const [ownerNoChkodalShow, setOwnerNoChkModalShow] = useState(false);
@@ -219,7 +269,6 @@ function Ownersignup() {
                         value={values.pwd} 
                         onChange={onPwdChange}
                         placeholder="비밀번호" required/>
-          
         </Form.Group>
         
         <Form.Group className="ownersignup__pwd-chk" controlId="ownersignup__pwd-chk">
@@ -268,11 +317,9 @@ function Ownersignup() {
                 <Form.Control  placeholder="상세주소" name="addrDetail" onChange={onAddrDetailChange} required/>
             </Form.Group>
         </div>
-        <Link to={"/ownersignup/gymregist"}>
           <Button className="ownersignup__submit" variant="primary" onClick={onSubmit} type="submit">
             회원가입
           </Button>
-        </Link>
       </Form>
       </div>
     </div>
