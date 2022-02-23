@@ -1,0 +1,58 @@
+.usersignup {
+  display: flex;
+  justify-content: center;
+  padding: 0 30px;
+  margin: 0 auto;
+  max-width: 768px;
+  min-width: 460px;
+}
+
+.h1__title {
+  text-align: center;
+  margin: 30px;
+  padding: 10px;
+}
+
+.usersignup__form {
+  width: 460px;
+}
+
+.usersignup__email,
+.usersignup__pwdchk {
+  /* display: flex; */
+  margin-bottom: 2em;
+}
+.usersignup__pwd,
+.usersignup__name,
+.usersignup__phoneNo,
+.usersignup__phoneNoVarifCode,
+.usersignup__zipcode,
+.usersignup__addr,
+.usersignup__addr2 {
+  margin-bottom: 10px;
+}
+
+.usersignup__phonenovarifbtn {
+  display: inline-block;
+}
+
+.usersignup__submitBtn {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px 0 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.msg {
+  margin-top: 9px;
+  margin-bottom: -2px;
+  margin-left: 9px;
+}
+
+.snsBtn {
+  display: inline-block;
+  width: 60vw;
+  height: 60vh;
+}
