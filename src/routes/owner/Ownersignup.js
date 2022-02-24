@@ -179,8 +179,6 @@ function Ownersignup() {
       })
     } else {
       alert("가입 실패");
-
-      
     }
   }
 
