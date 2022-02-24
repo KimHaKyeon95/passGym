@@ -7,7 +7,6 @@ import PostcodeModal from "../../components/owner/PostcodeModal";
 import { Link } from "react-router-dom";
 
 function Ownersignup() {
-  
   const [values, setValues] = useState({
     id: "",
     pwd: "",
@@ -63,27 +62,6 @@ function Ownersignup() {
   const [chkIdResult, setChkIdResult] = useState({
     result: false
   })
-    // //테스트용
-    // let response = {
-    //   "id": "id123"
-    // };
-  
-    // const idDupChk = (event) => { 
-    //   console.log(chkIdResult.result);
-    //   if(!(chkIdResult.result)){
-    //     alert("4~10자리의 영문과 숫자조합을 입력해주세요");
-    //   }else{
-    //     if(response.id === values.id){
-    //       alert("이미 존재하는 아이디입니다.");
-    //       setValues({...values, id: "",});
-    //       setResults({...chkResults, idDupChkResult: 0});
-    //     }else{
-    //       alert("사용가능한 아이디입니다.");
-    //       setResults({...chkResults, idDupChkResult: 1,});
-    //     }
-    //   }
-    //   event.preventDefault();
-    // }
     
     const idDupChk = () => {
       let idDupChkUrl = "http://localhost:8082/passgym/ownersignup/iddupchk";
@@ -116,7 +94,6 @@ function Ownersignup() {
     setChkPwdResult({result: regExp.test(value)});
     return regExp.test(value);
   }
-
   //비밀번호 실시간체크
   const onPwdChange = (event) => {
     const {name, value} = event.target;
@@ -134,7 +111,6 @@ function Ownersignup() {
       setChkPwdResult({resultMsg: "비밀번호는 8~10자리 숫자와 영어 조합으로 입력해주세요."});
       setResults({...chkResults, pwdChkResult: 0});
     }
-
     if(name === "pwd"){
       if(value != nextValues.pwdChk){
         setPwdChkMsg({msg: "비밀번호가 일치하지 않습니다."});        
@@ -155,13 +131,11 @@ function Ownersignup() {
           setResults({...chkResults, pwdChkResult: 1});
         }
     }
-
     if(nextResult.result && nextValues.pwdChk === nextValues.pwd){
       setResults({...chkResults, pwdChkResult: 1});
     }else{
       setResults({...chkResults, pwdChkResult: 0});
-    }
-    
+    } 
   }
 
   
@@ -189,10 +163,12 @@ function Ownersignup() {
           alert("이미 존재하는 사업자입니다.");
           event.preventDefault();
         }else{
-          sessionStorage.setItem("id", submitInfo.id);
+          sessionStorage.setItem("ownerNo", submitInfo.ownerNo);
           sessionStorage.setItem("addr", submitInfo.addr);
           sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
-          // window.location.href = "ownersignup/gymregist";
+          sessionStorage.setItem("lat", submitInfo.lat);
+          sessionStorage.setItem("lon", submitInfo.lon);
+          window.location.href = "../ownersignup/gymregist";
         }
       }
       ).catch((error) => {

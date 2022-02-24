@@ -3,7 +3,6 @@ import {Button, Container, Form, Modal, Row} from "react-bootstrap";
 import DaumPostcode from 'react-daum-postcode';
 
 const Postcode = (props) => {
-
   const handleComplete = (data) => {
     const { kakao } = window;
     let yLocation = "";
@@ -33,13 +32,8 @@ const Postcode = (props) => {
               lon: xLocation });
         } 
     });
-
-    
-    
     props.onHide();
   }
-
-
 
   return (
     <Modal

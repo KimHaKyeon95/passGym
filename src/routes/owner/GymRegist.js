@@ -7,9 +7,6 @@ import { Route, Routes } from "react-router-dom";
 import Login from "../common/Login";
 
 function GymRegist(){
-    sessionStorage.setItem("id", "id123");
-    sessionStorage.setItem("addr", "테스트 주소");
-    sessionStorage.setItem("addrDetail", "테스트 상세주소");
 
     const [fileState, setFileState] = useState({
         refFile: "",
@@ -17,23 +14,24 @@ function GymRegist(){
     });
 
     const [gymInfo, setGymInfo] = useState({
+        ownerNo: sessionStorage.getItem("ownerNo"),
         phoneNo: "",
         addr: sessionStorage.getItem("addr"),
         addrDetail: sessionStorage.getItem("addrDetail"),
         introduce: "",
         notice: "",
         startHour: "",
-        startMinute: "",
+        startMinute: "00",
         endHour: "",
-        endMinute: "",
+        endMinute: "00",
         program: "",
-        etc: ""
+        etc: "",
+        lat: sessionStorage.getItem("lat"),
+        lon: sessionStorage.getItem("lon")
     })
 
     const [countList, setCountList] = useState([]);
 
-    let uploadFile;
-    // const formData = new FormData(document.getElementsByClassName("gym__regist-form")[0]);
     const formData = new FormData();
     const onRefFileChange = (event) => {
         let reader = new FileReader();
@@ -74,17 +72,19 @@ function GymRegist(){
     }
 
     const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
-        uploadFile = fileState.refFile;
-        formData.append("files", uploadFile);
-        formData.append("gymInfo", gymInfo);
-        formData.append("passes", countList); 
-
-    //     formData.forEach(function(value, key){
-    //        console.log(key + ":" + value);
-    //    })
-
-       let submitUrl = "http://localhost:3000/ownersignup/gymregist";
-       axios.post(submitUrl, formData).then(() => {
+        let uploadRefFile = fileState.refFile;
+        console.log(uploadRefFile);
+        console.log(fileState);
+        formData.append("files", uploadRefFile);
+        formData.append("gymInfo", JSON.stringify(gymInfo));
+        formData.append("passes", JSON.stringify(countList)); 
+       let submitUrl = "http://localhost:8082/passgym/gym/gymregist";
+       axios.post(submitUrl, formData, {
+           headers: {
+               "Content-Type": "multipart/form-data"
+           }
+       }).then((response) => {
+            console.log(response);
             event.preventDefault();
        }).catch((error) => {
             alert(error.response.status);
