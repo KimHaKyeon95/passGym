@@ -24,7 +24,7 @@ function Header() {
   }
   return (
     <div>
-      <Navbar expand="sm" bg="dark" variant="dark">
+      <Navbar bg="dark" variant="dark"  style={{ height:'80px' }} className="mb-4">
         <Container>
           <Link to={"/"} className="navbar-brand">
             패스짐&nbsp;&nbsp;
