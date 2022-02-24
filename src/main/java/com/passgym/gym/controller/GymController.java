@@ -30,10 +30,12 @@ public class GymController {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Autowired
+	ObjectMapper objectMapper;
+	
 	@GetMapping("/{ownerNo}")
 	public Object gymDetail(@PathVariable(name="ownerNo") String ownerNo) {
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
 			Gym gym = service.findByOwnerNo(ownerNo);
 			String name = gym.getName();
 			String phoneNo = gym.getPhoneNo();
@@ -64,9 +66,11 @@ public class GymController {
 				int passNo = p.getPassPk().getPassNo();
 				String passName = p.getPassName();
 				int passPrice = p.getPassPrice();
+				int passMonth = p.getPassMonth();
 				pass.put("passNo", passNo);
 				pass.put("passName", passName);
 				pass.put("passPrice", passPrice);
+				pass.put("passMonth", passMonth);
 				passes.add(pass);
 			}
 			map.put("passes", passes);
