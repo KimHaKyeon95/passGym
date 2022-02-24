@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {Container} from 'react-bootstrap';
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./routes/common/Home";
@@ -8,10 +9,9 @@ import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
 import SearchIdPwd from "./routes/common/SearchIdPwd";
 import "./css/common/index.css";
-import Payment from "./routes/users/Payment";
+import Payment from "./routes/users/payment";
 import Mypage from "./routes/users/Mypage";
 import GymRegist from "./routes/owner/GymRegist";
-
 
 function App() {
   return (
@@ -43,7 +43,6 @@ function App() {
           <Route path="/payment/:ownerNo" element={<Payment />} />
         </Routes>
         <Routes>
-          <Route path="/mypage/" element={<Mypage />} />
         </Routes>
       </section>
       <Footer />
