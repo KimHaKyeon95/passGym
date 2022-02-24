@@ -8,7 +8,8 @@ import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
 import SearchIdPwd from "./routes/common/SearchIdPwd";
 import "./css/common/index.css";
-import Payment from "./routes/users/payment";
+import Payment from "./routes/users/Payment";
+import Mypage from "./routes/users/Mypage";
 import GymRegist from "./routes/owner/GymRegist";
 
 
@@ -41,6 +42,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/payment/:ownerNo" element={<Payment />} />
+        </Routes>
+        <Routes>
+          <Route path="/mypage/" element={<Mypage />} />
         </Routes>
       </section>
       <Footer />
