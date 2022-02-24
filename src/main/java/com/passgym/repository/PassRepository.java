@@ -1,4 +1,4 @@
-package com.passgym.pass.repository;
+package com.passgym.repository;
 
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;

@@ -1,23 +1,13 @@
 package com.passgym.gym.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,7 +30,7 @@ public class Gym {
 	private String addrDetail; //상세주소
 	private String introduce; //헬스장 소개
 	private String notice; //공지사항
-	private String operatingTime; //운영시간
+	private String operatingTime; //운영시간, "00:00~00:00"
 	private String operatingProgram; // 운영프로그램
 	private String extraService; //부가서비스
 	private String etc; //기타

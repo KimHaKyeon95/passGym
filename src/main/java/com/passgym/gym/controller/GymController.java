@@ -1,25 +1,21 @@
 package com.passgym.gym.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
 import com.passgym.pass.entity.Pass;
 import com.passgym.service.GymService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("gym/*")
@@ -78,12 +74,47 @@ public class GymController {
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
-		} catch (JsonProcessingException e) {
+		}catch (JsonProcessingException e) {
 			e.printStackTrace();
 			Map<String, Object> returnMap = new HashMap<>();
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
+		}
+	}
+
+	@PostMapping(value = "/gymregist", consumes = "multipart/form-data")
+	public void saveGym(@RequestParam("files") List<MultipartFile> files,
+						@RequestParam("gymInfo") String gymInfo,
+						@RequestParam("passes") String passes) throws IOException {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try{
+			Map<String, String> gym = mapper.readValue(gymInfo,
+					new TypeReference<Map<String, String>>(){});
+			logger.info(""+gym.get("phoneNo"));
+
+			for(MultipartFile file : files) {
+				String imgName = (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
+				String originFileName = file.getOriginalFilename();
+				String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
+				File imgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") , imgName + "." + fileExtension);
+				if (!imgDirectory.exists()) {
+					imgDirectory.mkdir();
+				}
+				file.transferTo(imgDirectory);
+			}
+
+			List<Map<String,Object>> mapPasses = mapper.readValue(passes,
+					new TypeReference<List<Map<String, Object>>>(){});
+			for (Map<String, Object> pass : mapPasses) {
+				logger.info(pass.get("passNo") + " : " + pass.get("passName"));
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }
