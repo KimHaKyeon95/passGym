@@ -29,7 +29,7 @@ public class Owner {
 	private int ownerStatus;
 	
 	@OneToOne
-	@JoinColumn(name = "owner_no")
+	@JoinColumn(name="owner_no")
 	private Gym gym; //단방향 설정이 필요한가?
 
 }

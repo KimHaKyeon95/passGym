@@ -1,14 +1,9 @@
 package com.passgym.gym;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import com.passgym.gym.entity.Gym;
+import com.passgym.pass.entity.Pass;
+import com.passgym.pass.entity.PassPK;
+import com.passgym.repository.GymRepository;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import com.passgym.gym.entity.Gym;
-import com.passgym.pass.entity.Pass;
-import com.passgym.pass.entity.PassPK;
-import com.passgym.payment.entity.Payment;
-import com.passgym.repository.GymRepository;
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 public class GymRepositoryTests {
 	
 	@Autowired
 	GymRepository gymRepository;
+
+
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -75,5 +73,16 @@ public class GymRepositoryTests {
 		for(Pass p: gym.getPasses()) {
 			logger.info(p.getPassName());
 		}
+	}
+
+	@Test
+	@Transactional
+	void gymSaveTest(){
+
+		Gym gym = new Gym();
+		gym.setOwnerNo("7838101646");
+
+
+
 	}
 }
