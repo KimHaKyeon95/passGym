@@ -4,13 +4,14 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./routes/common/Home";
 import Login from "./routes/common/Login";
+import Usersignup from "./routes/users/Usersignup";
 import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
-import OwnerHome from "./routes/owner/OwnerHome";
-import PassInfo from "./routes/owner/PassInfo";
-import OwnerModify from "./routes/owner/OwnerModify";
+import SearchIdPwd from "./routes/common/SearchIdPwd";
 import "./css/common/index.css";
 import Payment from "./routes/users/payment";
+import Mypage from "./routes/users/Mypage";
+import GymRegist from "./routes/owner/GymRegist";
 
 function App() {
   return (
@@ -30,19 +31,18 @@ function App() {
           <Route path="/ownersignup" element={<Ownersignup />} />
         </Routes>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/usersignup" element={<Usersignup />} />
+        </Routes>
+        <Routes>
+          <Route path="/searchidpwd" element={<SearchIdPwd />} />
+        </Routes>
+        <Routes>
+          <Route path="/ownersignup/gymregist" element={<GymRegist />} />
         </Routes>
         <Routes>
           <Route path="/payment/:ownerNo" element={<Payment />} />
         </Routes>
         <Routes>
-         <Route path="/owner/home" element={<OwnerHome />} />  
-        </Routes>
-        <Routes>
-         <Route path="/owner/passInfo" element={<PassInfo />} />  
-        </Routes>
-           <Routes>
-         <Route path="/owner/modify" element={<OwnerModify />} />  
         </Routes>
       </section>
       <Footer />

@@ -1,8 +1,27 @@
 import Logo from "../../images/dumbbell.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Navbar, Nav } from "react-bootstrap";
+import React, { useState } from "react";
+import axios from "axios";
 
 function Header() {
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  function onLogoutHandler() {
+    console.log("로그아웃 버튼 클릭");
+    sessionStorage.removeItem("id", "");
+    navigate("/");
+    // axios
+    //   .get("/logout")
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     sessionStorage.removeItem("id", "");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response.status);
+    //   });
+  }
   return (
     <div>
       <Navbar bg="dark" variant="dark"  style={{ height:'80px' }} className="mb-4">
@@ -25,7 +44,11 @@ function Header() {
               마이페이지
             </Link>
             <Link to={"/"} className="nav-link">
-              <Button variant="outline-light" size="sm">
+              <Button
+                variant="outline-light"
+                size="sm"
+                onClick={onLogoutHandler}
+              >
                 로그아웃
               </Button>
             </Link>
