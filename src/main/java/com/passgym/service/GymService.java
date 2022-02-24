@@ -21,7 +21,7 @@ public class GymService {
 				throw new FindException("Gym 조회 실패");
 			}
 			return optGym.get();
-		}catch(FindException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			throw new FindException("Gym 조회 실패");
 		}
