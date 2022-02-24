@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Col,
   Container,
@@ -8,46 +9,103 @@ import {
   Form,
   Spinner,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function Payment() {
+  const userNo = "1"; //임시번호
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
-  const [selectedPass, setSelectedPass] = useState();
+  const [selectedPassNo, setSelectedPassNo] = useState();
+  const [startDate, setStartDate] = useState(
+    new Date().toISOString().substring(0, 10)
+  );
+  const [endDate, setEndDate] = useState("");
+
+  const navigate = useNavigate();
 
   const getGym = () => {
-    const json = {
-      data: {
-        gym: {
-          ownerNo: 1,
-          name: "비타민 헬스장",
-          phoneNo: "032-151-4845",
-          addr: "수원시 팔달구",
-          addrDetail: "지동 포레스트 311호",
-          avgStar: 3.0,
-          distance: 0.5,
-          introduce: "우리 헬스장은 뛰어난 트레이너들이 있습니다.",
-          notice: "기구는 한번에 하나씩",
-          operatingTime: "평일 06:00 ~ 20:00 / 공휴일 09:00 ~ 18:00",
-          operatingProgram: "크로스핏",
-          extraService: "운동복 세탁",
-          etc: "",
-          passes: [
-            { passNo: 1, passName: "1개월권", passPrice: 30000 },
-            { passNo: 2, passName: "3개월권", passPrice: 50000 },
-            { passNo: 3, passName: "6개월권", passPrice: 100000 },
-          ],
-        },
+    const url = "http://localhost:9999/passgym/gym/" + ownerNo;
+    axios
+      .get(url)
+      .then(function (response) {
+        setGym(response.data);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error.response.status);
+      });
+  };
+
+  const onPassChange = (event) => {
+    setSelectedPassNo(() => event.target.value);
+    sessionStorage.setItem("passNo", selectedPassNo);
+    for (var idx in Gym.passes) {
+      if (Gym.passes[idx].passNo == selectedPassNo) {
+        sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
+        sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
+      }
+    }
+  };
+
+  const onDateChange = (event) => {
+    console.log(event.target.value);
+    setStartDate(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    const url = "http://localhost:9999/passgym/payment/";
+    const data = {
+      paymentNo: "" + userNo + ownerNo + selectedPassNo,
+      paymentPrice: sessionStorage.getItem("passPrice"),
+      paymentType: 1,
+      bankName: "농협은행",
+      gymPass: {
+        ownerNo: ownerNo,
+        passNo: selectedPassNo,
+        userNo: userNo,
+        startDate: startDate,
+        endDate: endDate,
+        pauseCount: 2,
+        pauseDate: 30,
+        status: 0,
       },
     };
-    setGym(json.data.gym);
-    setLoading(false);
+
+    if (startDate !== "") {
+      axios
+        .post(url, data)
+        .then(() => {
+          navigate("/mypage");
+        })
+        .catch((error) => {
+          alert(error.response.status);
+        });
+    }
+
+    event.preventDefault();
   };
+
+  const getEndDate = () => {};
+
+  useEffect(() => {
+    for (var idx in Gym.passes) {
+      if (Gym.passes[idx].passNo == selectedPassNo) {
+        sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
+        sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
+      }
+    }
+    let tempDate = new Date(startDate);
+    tempDate.setMonth(
+      tempDate.getMonth() + Number(sessionStorage.getItem("passMonth"))
+    );
+    setEndDate(tempDate.toISOString().substring(0, 10));
+  }, [startDate, selectedPassNo]);
 
   useEffect(() => {
     getGym();
-    setSelectedPass(sessionStorage.getItem("passNo"));
+    setSelectedPassNo(sessionStorage.getItem("passNo"));
+    setStartDate(new Date().toISOString().substring(0, 10));
   }, []);
 
   return (
@@ -91,10 +149,7 @@ function Payment() {
                 </Col>
               </Row>
               <Row>
-                <Col>{Gym.phoneNo}</Col>
-              </Row>
-              <Row style={{ paddingTop: "10px" }}>
-                <Col>현재 위치와의 거리 : {Gym.distance} Km</Col>
+                <Col>전화번호 : {Gym.phoneNo}</Col>
               </Row>
               <hr />
               <Row style={{ margin: "10px 0" }}>
@@ -102,7 +157,7 @@ function Payment() {
               </Row>
               <Row style={{ margin: "10px 0" }}>
                 <Col>
-                  <Form.Select value={selectedPass}>
+                  <Form.Select value={selectedPassNo} onChange={onPassChange}>
                     <option>옵션 선택</option>
                     {Gym.passes.map((pass) => (
                       <option key={pass.passNo} value={pass.passNo}>
@@ -114,9 +169,23 @@ function Payment() {
               </Row>
               <Row style={{ margin: "10px 0" }}>
                 <Col>
-                  <Link to="/mypage">
-                    <Button>결제하기</Button>
-                  </Link>
+                  시작일자
+                  <br />
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={onDateChange}
+                  />
+                </Col>
+                <Col>
+                  끝나는일자
+                  <br />
+                  <input type="date" value={endDate} readOnly />
+                </Col>
+              </Row>
+              <Row style={{ margin: "10px 0" }}>
+                <Col>
+                  <Button onClick={onSubmit}>결제하기</Button>
                 </Col>
               </Row>
             </Col>

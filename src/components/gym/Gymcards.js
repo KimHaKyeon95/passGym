@@ -9,7 +9,7 @@ function Gymcards({ type }) {
       data: {
         gyms: [
           {
-            ownerNo: 1,
+            ownerNo: "1111111111",
             name: "비타민 헬스장",
             addr: "수원시 팔달구",
             avgStar: 3.0,
