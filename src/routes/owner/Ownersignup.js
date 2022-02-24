@@ -4,8 +4,8 @@ import "../css/Ownersignup.css";
 import {Button, Form} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import OwnerNoChkModal from "../../components/owener/OwnerNoChkModal";
-import PostcodeModal  from "../../components/owener/PostcodeModal";
+import OwnerNoChkModal from "../../components/owner/OwnerNoChkModal";
+import PostcodeModal  from "../../components/owner/PostcodeModal";
 import { Link } from "react-router-dom";
 
 function Ownersignup() {
@@ -199,10 +199,9 @@ function Ownersignup() {
 
   return (
     <div>
-      <Header />
       <div className="ownersignup">
       <Form className="ownersignup__form">
-      <h4>판매자 회원가입</h4>
+      <h3 className="title">판매자 회원가입</h3>
         <div className="ownersignup__id">
           <Form.Group className="ownersignup__id-input" controlId="ownersignup__id-input">
             <Form.Control name="id" 
@@ -269,14 +268,13 @@ function Ownersignup() {
                 <Form.Control  placeholder="상세주소" name="addrDetail" onChange={onAddrDetailChange} required/>
             </Form.Group>
         </div>
-        <Link to={"/ownersignup"}>
+        <Link to={"/ownersignup/gymregist"}>
           <Button className="ownersignup__submit" variant="primary" onClick={onSubmit} type="submit">
             회원가입
           </Button>
         </Link>
       </Form>
       </div>
-      <Footer />
     </div>
   );
 }
