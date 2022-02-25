@@ -22,17 +22,15 @@ const PassList = (props) => {
       <div>
         {
         props.countList && props.countList.map((item, i) => (
-          <div key={i} className={i} >
+          <div key={i} className={i}>
             <InputGroup >
               <InputGroup.Text id="basic-addon1">회원권 번호</InputGroup.Text>
               <Form.Control name="passNo" className="gym__pass-no" placeholder="회원권 번호" onChange={onChange} value={i} />
             </InputGroup>
-
             <InputGroup>
               <InputGroup.Text>회원권 이름</InputGroup.Text>
               <Form.Control name="passName" className="gym__pass-name" placeholder="회원권 이름" onChange={onChange} required />
-            </InputGroup>
-          
+            </InputGroup>          
             <InputGroup>
               <InputGroup.Text>회원권 가격</InputGroup.Text>
               <Form.Control name="passPrice" className="gym__pass-price" type="text" placeholder="(단위는 제외하고 입력하세요.)" onChange={onChange}  
