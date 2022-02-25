@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import com.passgym.gympass.entity.GymPass;
 import com.passgym.repository.UserRepository;
 import com.passgym.user.entity.User;
 @SpringBootTest
@@ -113,5 +114,30 @@ class UserRepositoryTest {
 	void testDelete() {
 		int userNo = 12;
 		repository.deleteById(userNo);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void testGympassFindById() {
+		logger.info("------userNo find -------");
+		int userNo = 1;
+		Optional <User> optU1 = repository.findById(userNo);
+		assertTrue(optU1.isPresent());
+		User u1= optU1.get();
+		String expectedId = "id1@naver.com";
+		assertEquals(expectedId, u1.getId());
+		logger.info("------userNo found -------");
+
+		logger.info("------id find -------");
+		User u2 = repository.findById(expectedId);
+		assertEquals( userNo,  u2.getUserNo());
+		logger.info("------id found -------");
+		
+		List<GymPass> gpList = u1.getGymPasses();
+		for(GymPass gp: gpList) {
+			logger.info(gp.getPaymentNo());
+			logger.info(gp.getPass().getPassName());
+		}
 	}
 }

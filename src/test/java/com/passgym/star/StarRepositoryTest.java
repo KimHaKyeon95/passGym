@@ -1,4 +1,4 @@
-package com.passgym.StarRepositoryTest;
+package com.passgym.star;
 
 import javax.transaction.Transactional;
 
