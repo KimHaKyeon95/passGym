@@ -19,7 +19,7 @@ function Ownersignup() {
   });
 
   const [ownerAddr, setOwnerAddr] = useState({
-    zipCode: "",
+    zipcode: "",
     addr: "",
     addrDetail: "",
     lat: "",
@@ -152,24 +152,28 @@ function Ownersignup() {
   function onSubmit(event){
     const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
     const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
-    console.log(submitInfo);
+    alert(submitInfo);
     let submitUrl = "http://localhost:8082/passgym/ownersignup/signup";
     if(forSubmitConfirm.idDupChkResult, 
       forSubmitConfirm.ownerNoChkResult, 
       forSubmitConfirm.pwdChkResult === 1){
+        alert("if Test");
       axios.post(submitUrl, submitInfo)
-      .then((response) => { //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
+      .then((response) => {
+        alert("test"); //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
         if(response.data === "OwnerNo is exists"){
           alert("이미 존재하는 사업자입니다.");
           event.preventDefault();
         }else{
           sessionStorage.setItem("ownerNo", submitInfo.ownerNo);
+          sessionStorage.setItem("zipcode", submitInfo.zipcode);
           sessionStorage.setItem("addr", submitInfo.addr);
           sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
           sessionStorage.setItem("lat", submitInfo.lat);
           sessionStorage.setItem("lon", submitInfo.lon);
           window.location.href = "../ownersignup/gymregist";
         }
+        alert("testEnd");
       }
       ).catch((error) => {
       if(error.response){
@@ -178,8 +182,9 @@ function Ownersignup() {
         }
       })
     } else {
-      alert("가입 실패");
+      alert("가입 실패"); 
     }
+    event.preventDefault();
   }
 
   // 테스트용
@@ -274,7 +279,7 @@ function Ownersignup() {
         <div className="ownersignup__owneraddr">
           <div className="ownersignup__search-owneraddr">
             <Form.Group className="ownersignup__search-owneraddr-no" controlId="ownersignup__search-owneraddr-no">
-              <Form.Control  placeholder="우편번호" value={ownerAddr.zipCode} readOnly required/>
+              <Form.Control  placeholder="우편번호" value={ownerAddr.zipcode} readOnly required/>
             </Form.Group>
             <PostcodeModal show={postcodeModalShow} 
                             onHide={() => {

@@ -1,10 +1,8 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "../css/GymRegist.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import PassList from "../../components/owner/PassList";
-import { Route, Routes } from "react-router-dom";
-import Login from "../common/Login";
 
 function GymRegist(){
 
@@ -16,13 +14,15 @@ function GymRegist(){
     const [gymInfo, setGymInfo] = useState({
         ownerNo: sessionStorage.getItem("ownerNo"),
         phoneNo: "",
+        name: "",
+        zipcode: sessionStorage.getItem("zipcode"),
         addr: sessionStorage.getItem("addr"),
         addrDetail: sessionStorage.getItem("addrDetail"),
         introduce: "",
         notice: "",
-        startHour: "",
+        startHour: "00",
         startMinute: "00",
-        endHour: "",
+        endHour: "00",
         endMinute: "00",
         program: "",
         etc: "",
@@ -198,6 +198,27 @@ function GymRegist(){
 
     }
 
+    if(!sessionStorage.getItem("ownerNo") && !sessionStorage.getItem("addr")){
+        return(           
+            <Container>
+                <Row className="justify-content-md-center">
+                    접근할 수 없는 페이지입니다.
+                </Row>
+                <Row>
+                    <br/>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col xs lg="2">
+                    </Col>
+                    <Col xs="auto">
+                        <Button href="/">홈으로</Button>
+                    </Col>
+                    <Col xs lg="2">
+                    </Col>                    
+                </Row>
+            </Container>  
+        )
+    }
     return(
         <div>
             <h3 className="title">헬스장 정보 등록</h3>
@@ -217,6 +238,7 @@ function GymRegist(){
             <Form.Label>주소</Form.Label>            
             <Form.Control name="addr" onChange={onChange} className="gym__addr" value={sessionStorage.getItem("addr")} required readOnly/>       
             <Form.Control name="addrDetail" onChange={onChange} className="gym__addr-detail" value={sessionStorage.getItem("addrDetail")} required readOnly/>        
+            <Form.Control name="name" onChange={onChange} className="gym__name" as="textarea" row={2} placeholder="업체 이름" required />
             <Form.Control name="introduce" onChange={onChange} className="gym__info" as="textarea" row={2} placeholder="업체 소개" required />
             <Form.Control name="notice" onChange={onChange} className="gym__notice" as="textarea" row={2} placeholder="공지 사항"/>
             <Form.Label>회원권 입력</Form.Label>           

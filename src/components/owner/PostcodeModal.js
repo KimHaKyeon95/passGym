@@ -26,7 +26,7 @@ const Postcode = (props) => {
             yLocation = result[0].y;
             xLocation = result[0].x;  
             console.log(yLocation + ":" + xLocation);
-            props.setValues({zipCode: data.zonecode,
+            props.setValues({zipcode: data.zonecode,
               addr: data.address,
               lat: yLocation,
               lon: xLocation });
