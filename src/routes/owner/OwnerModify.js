@@ -4,7 +4,6 @@ import Footer from "../../components/common/Footer";
 import "../css/GymRegist.css";
 import { useEffect,useState } from "react";
 import axios from "axios";
-import GymEquipList from "../../components/owner/GymEquipList";
 
 function OwnerModify(props){
     sessionStorage.setItem("id", "id123");
@@ -212,12 +211,6 @@ function OwnerModify(props){
             </Form.Group>
             <Form.Group className="gym__operating-program">
                 <Form.Control className="gym__operating-program" as="textarea" row={2} placeholder="운영 프로그램" />
-            </Form.Group>
-            <Form.Label column sm={4}>운동기구 선택</Form.Label>
-            <Form.Group className="gym__equip-list" >
-                <Col sm={6} >   
-                <GymEquipList/>
-                </Col>
             </Form.Group>
             <Form.Group className="gym__etc">
                 <Form.Control className="gym__etc" placeholder="기타 사항" />

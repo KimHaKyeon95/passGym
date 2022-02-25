@@ -4,7 +4,9 @@ import DaumPostcode from 'react-daum-postcode';
 
 const Postcode = (props) => {
   const handleComplete = (data) => {
-    let fullAddress = data.address;
+    const { kakao } = window;
+    let yLocation = "";
+    let xLocation = ""; 
     let extraAddress = ''; 
     
     if (data.addressType === 'R') {
@@ -14,11 +16,22 @@ const Postcode = (props) => {
       if (data.buildingName !== '') {
         extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
       }
-      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
     }
 
-    props.setValues({zipCode: data.zonecode,
-                      addr: data.address})
+    let addr = extraAddress;
+    //입력된 주소를 통해 좌표를 검색한다
+    let geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(addr, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            yLocation = result[0].y;
+            xLocation = result[0].x;  
+            console.log(yLocation + ":" + xLocation);
+            props.setValues({zipcode: data.zonecode,
+              addr: data.address,
+              lat: yLocation,
+              lon: xLocation });
+        } 
+    });
     props.onHide();
   }
 
