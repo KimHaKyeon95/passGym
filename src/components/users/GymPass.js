@@ -42,15 +42,31 @@ function GymPass({
           ></Image>
         </Col>
         <Col lg={{ span: 6 }} md={{ span: 6 }}>
-          <Row>번호 : {paymentNo}</Row>
-          <Row>상태 : {status}</Row>
-          <Row>이름 : {name}</Row>
-          <Row>회원권 이름 : {passName}</Row>
-          <Row>평균별점 : {avgStar}</Row>
           <Row>
-            {startDate.getDate()} ~ {endDate.getDate()}
+            <Col>번호 : {paymentNo}</Col>
           </Row>
-          <Row>{remain}</Row>
+          <Row>
+            <Col>상태 : {status}</Col>
+          </Row>
+          <Row>
+            <Col>이름 : {name}</Col>
+          </Row>
+          <Row>
+            <Col>회원권 이름 : {passName}</Col>
+          </Row>
+          <Row>
+            <Col>평균별점 : </Col>
+            <Col style={{ display: "inline-block", color: "yellow" }}>★</Col>
+            <Col>{avgStar}</Col>
+          </Row>
+          <Row>
+            <Col>
+              {startDate} ~{endDate}
+            </Col>
+          </Row>
+          <Row>
+            <Col>{remain}</Col>
+          </Row>
         </Col>
         <Col
           md={{ span: 2 }}

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
-import PostcodeModal from "../../components/owener/PostcodeModal";
+import PostcodeModal from "../../components/owner/PostcodeModal";
 // import HorizonLine from "../common/HorizonLine";
 // import kakao from "../../images/kakao.png";
 // import naver from "../../images/naver.png";
