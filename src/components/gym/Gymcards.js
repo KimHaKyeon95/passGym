@@ -4,6 +4,7 @@ import Gymcard from "../../components/gym/Gymcard";
 function Gymcards({ type }) {
   const [loading, setLoading] = useState(true);
   const [gyms, setGyms] = useState({});
+
   const getGyms = () => {
     const json = {
       data: {
