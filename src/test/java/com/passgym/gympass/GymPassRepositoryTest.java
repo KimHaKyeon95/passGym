@@ -3,6 +3,7 @@ package com.passgym.gympass;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -81,4 +82,28 @@ class GymPassRepositoryTest {
 		//assertEquals("tname2", gymPass.getUser().getName());
 	}
 	
+	@Test
+	@Transactional
+	void findByUser_userNoTest() {
+		int userNo = 1;
+		List<GymPass> gpList = repository.findByUser_userNo(userNo);
+		assertTrue(gpList.size() > 0);
+		for(GymPass gp : gpList) {
+			
+		}
+	}
+	
+	
+	@Test
+	@Transactional
+	void findByUserTest() {
+		int userNo = 1;
+		User user = new User();
+		user.setUserNo(userNo);
+		List<GymPass> gpList = repository.findByUser(user);
+		assertTrue(gpList.size() > 0);
+		for(GymPass gp : gpList) {
+			
+		}
+	}
 }
