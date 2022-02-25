@@ -84,7 +84,6 @@ function GymRegist(){
                "Content-Type": "multipart/form-data"
            }
        }).then((response) => {
-            console.log(response);
             event.preventDefault();
        }).catch((error) => {
             alert(error.response.status);
@@ -106,7 +105,6 @@ function GymRegist(){
                     pauseDate: 0
                     }; 
         countArr[idx] = data;
-        console.log(countArr);
         setCountList(countArr);
     }
 
@@ -115,7 +113,6 @@ function GymRegist(){
         let idx = countArr.length;
         idx--;
         countArr.pop(idx);
-        console.log(countArr);
         setCountList(countArr);
     }
 
