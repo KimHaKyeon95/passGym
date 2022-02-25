@@ -1,9 +1,11 @@
 package com.passgym.gym;
 
 import com.passgym.gym.entity.Gym;
+import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
+import com.passgym.repository.OwnerRepository;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
@@ -23,8 +23,9 @@ public class GymRepositoryTests {
 	@Autowired
 	GymRepository gymRepository;
 
+	@Autowired
+	OwnerRepository ownerRepository;
 
-	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Test
@@ -79,10 +80,68 @@ public class GymRepositoryTests {
 	@Transactional
 	void gymSaveTest(){
 
+		Owner owner = new Owner();
+		owner.setOwnerNo("testOwnerNo");
+		owner.setId("testId");
+		owner.setPwd("testPwd");
+		owner.setOwnerStatus(1);
+
+
 		Gym gym = new Gym();
-		gym.setOwnerNo("7838101646");
+		gym.setOwnerNo(owner.getOwnerNo());
+		gym.setName("testName");
+		gym.setPhoneNo("testPhoneNo");
+		gym.setZipcode("testZipcode");
+		gym.setAddr("testAddr");
+		gym.setAddrDetail("testAddrDetail");
+		gym.setIntroduce("testIntroduce");
+		gym.setNotice("testNotice");
+		gym.setOperatingTime("testTime");
+		gym.setOperatingProgram("testProgram");
+		gym.setExtraService("testService");
+		gym.setEtc("tesEtc");
+		gym.setLat(0.0);
+		gym.setLon(0.0);
 
+		gym.setOwner(owner);
 
+		List<Pass> passes = new ArrayList<>();
+		Pass pass0 = new Pass();
+		PassPK passPK0 = new PassPK();
+		Pass pass1 = new Pass();
+		PassPK passPK1 = new PassPK();
+
+		passPK0.setOwnerNo(gym.getOwnerNo());
+		passPK0.setPassNo(0);
+
+		pass0.setPassPk(passPK0);
+		pass0.setPassName("testName0");
+		pass0.setPassPrice(1000);
+		pass0.setPassDate(new Date());
+		pass0.setPassStatus(1);
+		pass0.setPassMonth(1);
+		pass0.setPauseCount(1);
+		pass0.setRemarks("test0");
+
+		passPK1.setOwnerNo(gym.getOwnerNo());
+		passPK1.setPassNo(1);
+
+		pass1.setPassPk(passPK1);
+		pass1.setPassName("testName1");
+		pass1.setPassPrice(2000);
+		pass1.setPassDate(new Date());
+		pass1.setPassStatus(2);
+		pass1.setPassMonth(2);
+		pass1.setPauseCount(2);
+		pass1.setRemarks("test1");
+
+		passes.add(pass0);
+		passes.add(pass1);
+
+		gym.setPasses(passes);
+
+		ownerRepository.save(owner);
+		gymRepository.save(gym);
 
 	}
 }

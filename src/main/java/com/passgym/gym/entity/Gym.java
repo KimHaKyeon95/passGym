@@ -1,5 +1,6 @@
 package com.passgym.gym.entity;
 
+import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Gym {
 	//private Owner owner; //포함관계를 만들 필요가 없으면 연결을 안시켜도 되나?
 
 	@Id
+	@Column(name="owner_no")
 	private String ownerNo; //사업자번호
 	private String name; //헬스장이름
 	private String phoneNo; //헬스장전화번호
@@ -40,9 +42,10 @@ public class Gym {
 	private double lon; //경도 longitude
 //	private double distance;//거리
 
-//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "owner_no", insertable = false, updatable = false)
-//    private Owner owner;
+	@MapsId
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_no", insertable = false, updatable = false)
+    private Owner owner;
 	
 //	private List<PaymentMethod> paymentMethods;
 
