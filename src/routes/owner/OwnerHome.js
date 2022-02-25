@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 const Home = () => {
         sessionStorage.setItem("ownerNo", "1234567890")
   return (
-             <div> 
+    <div> 
         <Container> 
             <Carousel fade  style={{ marginTop: "-50px" }}>
-                <Carousel.Item interval={3000}
+                <Carousel.Item interval={1000}
                 >
                     <img
                     style={{ height: "350px" }}
@@ -21,7 +21,7 @@ const Home = () => {
                 <p>00 헬스장  </p>
                 </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item interval={3000}>
+                <Carousel.Item interval={1000}>
                     <img
                     style={{ height: "350px" }}
                     className="d-block w-100"
@@ -33,7 +33,7 @@ const Home = () => {
                 <p>00 헬스장 바로가기</p>
                 </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item interval={3000}>
+                <Carousel.Item interval={1000}>
                     <img
                     style={{  height: "350px"}}
                     className="d-block w-100"
@@ -45,7 +45,7 @@ const Home = () => {
                 <p> 00휘트니스클럽  </p>
                 </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item interval={3000}>
+                <Carousel.Item interval={1000}>
                     <img
                     style={{ height: "350px" }} 
                     className="d-block w-100"

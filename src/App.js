@@ -52,7 +52,7 @@ function App() {
          <Route path="/owner/passInfo" element={<PassInfo />} />  
         </Routes>
         <Routes>
-         <Route path="/owner/modify/:ownerNo" element={<OwnerModify />} />  
+         <Route path="/owner/modify" element={<OwnerModify />} />  
         </Routes>
       </section>
       <Footer />

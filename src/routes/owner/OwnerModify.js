@@ -10,9 +10,9 @@ function OwnerModify(props){
     sessionStorage.setItem("id", "id123");
     sessionStorage.setItem("addr", "테스트 주소");
     sessionStorage.setItem("addrDetail", "테스트 상세주소");
-    sessionStorage.setItem("ownerNo", "100000001");
+    
         
-     const ownerNo = props.match.params.ownerNo;
+     
 
     const [fileState, setFileState] = useState({
         refFile: "",
@@ -114,30 +114,30 @@ function OwnerModify(props){
 
     
 
- const submitBook = (e) => {
-    e.preventDefault(); // submit이 action을 안타고 자기 할일을 그만함.
-    fetch('http://localhost:9990/gym/modify/'+ ownerNo,  {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(gymInfo),
-    }) 
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          return null;
-        }
-      })
-      .then((res) => {
-        if (res !== null) {
-          props.history.push('/OwnerHome' );
-        } else {
-          alert('책 수정에 실패하였습니다.');
-        }
-      });
-  };
+//  const submitBook = (e) => {
+//     e.preventDefault(); // submit이 action을 안타고 자기 할일을 그만함.
+//     fetch('http://localhost:9990/gym/modify'+ ownerNo,  {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json; charset=utf-8',
+//       },
+//       body: JSON.stringify(gymInfo),
+//     }) 
+//       .then((res) => {
+//         if (res.status === 200) {
+//           return res.json();
+//         } else {
+//           return null;
+//         }
+//       })
+//       .then((res) => {
+//         if (res !== null) {
+//           props.history.push('/OwnerHome' );
+//         } else {
+//           alert('책 수정에 실패하였습니다.');
+//         }
+//       });
+//   };
 
 
 
