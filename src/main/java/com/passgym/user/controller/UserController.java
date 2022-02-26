@@ -116,7 +116,7 @@ public class UserController {
 				String startDate =  formatter.format(gp.getStartDate());
 				String endDate = formatter.format(gp.getEndDate());
 				double avgStar = Math.round((double)gp.getPass().getGym().getTotalStar() / gp.getPass().getGym().getTotalMember());
-				long remain = (gp.getEndDate().getTime() - gp.getStartDate().getTime()) / (24*60*60*1000);
+				//long remain = (gp.getEndDate().getTime() - gp.getStartDate().getTime()) / (24*60*60*1000);
 				int star = 0;
 				if(gp.getStar() != null) {
 					star = gp.getStar().getStar();
@@ -131,7 +131,7 @@ public class UserController {
 				GymPassMap.put("startDate", startDate);
 				GymPassMap.put("endDate", endDate);
 				GymPassMap.put("avgStar", avgStar);
-				GymPassMap.put("remain", remain);
+				//GymPassMap.put("remain", remain);
 				GymPassMap.put("star", star);
 				
 				GymPasses.add(GymPassMap);
