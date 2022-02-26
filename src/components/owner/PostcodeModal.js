@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container, Form, Modal, Row} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import DaumPostcode from 'react-daum-postcode';
 
 const Postcode = (props) => {

@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
-import "../css/GymRegist.css";
+import "../css/gymRegist.css";
 import { useEffect,useState } from "react";
 import axios from "axios";
 

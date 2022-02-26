@@ -1,5 +1,5 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "../css/GymRegist.css";
+import "../css/gymRegist.css";
 import { useState } from "react";
 import axios from "axios";
 import PassList from "../../components/owner/PassList";
@@ -10,6 +10,8 @@ function GymRegist(){
         refFile: "",
         previewUrl: ""
     });
+
+    const [ detailFileState, setDetailFileState] = useState({});
 
     const [gymInfo, setGymInfo] = useState({
         ownerNo: sessionStorage.getItem("ownerNo"),
@@ -30,7 +32,7 @@ function GymRegist(){
         lon: sessionStorage.getItem("lon")
     })
 
-    const [countList, setCountList] = useState([]);
+    const [passInfoList, setPassInfoList] = useState([]);
 
     const formData = new FormData();
     const onRefFileChange = (event) => {
@@ -49,7 +51,8 @@ function GymRegist(){
         let fileData = event.target.files;
         let file = null;
         let name = "";
-        let newValues = {...fileState};
+        let newValues = {...detailFileState};
+        
         for(let i = 0; i < fileData.length; i++){
             file = fileData[i];
             name = "detailImg" + i;
@@ -57,7 +60,7 @@ function GymRegist(){
                 ...newValues,
                 [name] : file
             }
-            setFileState(newValues);
+            setDetailFileState(newValues);
         }
     }
 
@@ -71,20 +74,31 @@ function GymRegist(){
         event.preventDefault();
     }
 
-    const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
+    const onSubmit = (event) =>{ 
         let uploadRefFile = fileState.refFile;
-        console.log(uploadRefFile);
-        console.log(fileState);
         formData.append("files", uploadRefFile);
         formData.append("gymInfo", JSON.stringify(gymInfo));
-        formData.append("passes", JSON.stringify(countList)); 
+        formData.append("passes", JSON.stringify(passInfoList)); 
+        let fileStateClone = {...detailFileState};
+        let detailFilesLength = Object.keys(fileStateClone).length;
+        for(let i = 0; i < detailFilesLength; i++){
+            let name = "detailImg" + i;
+            let uploadDetailFile = detailFileState[name];
+            formData.append("detailFiles", uploadDetailFile);
+        }
        let submitUrl = "http://localhost:8082/passgym/gym/gymregist";
        axios.post(submitUrl, formData, {
            headers: {
                "Content-Type": "multipart/form-data"
            }
        }).then((response) => {
-            event.preventDefault();
+           if(response.data === "error"){
+               alert("가입 실패(서버문제 발생");
+               event.preventDefault();
+           }else{
+            sessionStorage.clear();
+            window.location.href="../login"
+           }          
        }).catch((error) => {
             alert(error.response.status);
        });
@@ -93,27 +107,26 @@ function GymRegist(){
 
     
     const passComponentPlus = () => {
-        let countArr = [...countList]
+        let countArr = [...passInfoList]
         let idx = countArr.length;
         let data = {
                     passNo: idx, 
                     passName: "", 
                     passPrice: 0, 
-                    passDate: "", 
                     passMonth: 0, 
                     pauseCount: 0, 
                     pauseDate: 0
                     }; 
         countArr[idx] = data;
-        setCountList(countArr);
+        setPassInfoList(countArr);
     }
 
     const passComponentMinus = () => {
-        let countArr = [...countList]
+        let countArr = [...passInfoList]
         let idx = countArr.length;
         idx--;
         countArr.pop(idx);
-        setCountList(countArr);
+        setPassInfoList(countArr);
     }
 
     const RenderRepImg = () => {
@@ -218,28 +231,32 @@ function GymRegist(){
     }
     return(
         <div>
-            <h3 className="title">헬스장 정보 등록</h3>
+            <h1 className="title">헬스장 정보 등록</h1>
             <div className="gym__regist">
             <Form className="gym__regist-form">
-            <h5>대표사진 등록</h5>
+            <Form.Label>대표사진 등록</Form.Label>
             <Form.Group className="gym__regist-represent-img" >
                 <Form.Control type="file" className="gym__regist-represent-img-upload" onChange={onRefFileChange}/>
             </Form.Group>
                 {fileState.refFile == "" ? <div></div> : <RenderRepImg />}
-            <h5>세부사진 등록</h5>
+                <Form.Label>세부사진 등록</Form.Label>
             <Form.Group className="gym__regist-detail-img">
                 <Form.Control type="file" className="gym__regist-detail-img" onChange={onDetailFileChange} multiple/>
             </Form.Group> 
             <div className="img__box"></div>
-            <Form.Control name="phoneNo" onChange={onChange} className="gym__regist-phone-no" placeholder="전화번호" />                 
+            <Form.Label>전화번호</Form.Label>
+            <Form.Control name="phoneNo" onChange={onChange} className="gym__regist-phone-no" autoComplete="off" placeholder="'-'제외하고 입력" />                 
             <Form.Label>주소</Form.Label>            
             <Form.Control name="addr" onChange={onChange} className="gym__addr" value={sessionStorage.getItem("addr")} required readOnly/>       
             <Form.Control name="addrDetail" onChange={onChange} className="gym__addr-detail" value={sessionStorage.getItem("addrDetail")} required readOnly/>        
-            <Form.Control name="name" onChange={onChange} className="gym__name" as="textarea" row={2} placeholder="업체 이름" required />
-            <Form.Control name="introduce" onChange={onChange} className="gym__info" as="textarea" row={2} placeholder="업체 소개" required />
-            <Form.Control name="notice" onChange={onChange} className="gym__notice" as="textarea" row={2} placeholder="공지 사항"/>
+            <Form.Label>업체이름</Form.Label>
+            <Form.Control name="name" onChange={onChange} className="gym__name" autoComplete="off" required />
+            <Form.Label>소개글</Form.Label>
+            <Form.Control name="introduce" onChange={onChange} className="gym__info" autoComplete="off" as="textarea" row={2} required />
+            <Form.Label>공지사항</Form.Label>
+            <Form.Control name="notice" onChange={onChange} className="gym__notice"autoComplete="off"  as="textarea" row={2} />
             <Form.Label>회원권 입력</Form.Label>           
-            <PassList countList={countList}/>
+            <PassList passInfoList={passInfoList}/>
                 <Button className="pass__plus" 
                         onClick={passComponentPlus}>+</Button>
                 <Button className="pass__minus"
@@ -252,8 +269,10 @@ function GymRegist(){
                     <Col><TimeEndHour /></Col>:<Col><TimeEndMinute/></Col>
                 </Row>
             </Form.Group>
-            <Form.Control name="program" onChange={onChange} className="gym__operating-program" as="textarea" row={2} placeholder="운영 프로그램"/>
-            <Form.Control name="etc" onChange={onChange} className="gym__etc" placeholder="기타 사항" />
+            <Form.Label>운영 프로그램</Form.Label>
+            <Form.Control name="program" onChange={onChange} className="gym__operating-program" as="textarea" row={2}/>
+            <Form.Label>비고</Form.Label>
+            <Form.Control name="etc" onChange={onChange} className="gym__etc"/>
             <Button className="gym__submit-btn" onClick={onSubmit} type="submit">등록</Button>
             </Form>
             </div>

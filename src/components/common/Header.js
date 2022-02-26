@@ -11,6 +11,7 @@ function Header() {
   function onLogoutHandler() {
     console.log("로그아웃 버튼 클릭");
     sessionStorage.removeItem("id", "");
+    sessionStorage.removeItem("ownerNo");
     navigate("/");
     // axios
     //   .get("/logout")
