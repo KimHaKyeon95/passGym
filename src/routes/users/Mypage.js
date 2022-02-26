@@ -19,7 +19,6 @@ function Mypage() {
     axios
       .get(url)
       .then(function (response) {
-        console.log(response);
         setUser(response.data);
         setLoading(false);
       })
