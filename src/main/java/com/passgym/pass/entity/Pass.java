@@ -45,4 +45,5 @@ public class Pass {
 	@JoinColumn(name="owner_no", insertable = false, updatable = false)
 	@JoinColumn(name="pass_no", insertable = false, updatable = false)
 	private List<GymPass> gympasses;
+
 }

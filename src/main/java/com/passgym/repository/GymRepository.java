@@ -1,9 +1,7 @@
 package com.passgym.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.passgym.gym.entity.Gym;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GymRepository extends CrudRepository<Gym, String> {
-
+public interface GymRepository extends JpaRepository<Gym, String> {
 }
