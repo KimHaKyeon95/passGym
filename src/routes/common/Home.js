@@ -9,14 +9,12 @@ function Home() {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             setLat(position.coords.latitude);
-            let lat = position.coords.latitude;
             setLon(position.coords.longitude)
-            let long = position.coords.longitude;
           }, 
           (error) => {
             console.error(error);
           }, 
-          { enableHighAccuracy: false,
+          { enableHighAccuracy: true,
             maximumAge: 0,
             timeout: Infinity
           });
@@ -28,14 +26,17 @@ function Home() {
 
   const ShowLatLon = () => {
     getLocation();
-    return <div>lat = {lat} : lon = {lon}</div>
+    return <div>{lat}, {lon}</div>
   }
+  useEffect(() => {
+    getLocation();
+    console.log(lat + ", " + lon);
+  }, []);
 
   return (
     <>
-      <ShowLatLon/>
-      <Gymcards type="star" />
-      <Gymcards type="distance" />
+      <Gymcards type="star" lat={lat} lon={lon}/>
+      <Gymcards type="distance" lat={lat} lon={lon} />
     </>
   );
 }
