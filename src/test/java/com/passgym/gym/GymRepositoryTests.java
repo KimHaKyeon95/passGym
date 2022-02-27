@@ -1,11 +1,6 @@
 package com.passgym.gym;
 
-import com.passgym.gym.entity.Gym;
-import com.passgym.owner.entity.Owner;
-import com.passgym.pass.entity.Pass;
-import com.passgym.pass.entity.PassPK;
-import com.passgym.repository.GymRepository;
-import com.passgym.repository.OwnerRepository;
+ 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +11,30 @@ import org.springframework.test.annotation.Commit;
 import javax.transaction.Transactional;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.DisplayName;
+import com.passgym.gym.entity.Gym;
+import com.passgym.gympass.entity.GymPass;
+import com.passgym.owner.entity.Owner;
+import com.passgym.owner.repository.OwnerRepository;
+import com.passgym.pass.entity.Pass;
+import com.passgym.pass.entity.PassPK;
+import com.passgym.payment.entity.Payment;
+import com.passgym.repository.OwnerRepository;
+import com.passgym.repository.GymRepository;
+import com.passgym.user.entity.User;
+
 @SpringBootTest
 public class GymRepositoryTests {
 	
 	@Autowired
 	GymRepository gymRepository;
-
+	
 	@Autowired
 	OwnerRepository ownerRepository;
 
+ 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Test
@@ -145,3 +154,116 @@ public class GymRepositoryTests {
 
 	}
 }
+	
+	
+	
+ 
+	@Test
+//	@Transactional
+	@DisplayName("gym정보 insertTest")
+	void testInsert() {
+		String name = "1헬스"; //헬스장이름
+		String phoneNo = "1전화번호"; //헬스장전화번호
+		String zipcode="1zipcode"; //우편번호
+		String addr="1주소"; //주소
+		String addrDetail="1상세주소"; //상세주소
+		String introduce="1헬스장 소개"; //헬스장 소개
+		String notice="1공지사항"; //공지사항
+		String operatingTime="1운영시간"; //운영시간
+		String operatingProgram="1운영프로그램"; // 운영프로그램
+		String extraService="1부가서비스"; //부가서비스
+		String etc="1etc"; //기타
+		int totalStar=1; //총별점
+		int totalMember=1; //총인원수
+		double lat=1; //위도 latitude 
+		double lon=1; //경도 longitude
+//		double distance=1;//거리
+
+		String ownerNo = "1000000001";
+		Gym g = new Gym(
+				ownerNo 
+				,name, phoneNo, zipcode, addr, addrDetail, introduce, notice,operatingTime, operatingProgram, extraService
+				,etc//기타
+				,totalStar //총별점
+				,totalMember //총인원수
+				,lat //위도 latitude 
+				,lon //경도 longitude
+//				,distance//거리
+				, null //Owner
+				,null //List<Pass>
+				);
+
+
+		gymRepository.save(g);
+	}
+	
+	@DisplayName("Gym의 owner정보 확인")
+	@Test
+	@Transactional
+	void testFindById1() {
+		String ownerNo = "1000000001";
+		Optional<Gym> optGym = gymRepository.findById(ownerNo);
+		assertTrue(optGym.isPresent());
+		Gym g = optGym.get();
+		String expectedName = "1헬스";
+		assertEquals(expectedName, g.getName());
+		//Gym의 owner정보 확인
+		/*@OneToOne
+		  @JoinColumn(name = "owner_no")
+		  private Owner owner;
+		 */
+		String expectedId = "ownerid9";
+		String expectedPwd = "ownerp9";
+		assertEquals(expectedId, g.getOwner().getId());
+		assertEquals(expectedPwd, g.getOwner().getPwd());
+	}
+
+	@DisplayName("Gym의 pass정보 확인")
+	@Test
+	@Transactional
+	void testFindById2() {
+		String ownerNo = "1000000001";
+		Optional<Gym> optGym = gymRepository.findById(ownerNo);
+		assertTrue(optGym.isPresent());
+		Gym g = optGym.get();
+		//Gym의 pass정보 확인
+		List<Pass> passes = g.getPasses();
+		int expectedSize = 3;
+		assertTrue(expectedSize==passes.size());
+		passes.forEach(pass->{logger.info(pass.getPassName());});
+
+	}
+	
+ 
+	 
+	
+	@Test
+	@Transactional
+	void testFindTotal() {
+		//판매자 아이디와 비번으로 로그인 성공시 사업자번호조회 & 회원권별 구매한 회원검색
+		String ownerId = "ownerid1";
+		String ownerPwd = "ownerp1";
+		Owner o = ownerRepository.findByIdAndPwd(ownerId, ownerPwd);
+		
+		logger.info("ownerId =" + o.getId());
+		logger.info("ownerPwd =" + o.getPwd());
+		logger.info("ownerNo =" + o.getOwnerNo());
+		Gym g = o.getGym();
+		List<Pass>passes =  g.getPasses();		
+		passes.forEach(p->{
+			logger.info("---이용권 이름:"+ p.getPassName() +"---");
+			 
+			List<GymPass> gymPasses = p.getGympasses();
+			gymPasses.forEach(gp->{
+				User u = gp.getUser();
+				String userId = u.getId();
+				String userName = u.getName();
+				Payment payment = gp.getPayment();
+				logger.info("----구매한 회원ID:" + userId + ", 회원명:" + userName +", paymentPrice:" + payment.getPaymentPrice());
+			
+			});
+		});
+		
+		
+		
+	}}

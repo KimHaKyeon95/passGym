@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -19,6 +20,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.DisplayName;
+
+ 
 
 @SpringBootTest
 public class OwnerRepositoryTest {
@@ -31,7 +37,7 @@ public class OwnerRepositoryTest {
 
     @Autowired
     PassRepository passRepository;
-
+    Logger logger = LoggerFactory.getLogger(getClass());
     @Test
     public void ownerFindTest(){
 
@@ -135,5 +141,20 @@ public class OwnerRepositoryTest {
 //        );
 
     }
+    
+    
+	@Test
+	@DisplayName("판매자insert_ownerTest")
+	void testInsert1() { //owner 값 넣기
+		for(int i=1; i<10; i++) {
+			Owner o = new Owner();
+			o.setOwnerNo("1000000001");
+			o.setId("ownerid"+i);
+			o.setPwd("ownerp"+i);
+			o.setOwnerStatus(1);		//1: 관리자 승인 , 2: 관리자 승인거절
+			ownerRepository.save(o);
+		}
+	}
+    
 
 }

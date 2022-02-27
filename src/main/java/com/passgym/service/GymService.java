@@ -1,18 +1,26 @@
 package com.passgym.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+ 
+ 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
-import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
-import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.pass.entity.PassPK;
+import com.passgym.owner.entity.Owner;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -41,6 +49,7 @@ public class GymService {
 		}
 	}
 
+	
 	public void gymSetting(List<MultipartFile> files, List<MultipartFile> detailFiles,
 						  String gymInfo, String passes) throws IOException {
 
@@ -125,4 +134,9 @@ public class GymService {
 		gymRepository.save(realGym);
 	}
 
+	
+	@Transactional(readOnly = true)
+	public List<Pass> gymUserSelect(Gym gym) {
+		return gym.getPasses();
+	}
 }
