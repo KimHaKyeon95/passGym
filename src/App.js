@@ -11,6 +11,7 @@ import SearchIdPwd from "./routes/common/SearchIdPwd";
 import "./css/common/index.css";
 import Payment from "./routes/users/Payment";
 import Mypage from "./routes/users/Mypage";
+import Useredit from "./routes/users/Useredit";
 import GymRegist from "./routes/owner/GymRegist";
 import OwnerHome from "./routes/owner/OwnerHome";
 import PassInfo from "./routes/owner/PassInfo";
@@ -31,7 +32,10 @@ function App() {
           <Route path="/gym/:ownerNo" element={<Gymdetail />} />
         </Routes>
         <Routes>
-          <Route path="/mypage/" element={<Mypage />} />
+          <Route path="/mypage" element={<Mypage />} />
+        </Routes>
+        <Routes>
+          <Route path="/useredit" element={<Useredit />} />
         </Routes>
         <Routes>
           <Route path="/ownersignup" element={<Ownersignup />} />
