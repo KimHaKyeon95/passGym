@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/login.css";
 // import { KAKAO_AUTH_URL } from "./Oauth";
-import HorizonLine from "./HorizonLine";
+import HorizonLine from "../../components/common/HorizonLine";
 // import kakao from "../../images/kakao.png";
 // import naver from "../../images/naver.png";
 
@@ -19,7 +19,7 @@ function Login() {
   const [pwd, setPwd] = useState("");
   const [isRemember, setIsRemember] = useState(false);
 
-  const [submit, setSubmit] = useState(false);
+  // const [submit, setSubmit] = useState(false);
   // const [error, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -41,12 +41,12 @@ function Login() {
     pwd: "p1",
   };
 
-  useEffect(() => {
-    if (localStorage.id !== undefined) {
-      setId(localStorage.id);
-      setIsRemember(true);
-    }
-  });
+  // useEffect(() => {
+  //   if (localStorage.id !== undefined) {
+  //     setId(localStorage.id);
+  //     setIsRemember(true);
+  //   }
+  // });
   function onCheckHandler(event) {
     const nextIsRememberValue = event.target.checked;
 
@@ -57,34 +57,35 @@ function Login() {
       window.localStorage.setItem("id", id);
     } else {
       console.log("isRemeberValue false");
+      window.localStorage.removeItem("id", id);
     }
   }
 
   function onSubmitHandler(event) {
     console.log("login button clicked");
+    console.log(radioValue);
     const submitInfo = { id, pwd };
-    console.log(submitInfo);
-    let userSubmitUrl = "http://localhost:3000/userlogin/login";
-    let ownerSubmitUrl = "http://localhost:3000/ownerlogin/login";
+    // console.log(submitInfo);
+    let userSubmitUrl = "http://localhost:9999/passgym/user/login";
+    // let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
     if (radioValue == 1) {
-      if (response.id === submitInfo.id) {
-        console.log("사용자 로그인");
-        sessionStorage.setItem("id", submitInfo.id);
-        navigate("/");
-        // axios
-        //   .post(userSubmitUrl, submitInfo)
-        //   .then(() => {
-        //     sessionStorage.setItem("id", submitInfo.id);
-        //     navigate("/");
-        //   })
-        //   .catch((error) => {
-        //     if (error.response) {
-        //       alert(error.response.status);
-        //     }
-        //   });
-      } else {
-        alert("로그인 실패");
-      }
+      axios
+        .post(userSubmitUrl, submitInfo)
+        .then((response) => {
+          if (response.data.status == 1) {
+            // console.log(response.data);
+            sessionStorage.setItem("user", response.data.user);
+            navigate("/");
+            alert("로그인 성공하였습니다.");
+          } else {
+            alert("로그인 실패하였습니다.");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
     } else if (radioValue == 2) {
       // console.log("사업자 로그인");
       //   axios

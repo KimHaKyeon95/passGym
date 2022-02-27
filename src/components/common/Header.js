@@ -1,27 +1,42 @@
 import Logo from "../../images/dumbbell.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Navbar, Nav } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Header() {
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
   function onLogoutHandler() {
     console.log("로그아웃 버튼 클릭");
-    sessionStorage.removeItem("id", "");
-    navigate("/");
-    // axios
-    //   .get("/logout")
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     sessionStorage.removeItem("id", "");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response.status);
-    //   });
+    axios
+      .get("/logout")
+      .then((response) => {
+        console.log(response.data);
+        sessionStorage.removeItem("user");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.response.status);
+      });
   }
+
+  function showUser() {
+    const user = {
+      data: {
+        name: 
+      }
+    }
+    setUser(json.data.user);
+    setShow(true);
+  }
+
+  useEffect(() => {
+    showUser();
+  }, []);
+
   return (
     <div>
       <Navbar expand="sm" bg="dark" variant="dark">

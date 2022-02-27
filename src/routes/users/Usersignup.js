@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
-import PostcodeModal from "../../components/owener/PostcodeModal";
-// import HorizonLine from "../common/HorizonLine";
+import PostcodeModal from "../../components/owner/PostcodeModal";
+// import HorizonLine from "../../components/common/HorizonLine";
 // import kakao from "../../images/kakao.png";
 // import naver from "../../images/naver.png";
 import "../css/usersignup.css";
@@ -18,7 +18,7 @@ function Usersignup() {
   const [address, setAddress] = React.useState({
     zipCode: "",
     addr: "",
-    addr2: "",
+    addrDetail: "",
   });
   const [postcodeModalShow, setPostcodeModalShow] = React.useState(false);
 
@@ -54,14 +54,34 @@ function Usersignup() {
   }
 
   function onIdHandler(event) {
+    console.log(event.target.value);
+
     const value = event.target.value;
     setId(value);
+    console.log(id);
     const nextResult = {
       result: onIdRegexChkHandler(value),
       resultMsg: "",
     };
+    let idDupChkUrl = "http://localhost:9999/passgym/user/iddupchk";
 
-    let idDupChkUrl = "http://localhost:3000/usersignup/iddupchk";
+    function onIdDupChkHandler(event) {
+      axios
+        .get(idDupChkUrl, value)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status === 0) {
+            setIdChkMsg({ msg: "이미 사용중인 아이디입니다." });
+            setResults({ ...chkResults, idDupChkResult: 0 });
+          } else {
+            setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+            setResults({ ...chkResults, idDupChkResult: 1 });
+          }
+        })
+        .catch((error) => {
+          alert(error.response.status);
+        });
+    }
 
     if (!nextResult.result) {
       setIdRegexChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
@@ -69,29 +89,15 @@ function Usersignup() {
       setIdChkMsg({ msg: "" });
       setResults({ ...chkResults, idDupChkResult: 0 });
     } else {
-      setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-      setResults({ ...chkResults, idDupChkResult: 1 });
-      // axios
-      //   .get(idDupChkUrl, id)
-      //   .then((res) => {
-      //     if (res.id === value) {
-      //       setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
-      //       setResults({ ...chkResults, idDupChkResult: 0 });
-      //     } else {
-      //       setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-      //       setResults({ ...chkResults, idDupChkResult: 1 });
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     alert(error.res.status);
-      //   });
+      // setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+      // setResults({ ...chkResults, idDupChkResult: 1 });
     }
   }
 
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-  };
+  // //테스트
+  // let response = {
+  //   id: "id1@naver.com",
+  // };
 
   //비밀번호 형식 체크
   function onPwdRegexChkHandler(value) {
@@ -104,6 +110,7 @@ function Usersignup() {
 
   //비밀번호 실시간 체크
   function onPwdHandler(event) {
+    //console.log()
     const value = event.target.value;
     setPwd(value);
     const nextResult = {
@@ -196,10 +203,10 @@ function Usersignup() {
       phoneNo,
       address.zipCode,
       address.addr,
-      address.addr2,
+      address.addrDetail,
     ];
     // console.log(submitInfo);
-    let submitUrl = "http://localhost:3000/usersignup/signup";
+    let submitUrl = "http://localhost:9999/passgym/user/";
     if (
       (chkResults.idChkResult,
       chkResults.idDupChkResult,
@@ -245,6 +252,13 @@ function Usersignup() {
               </Form.Text>
               <Form.Text className="msg">{idChkMsg.msg}</Form.Text>
             </Form.Group>
+            <Button
+              onClick={onIdDupChkHandler}
+              className="usersignup__idDupChkBtn"
+              variant="outline-dark"
+            >
+              중복확인
+            </Button>
           </div>
           <div className="usersignup__password">
             <Form.Group className="usersignup__pwd" controlId="usersignup__pwd">
@@ -297,7 +311,7 @@ function Usersignup() {
             </Form.Group>
             <Button
               onClick={onPhoneNoVarifHandler}
-              className="usersignup__phonenovarifbtn"
+              className="usersignup__phoneNoVarifBtn"
               variant="outline-dark"
             >
               인증
@@ -352,10 +366,10 @@ function Usersignup() {
               />
             </Form.Group>
             <Form.Group
-              className="usersignup__addr2"
-              controlId="usersignup__addr2"
+              className="usersignup__addrDetail"
+              controlId="usersignup__addrDetail"
             >
-              <Form.Control value={address.addr2} placeholder="상세주소" />
+              <Form.Control value={address.addrDetail} placeholder="상세주소" />
             </Form.Group>
           </div>
           <Button

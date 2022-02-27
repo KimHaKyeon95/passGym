@@ -28,11 +28,11 @@
 .usersignup__phoneNoVarifCode,
 .usersignup__zipcode,
 .usersignup__addr,
-.usersignup__addr2 {
+.usersignup__addrDetail {
   margin-bottom: 10px;
 }
 
-.usersignup__phonenovarifbtn {
+.usersignup__phoneNoVarifBtn {
   display: inline-block;
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { axios } from "axios";
 
-function FindId() {
+function SearchId() {
   const [name, setName] = React.useState("");
   const [phoneNo, setPhoneNo] = React.useState("");
   // const [nameRegexChkResult, setNameRegexChkResult] = React.useState({
@@ -22,13 +22,16 @@ function FindId() {
   }
 
   function onPhoneNoHandler(event) {
-    setPhoneNo(event.target.value);
-    console.log(phoneNo);
+    const regex = /^[0-9]{0,11}$/;
+    if (regex.test(event.target.value)) {
+      setPhoneNo(event.target.value);
+    }
   }
 
   //테스트
   let response = {
     id: "id1@naver.com",
+    pwd: "1qaz2wsx",
     name: "패스짐",
     phoneNo: "01012345678",
   };
@@ -39,17 +42,18 @@ function FindId() {
     let submitUrl = "http://localhost:3000/searchidpwd/findid";
     if (response.name === submitInfo.name) {
       if (response.phoneNo === submitInfo.phoneNo) {
-        axios
-          .post(submitUrl, submitInfo)
-          .then(() => {
-            alert(`아이디는 "${response.id}" 입니다.`);
-          })
-          .cath((error) => {
-            if (error.response) {
-              alert(error.response.status);
-              event.preventDefault();
-            }
-          });
+        alert(`아이디는 "${response.id}" 입니다.`);
+        // axios
+        //   .post(submitUrl, submitInfo)
+        //   .then(() => {
+        //     alert(`아이디는 "${response.id}" 입니다.`);
+        //   })
+        //   .cath((error) => {
+        //     if (error.response) {
+        //       alert(error.response.status);
+        //       event.preventDefault();
+        //     }
+        //   });
       } else {
         alert("아이디를 찾을 수 없습니다.");
       }
@@ -61,7 +65,7 @@ function FindId() {
   return (
     <div>
       <Form>
-        <Form.Group className="findByName" controlId="findByName">
+        <Form.Group className="mb-3" controlId="findByName">
           <Form.Control
             name="name"
             onChange={onNameHandler}
@@ -74,7 +78,7 @@ function FindId() {
     </Form.Text> */}
         </Form.Group>
 
-        <Form.Group className="findByPhoneNo" controlId="findByPhoneNo">
+        <Form.Group className="mb-3" controlId="findByPhoneNo">
           <Form.Control
             name="phoneNo"
             onChange={onPhoneNoHandler}
@@ -97,4 +101,4 @@ function FindId() {
   );
 }
 
-export default FindId;
+export default SearchId;
