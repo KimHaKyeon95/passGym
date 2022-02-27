@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { Spinner, Tabs, Tab } from "react-bootstrap";
 import GymPassList from "../../components/users/GymPassList";
@@ -6,6 +7,7 @@ import UserQnaList from "../../components/users/UserQnaList";
 import ZzimList from "../../components/users/ZzimList";
 
 function Mypage() {
+  //임시
   const [User, setUser] = useState({});
   //const [GymPasses, setGymPasses] = useState({});
   //const [Zzims, setZzims] = useState({});
@@ -13,19 +15,17 @@ function Mypage() {
   const [loading, setLoading] = useState(true);
 
   const getUser = () => {
-    const json = {
-      data: {
-        user: {
-          userNo: 1,
-          id: "dlgusrb1913@naver.com",
-          name: "이현규",
-          addr: "수원시 팔달구 지동 276",
-          addrDetail: "포레스트 311호",
-          zipcode: "15647",
-        },
-      },
-    };
-    setUser(json.data.user);
+    const url = "http://localhost:9999/passgym/user/";
+    axios
+      .get(url)
+      .then(function (response) {
+        console.log(response);
+        setUser(response.data);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error.response.status);
+      });
   };
 
   // const getGymPasses = () => {
@@ -144,7 +144,6 @@ function Mypage() {
     //getGymPasses();
     //getZzims();
     getUserQnas();
-    setLoading(false);
   }, []);
   return (
     <>

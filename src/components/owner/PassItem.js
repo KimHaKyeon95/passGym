@@ -31,10 +31,10 @@ const PassItem = (props) => {
            <tr>
             <td>#</td>
             <td>{passMonth}</td>
-            <td>{pauseCount}</td>
             <td>{passDate}</td>
+            <td>{pauseCount}</td>
             <td>{pauseDate}</td>
-            <td>{passPrice}</td>
+            <td>{passPrice}원</td>
             <td>{remarks}</td>
           </tr>
         </tbody>
@@ -56,17 +56,19 @@ const PassItem = (props) => {
           </thead>
         <tbody>
             
-    {gymPasses.map(gp =>( 
+       {gymPasses.map(gp =>( 
            <tr key= {gp.userNo}  gp={gp}  >
               <td></td>
-              <td>{gp.userNo}</td>
-              <td>test1</td>  
-              <td>test1</td>
-              <td>test1</td>
-              <td>test1</td>
-              <td>test1</td>
-              <td>test1</td>
-              <td>test1</td>
+              <td>{gp.user.userId}</td>  
+              <td>{gp.user.userName}</td>  
+              <td>{gp.user.phoneNo}</td>  
+              <td>{gp.user.addr}</td>  
+              <td>{gp.user.addrDetail}</td>  
+              <td>{gp.payment.bankName}</td>  
+              <td>{gp.payment.paymentDate}</td>  
+              <td>{gp.payment.paymentPrice}</td>  
+                
+         
           </tr>
             ))}
           </tbody>
