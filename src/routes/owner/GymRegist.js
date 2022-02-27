@@ -93,7 +93,7 @@ function GymRegist(){
            }
        }).then((response) => {
            if(response.data === "error"){
-               alert("가입 실패(서버문제 발생");
+               alert("가입 실패(서버문제 발생)");
                event.preventDefault();
            }else{
             sessionStorage.clear();
