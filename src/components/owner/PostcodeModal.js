@@ -1,12 +1,18 @@
+import axios from 'axios';
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
 import DaumPostcode from 'react-daum-postcode';
 
 const Postcode = (props) => {
+
+  let zipCode = "";
+  let addrResult = "";
+
+  
+
   const handleComplete = (data) => {
-    const { kakao } = window;
-    let yLocation = "";
-    let xLocation = ""; 
+
+    let fullAddress = data.address;
     let extraAddress = ''; 
     
     if (data.addressType === 'R') {
@@ -16,23 +22,36 @@ const Postcode = (props) => {
       if (data.buildingName !== '') {
         extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
       }
+      fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
     }
 
-    let addr = extraAddress;
-    //입력된 주소를 통해 좌표를 검색한다
+    zipCode = data.zonecode
+    let addrResult = fullAddress; //꼭 전체 주소를 넣어줘야 검색이 된다...extraAdrress로는 검색이 잘 되지 않는다...
+    
+    addressResearch(addrResult);
+    props.onHide();
+  }
+
+
+
+  const addressResearch = (address) => {
+    const { kakao } = window;
     let geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(addr, function(result, status) {
+    let yLocation = "";
+    let xLocation = ""; 
+    
+    geocoder.addressSearch(address, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
             yLocation = result[0].y;
             xLocation = result[0].x;  
-            console.log(yLocation + ":" + xLocation);
-            props.setValues({zipcode: data.zonecode,
-              addr: data.address,
-              lat: yLocation,
-              lon: xLocation });
-        } 
+            props.setValues({zipcode: zipCode,
+                            addr: address,
+                            lat: yLocation,
+                            lon: xLocation });
+        } else{
+          console.log("fail");
+        }
     });
-    props.onHide();
   }
 
   return (

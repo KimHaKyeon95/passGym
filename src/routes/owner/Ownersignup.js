@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import OwnerNoChkModal from "../../components/owner/OwnerNoChkModal";
 import PostcodeModal from "../../components/owner/PostcodeModal";
-import { Link } from "react-router-dom";
 
 function Ownersignup() {
   const [values, setValues] = useState({
@@ -248,6 +247,7 @@ function Ownersignup() {
             <Button className="ownersignup__search-owneraddr-btn" onClick={() => setPostcodeModalShow(true)} variant="primary">
               검색
             </Button>
+            
           </div>
             <Form.Group className="ownersignup__owneraddr1" controlId="ownersignup__owneraddr1">
                 <Form.Control  placeholder="주소" value={ownerAddr.addr} readOnly required/>
@@ -255,6 +255,7 @@ function Ownersignup() {
                 <Form.Control className="ownersignup__owneraddr2" placeholder="상세주소" name="addrDetail" 
                               autoComplete="off" onChange={onAddrDetailChange} required/>           
         </div>
+        
           <Button className="ownersignup__submit" variant="primary" onClick={onSubmit} type="submit">
             회원가입
           </Button>

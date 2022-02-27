@@ -243,7 +243,6 @@ function GymRegist(){
             <Form.Group className="gym__regist-detail-img">
                 <Form.Control type="file" className="gym__regist-detail-img" onChange={onDetailFileChange} multiple/>
             </Form.Group> 
-            <div className="img__box"></div>
             <Form.Label>전화번호</Form.Label>
             <Form.Control name="phoneNo" onChange={onChange} className="gym__regist-phone-no" autoComplete="off" placeholder="'-'제외하고 입력" />                 
             <Form.Label>주소</Form.Label>            
