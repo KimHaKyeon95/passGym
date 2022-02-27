@@ -90,6 +90,7 @@ const Home = () => {
                 </Link>
             </Card>
             <Card>
+                  <Link to="/owner/write" style={{textDecoration:"none", color: "black"}}> 
                 <Card.Img variant="top" 
                src={require("../../images/gym1.jpg")} 
                 style={{ height: "285px"  }}/>
@@ -99,7 +100,7 @@ const Home = () => {
                    *1대1 문의
                 </Card.Text>
                 </Card.Body>
-                
+                   </Link>
             </Card>
             </CardGroup>
             </Container>
