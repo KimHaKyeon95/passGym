@@ -57,7 +57,7 @@ function Profile({ userNo, id, name, zipcode, addr, addrDetail }) {
               <Row>상세주소 : {addrDetail}</Row>
             </Col>
             <Col md={{ span: 2 }}>
-              <Link to="/">
+              <Link to="/useredit">
                 <Button>수정하기</Button>
               </Link>
             </Col>
