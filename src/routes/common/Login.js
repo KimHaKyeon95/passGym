@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/login.css";
-// import { KAKAO_AUTH_URL } from "./Oauth";
 import HorizonLine from "./HorizonLine";
-// import kakao from "../../images/kakao.png";
-// import naver from "../../images/naver.png";
+
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
@@ -41,12 +39,14 @@ function Login() {
     pwd: "p1",
   };
 
-  useEffect(() => {
-    if (localStorage.id !== undefined) {
-      setId(localStorage.id);
-      setIsRemember(true);
-    }
-  });
+  //이거 때문에 id의 value가 ""으로 설정되어 아이디가 입력되지 않는 현상이 발생
+  // useEffect(() => {
+  //   if (localStorage.id !== undefined) {
+  //     setId(localStorage.id);
+  //     setIsRemember(true);
+  //   }
+  // });
+
   function onCheckHandler(event) {
     const nextIsRememberValue = event.target.checked;
 
@@ -63,9 +63,8 @@ function Login() {
   function onSubmitHandler(event) {
     console.log("login button clicked");
     const submitInfo = { id, pwd };
-    console.log(submitInfo);
     let userSubmitUrl = "http://localhost:3000/userlogin/login";
-    let ownerSubmitUrl = "http://localhost:3000/ownerlogin/login";
+    let ownerSubmitUrl = "http://localhost:8082/passgym/owner/login";
     if (radioValue == 1) {
       if (response.id === submitInfo.id) {
         console.log("사용자 로그인");
@@ -86,15 +85,25 @@ function Login() {
         alert("로그인 실패");
       }
     } else if (radioValue == 2) {
-      // console.log("사업자 로그인");
-      //   axios
-      //     .post(ownerSubmitUrl, submitInfo)
-      //     .then()
-      //     .catch((error) => {
-      //       if (error.response) {
-      //         alert(error.response.status);
-      //       }
-      //     });
+        axios
+          .post(ownerSubmitUrl, submitInfo)
+          .then((response) => {
+            if(response.data === "id fail"){
+              alert("아이디가 존재하지 않습니다.");
+              setId("");
+            }else if(response.data === "pwd fail"){
+              alert("비밀번호가 틀렸습니다.");
+              setPwd("");
+            }else{
+              sessionStorage.setItem("ownerNo", response.data);
+              window.location.href = "../owner/home";
+            }           
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(error.response.status);
+            }
+          });
     } else {
       alert("로그인에 실패하였습니다.");
     }
@@ -126,14 +135,21 @@ function Login() {
           </>
           <div className="login__input">
             <Form.Group className="login__id" controlId="login__id">
-              <Form.Control
-                name="id"
-                onChange={onIdHandler}
-                value={id}
-                type="email"
-                placeholder="아이디(이메일)"
-                required
-              />
+              {radioValue == 1 ?  <Form.Control
+                                      name="id"
+                                      onChange={onIdHandler}
+                                      value={id}
+                                      type="email"
+                                      placeholder="아이디(이메일)"
+                                      required
+                                    /> 
+                                    : <Form.Control
+                                      name="id"
+                                      onChange={onIdHandler}
+                                      value={id}
+                                      placeholder="아이디"
+                                      required
+            />}
               {/* <div className="msg">{idChkMsg.msg}</div> */}
               {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>

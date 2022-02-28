@@ -16,6 +16,7 @@ import OwnerHome from "./routes/owner/OwnerHome";
 import PassInfo from "./routes/owner/PassInfo";
 import OwnerModify from "./routes/owner/OwnerModify";
 import OwnerWrite from "./routes/owner/OwnerWrite";
+import OwnerBoard from "./routes/owner/OwnerBoard";
 
 
 function App() {
