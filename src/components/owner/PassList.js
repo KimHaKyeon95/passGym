@@ -1,6 +1,4 @@
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Form} from "react-bootstrap";
 import "../../css/owner/passList.css"
 const PassList = (props) => {
 
