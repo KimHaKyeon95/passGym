@@ -116,7 +116,7 @@ public class GymController {
 		return "ok";
 	}
 
-	@GetMapping("/sort-gym")
+	@GetMapping("/sort-gym-distance")
 	@ResponseBody
 	public List<GymSortDto> gymInquire(@RequestParam String lat, @RequestParam String lon){
 		double userLat = Double.parseDouble(lat);
