@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.passgym.exception.AddException;
 import com.passgym.exception.FindException;
+import com.passgym.exception.ModifyException;
+import com.passgym.exception.RemoveException;
 import com.passgym.repository.UserRepository;
 import com.passgym.user.entity.User;
 
@@ -112,21 +114,33 @@ public class UserService {
 		}
 	}
 	
-	public User removeuser(String id, String pwd) throws FindException {
+
+	public User findById(int userNo) throws FindException{
+		User user;
 		try {
-			User user = userRepository.findById(id);
-			if(user.getPwd().equals(pwd)) {
-				user.setUserStatus(0);
-			}
-			throw new FindException("탈퇴 실패");
-		} catch(FindException e) {
+			user = userRepository.findById(userNo).get();
+		}catch(Exception e) {
 			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}
+		return user;
 	}
 	
-	public User findById(int userNo) throws FindException{
-		return userRepository.findById(userNo).get();
-
+	public void modifyUser(User user) throws ModifyException{
+		try {
+			userRepository.save(user);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new ModifyException(e.getMessage());
+		}
+	}
+	
+	public void withdrawalUser(User user) throws RemoveException{
+		try {
+			userRepository.save(user);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new RemoveException(e.getMessage());
+		}
 	}
 }
