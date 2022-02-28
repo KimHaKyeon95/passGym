@@ -35,6 +35,7 @@ function GymPassList() {
         >
           {GymPasses.map((gympass) => (
             <Row
+              key={gympass.paymentNo}
               xs={2}
               md={3}
               lg={4}

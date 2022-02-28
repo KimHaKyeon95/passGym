@@ -12,6 +12,7 @@ import "./css/common/index.css";
 import Payment from "./routes/users/Payment";
 import Mypage from "./routes/users/Mypage";
 import Useredit from "./routes/users/Useredit";
+import UserQna from "./routes/users/UserQna";
 import GymRegist from "./routes/owner/GymRegist";
 import OwnerHome from "./routes/owner/OwnerHome";
 import PassInfo from "./routes/owner/PassInfo";
@@ -37,6 +38,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/useredit" element={<Useredit />} />
+        </Routes>
+        <Routes>
+          <Route path="/userqna" element={<UserQna />} />
         </Routes>
         <Routes>
           <Route path="/ownersignup" element={<Ownersignup />} />
