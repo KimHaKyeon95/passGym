@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import { axios } from "axios";
+import axios from "axios";
 import "../css/searchidpwd.css";
 
 function SearchId() {
@@ -29,22 +29,27 @@ function SearchId() {
     }
   }
 
+  const nextValue = {
+    name,
+    phoneNo,
+  };
+
   function onSearchHandler(event) {
-    const submitInfo = { name, phoneNo };
+    const submitInfo = nextValue;
     console.log(submitInfo);
     event.preventDefault();
-    let submitUrl = "http://localhost:9999/user/findid";
+    let submitUrl = "http://localhost:9999/passgym/user/searchid";
     axios
       .post(submitUrl, submitInfo)
       .then((response) => {
-        console.log("then문");
-        // alert(`아이디는 "${response.data.id}" 입니다.`);
+        console.log(response);
+        alert(`아이디는 "${response.data.msg}" 입니다.`);
         event.preventDefault();
       })
       .cath((error) => {
         if (error.response) {
           console.log("error" + error);
-          // alert(error.response.status);
+          alert(error.response.status);
           event.preventDefault();
         }
       });

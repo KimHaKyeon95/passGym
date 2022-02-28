@@ -45,7 +45,7 @@ function Usersignup() {
   });
 
   const [pwdChkMsg, setPwdChkMsg] = React.useState({
-    msg: "비밀번호를 입력하세요",
+    msg: "",
   });
 
   function onIdRegexChkHandler(value) {
@@ -63,7 +63,7 @@ function Usersignup() {
     // return id;
   }
 
-  useEffect(() => {}, [id]);
+  // useEffect(() => {}, [id]);
 
   let idDupChkUrl = "http://localhost:9999/passgym/user/iddupchk";
 
@@ -72,17 +72,25 @@ function Usersignup() {
       result: onIdRegexChkHandler(id),
       resultMsg: "",
     };
+
+    // const nextValue = {
+    //   id,
+    // };
+    // console.log(nextValue.id);
+
     if (!nextResult.result) {
       setIdRegexChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
       setResults({ ...chkResults, idChkResult: 0 });
       setIdChkMsg({ msg: "" });
       setResults({ ...chkResults, idDupChkResult: 0 });
     } else {
+      // console.log(nextResult.result);
+      console.log("아이디:", id);
       setResults({ ...chkResults, idChkResult: 1 });
       axios
         .get(idDupChkUrl, id)
         .then((response) => {
-          console.log(response);
+          console.log("res", response);
           if (response.data.status === 0) {
             setIdChkMsg({ msg: "이미 사용중인 아이디입니다." });
             setResults({ ...chkResults, idDupChkResult: 0 });
@@ -108,14 +116,15 @@ function Usersignup() {
 
   //비밀번호 실시간 체크
   function onPwdHandler(event) {
-    //console.log()
     const value = event.target.value;
     setPwd(value);
     const nextResult = {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
-    // console.log("result:", nextResult.result);
+    if (value == null) {
+      setPwdChkMsg({ msg: "비밀번호를 입력하세요" });
+    }
     if (!nextResult.result) {
       setPwdChkResult({
         resultMsg: "8~10자리 숫자와 영어 조합으로 입력하세요.",
@@ -179,6 +188,7 @@ function Usersignup() {
   }
 
   function onSubmitHandler(event) {
+    event.preventDefault();
     const submitInfo = [
       id,
       pwd,
@@ -189,27 +199,28 @@ function Usersignup() {
       address.addrDetail,
     ];
     console.log(submitInfo);
-    let submitUrl = "http://localhost:9999/passgym/user/";
-    if (
-      (chkResults.idChkResult,
-      chkResults.idDupChkResult,
-      chkResults.pwdChkResult === 1)
-    ) {
-      axios
-        .post(submitUrl, submitInfo)
-        .then(() => {
-          sessionStorage.setItem("id", submitInfo.id);
-          Navigate("/login");
-        })
-        .catch((error) => {
-          if (error.response) {
-            alert(error.response.status);
-            event.preventDefault();
-          }
-        });
-    } else {
-      alert("가입 실패하였습니다.");
-    }
+
+    //   let submitUrl = "http://localhost:9999/passgym/user/";
+    //   if (
+    //     (chkResults.idChkResult,
+    //     chkResults.idDupChkResult,
+    //     chkResults.pwdChkResult === 1)
+    //   ) {
+    //     axios
+    //       .post(submitUrl, submitInfo)
+    //       .then(() => {
+    //         sessionStorage.setItem("id", submitInfo.id);
+    //         Navigate("/login");
+    //       })
+    //       .catch((error) => {
+    //         if (error.response) {
+    //           alert(error.response.status);
+    //           event.preventDefault();
+    //         }
+    //       });
+    //   } else {
+    //     alert("가입 실패하였습니다.");
+    // }
   }
 
   return (
@@ -272,11 +283,11 @@ function Usersignup() {
                 placeholder="비밀번호 확인"
                 required
               />
-              <Form.Text className="text-muted msg">
-                {pwdChkResult.resultMsg}
-              </Form.Text>
-              <Form.Text className="text-muted msg">{pwdChkMsg.msg}</Form.Text>
             </Form.Group>
+            <Form.Text className="text-muted msg">
+              {pwdChkResult.resultMsg}
+            </Form.Text>
+            <Form.Text className="text-muted msg">{pwdChkMsg.msg}</Form.Text>
           </div>
           <Form.Group
             className="mb-3 usersignup__name"

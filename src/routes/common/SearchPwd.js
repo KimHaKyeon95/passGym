@@ -1,5 +1,5 @@
 import React from "react";
-import { axios } from "axios";
+import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import "../css/searchidpwd.css";
 
@@ -20,13 +20,16 @@ function SearchPwd() {
 
   function onSearchHandler(event) {
     const submitInfo = { id, phoneNo };
-    // console.log(submitInfo);
-    let submitUrl = "http://localhost:9999/user/findid";
+    console.log(submitInfo);
+    event.preventDefault();
+    let submitUrl = "http://localhost:9999/passgym/user/searchpwd";
 
     axios
       .post(submitUrl, submitInfo)
       .then((response) => {
-        alert(`비밀번호는 "${response.data.password}" 입니다.`);
+        event.preventDefault();
+        console.log(response);
+        alert(`비밀번호는 "${response.data.msg}" 입니다.`);
       })
       .cath((error) => {
         if (error.response) {
@@ -34,6 +37,7 @@ function SearchPwd() {
           event.preventDefault();
         }
       });
+    event.preventDefault();
   }
 
   return (

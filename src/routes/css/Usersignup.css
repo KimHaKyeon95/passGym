@@ -19,9 +19,9 @@
 
 .usersignup__email,
 .usersignup__pwdchk {
-  /* display: flex; */
-  margin-bottom: 2em;
+  margin-bottom: 0;
 }
+
 .usersignup__pwd,
 .usersignup__name,
 .usersignup__phoneNo,

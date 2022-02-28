@@ -35,16 +35,17 @@ function Login() {
     setPwd(event.target.value);
   }
 
-  // useEffect(() => {
-  //   if (localStorage.id !== undefined) {
-  //     setId(localStorage.id);
-  //     setIsRemember(true);
-  //   }
-  // });
+  //아이디 저장 체크한 경우
+  //아이디 수정입력안됨 오류 ----------------------
+  useEffect(() => {
+    if (localStorage.id) {
+      setId(localStorage.id);
+      setIsRemember(true);
+    }
+  });
 
   function onCheckHandler(event) {
     const nextIsRememberValue = event.target.checked;
-
     setIsRemember(nextIsRememberValue);
 
     if (nextIsRememberValue) {
@@ -55,10 +56,6 @@ function Login() {
       window.localStorage.removeItem("id", id);
     }
   }
-
-  // useEffect(() => {
-  //   id;
-  // });
 
   function onSubmitHandler(event) {
     console.log("login button clicked");
@@ -73,7 +70,7 @@ function Login() {
         .then((response) => {
           if (response.data.status == 1) {
             // console.log(response.data);
-            sessionStorage.setItem("user", response.data.user);
+            sessionStorage.setItem("userNo", response.data.user);
             navigate("/");
             navigate(0); //새로고침
             alert("로그인 성공하였습니다.");
@@ -102,10 +99,16 @@ function Login() {
     event.preventDefault();
   }
 
+  function onEnterHandler(event) {
+    if (event.key === "Enter") {
+      onSubmitHandler();
+    }
+  }
+
   return (
     <div>
       <div className="login">
-        <Form className="login__form">
+        <Form className="login__form" onKeyPress={onEnterHandler}>
           <>
             <ButtonGroup className="radioBtn">
               {radios.map((radio, idx) => (
