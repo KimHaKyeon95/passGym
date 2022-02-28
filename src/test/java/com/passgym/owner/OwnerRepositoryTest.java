@@ -1,26 +1,24 @@
 package com.passgym.owner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import com.passgym.gym.entity.Gym;
+import com.passgym.repository.GymRepository;
+import com.passgym.owner.entity.Owner;
+import com.passgym.repository.OwnerRepository;
+import com.passgym.pass.entity.Pass;
+import com.passgym.pass.entity.PassPK;
+import com.passgym.repository.PassRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import com.passgym.gym.entity.Gym;
-import com.passgym.owner.entity.Owner;
-import com.passgym.owner.repository.OwnerRepository;
-import com.passgym.pass.entity.Pass;
-import com.passgym.pass.entity.PassPK;
-import com.passgym.pass.repository.PassRepository;
-import com.passgym.repository.GymRepository;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 
 @SpringBootTest
 public class OwnerRepositoryTest {
@@ -33,6 +31,13 @@ public class OwnerRepositoryTest {
 
     @Autowired
     PassRepository passRepository;
+
+    @Test
+    public void ownerFindTest(){
+
+        Optional<Owner> owner = ownerRepository.findOwnerById("id1@naver.com");
+        assertEquals("1", owner.get().getOwnerNo());
+    }
 
     @Test
     public void OwnerSaveTest(){
