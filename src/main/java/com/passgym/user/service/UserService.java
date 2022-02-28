@@ -123,9 +123,7 @@ public class UserService {
 			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}
-
-	@Autowired
-	UserRepository userRepository;
+	}
 	
 	public User findById(int userNo) throws FindException{
 		return userRepository.findById(userNo).get();
