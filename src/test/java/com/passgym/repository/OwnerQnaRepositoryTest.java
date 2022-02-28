@@ -52,7 +52,7 @@ class OwnerQnaRepositoryTest {
 	@Commit
 	void findByOwnerNoTest() {
 		String ownerNo = "1111111111";
-		List<OwnerQna> oqList = repository.findByOwnerNoIs(ownerNo);
+		List<OwnerQna> oqList = repository.findByOwnerNo(ownerNo);
 		//assertTrue(oqList.size() > 0);
 		for(OwnerQna oq: oqList) {
 			logger.info(oq.getQnaNo() + " : " + oq.getTitle() + " : " + oq.getContent());
