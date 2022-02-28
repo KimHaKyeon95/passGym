@@ -114,8 +114,6 @@ public class UserService {
 		}
 	}
 	
-
-	
 	public User findById(int userNo) throws FindException{
 		User user;
 		try {
