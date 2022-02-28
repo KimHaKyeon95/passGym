@@ -26,11 +26,11 @@
 
 .login__submitBtn {
   display: flex;
+  justify-content: center;
   width: 100%;
   margin-bottom: 10px;
   padding: 15px 0 15px;
   font-weight: 700;
-  /* text-align: center; */
 }
 
 .login__findBtn {

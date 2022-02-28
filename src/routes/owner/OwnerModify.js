@@ -1,5 +1,5 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "../css/GymRegist.css";
+import "../css/gymRegist.css";
 import { useEffect,useState } from "react";
 import axios from "axios";
 

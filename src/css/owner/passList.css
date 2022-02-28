@@ -1,0 +1,18 @@
+.input-group-text{
+    font-size: 10px;
+    height: 38px;
+    margin-top: 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#pass__form{
+    border: solid 1px;
+    border-radius: 8px;
+    margin: 6px 0px;
+}
+
