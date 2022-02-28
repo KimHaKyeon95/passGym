@@ -66,9 +66,11 @@ public class UserController {
 	public void signup(@RequestBody Map <String, Object> requestMap){
 //		String resultMsg = "";
 //		int status = 0;
+//		
 //		try {
 //			String id = (String)requestMap.get("id");
 //			String pwd = (String)requestMap.get("pwd");
+//			User user = service.signup();
 //			user.setUserStatus(1);
 //			service.signup(user);
 //			status = 1;
@@ -111,10 +113,15 @@ public class UserController {
 		return returnMap;
 	}
 	
-	@RequestMapping("logout")
-	public ResponseEntity logout(HttpSession session) {
+	@GetMapping("logout")
+	public Object logout(HttpSession session) {
+		Map <String, Object> returnMap = new HashMap<>();
+		String resultMsg = "s";
+		int status = 0;
 		session.removeAttribute("user");
-		return new ResponseEntity<>(HttpStatus.OK);
+		returnMap.put("msg", resultMsg);
+		returnMap.put("status", status);
+		return returnMap;
 	}
 	
 	@PostMapping("searchid")
@@ -145,11 +152,7 @@ public class UserController {
 		return returnMap;
 	}
 	
-//	@GetMapping("removeuser")
-//	@ResponseBody
-//	public Map <String, Object> removeuser(String id, String pwd){
-//		
-//	}
+	
 
 	
 	@GetMapping("/")
