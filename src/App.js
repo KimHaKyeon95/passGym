@@ -17,7 +17,8 @@ import GymRegist from "./routes/owner/GymRegist";
 import OwnerHome from "./routes/owner/OwnerHome";
 import PassInfo from "./routes/owner/PassInfo";
 import OwnerModify from "./routes/owner/OwnerModify";
-import OwnerWrite from "./routes/owner/OwnerWrite";
+import OwnerQnaList from "./routes/owner/OwnerQnaList";
+import OwnerQna from "./routes/owner/OwnerQna";
 
 function App() {
   return (
@@ -67,7 +68,10 @@ function App() {
           <Route path="/owner/modify" element={<OwnerModify />} />
         </Routes>
         <Routes>
-          <Route path="/owner/write" element={<OwnerWrite />} />
+          <Route path="/ownerqnalist" element={<OwnerQnaList />} />
+        </Routes>
+        <Routes>
+          <Route path="/ownerqna" element={<OwnerQna />} />
         </Routes>
         {/* <Routes>
           <Route path="/owner/board" element={<OwnerBoard />} />
