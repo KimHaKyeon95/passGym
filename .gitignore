@@ -100,3 +100,5 @@ passgymback/src/main/resources/mybatisConfig/mybatis-config.xml
 .idea/encodings.xml
 .idea/compiler.xml
 .idea/
+.project
+.classpath
