@@ -1,6 +1,7 @@
 package com.passgym.user.service;
 
 
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import com.passgym.user.entity.User;
 
 @Service
 public class UserService {
-
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -123,5 +123,12 @@ public class UserService {
 			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}
+
+	@Autowired
+	UserRepository userRepository;
+	
+	public User findById(int userNo) throws FindException{
+		return userRepository.findById(userNo).get();
+
 	}
 }

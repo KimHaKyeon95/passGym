@@ -1,25 +1,23 @@
 package com.passgym.gym.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
 import com.passgym.pass.entity.Pass;
+import com.passgym.repository.GymRepository;
+import com.passgym.repository.OwnerRepository;
 import com.passgym.service.GymService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("gym/*")
@@ -32,6 +30,15 @@ public class GymController {
 	
 	@Autowired
 	ObjectMapper objectMapper;
+
+	@Autowired
+	GymRepository gymRepository;
+
+	@Autowired
+	OwnerRepository ownerRepository;
+
+	@Autowired
+	GymService gymService;
 	
 	@GetMapping("/{ownerNo}")
 	public Object gymDetail(@PathVariable(name="ownerNo") String ownerNo) {
@@ -82,12 +89,26 @@ public class GymController {
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
-		} catch (JsonProcessingException e) {
+		}catch (JsonProcessingException e) {
 			e.printStackTrace();
 			Map<String, Object> returnMap = new HashMap<>();
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
 		}
+	}
+
+	@PostMapping(value = "/gymregist", consumes = "multipart/form-data")
+	public String saveGym(@RequestParam("files") List<MultipartFile> files,
+						@RequestParam("detailFiles") List<MultipartFile> detailFiles,
+						@RequestParam("gymInfo") String gymInfo,
+						@RequestParam("passes") String passes) {
+		try{
+			gymService.gymSetting(files, detailFiles, gymInfo, passes );
+		}catch(Exception e){
+			e.printStackTrace();
+			return "error";
+		}
+		return "ok";
 	}
 }

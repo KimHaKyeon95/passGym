@@ -1,14 +1,13 @@
 package com.passgym.user.entity;
 
-import java.util.List;
-
-import javax.persistence.*;
-
 import com.passgym.gympass.entity.GymPass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Getter	@Setter
 @AllArgsConstructor
@@ -22,8 +21,8 @@ import lombok.Setter;
 )
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-			generator = "USER_NO_SEQ_GENARATOR")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+//			generator = "USER_NO_SEQ_GENARATOR")
 	private int userNo;
 
 	private String id; //사용자아이디
