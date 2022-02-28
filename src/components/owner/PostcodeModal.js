@@ -6,9 +6,6 @@ import DaumPostcode from 'react-daum-postcode';
 const Postcode = (props) => {
 
   let zipCode = "";
-  let addrResult = "";
-
-  
 
   const handleComplete = (data) => {
 

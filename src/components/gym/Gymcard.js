@@ -1,35 +1,34 @@
-import { Col, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function Gymcard({ ownerNo, name, addr, avgStar, distance }) {
+function Gymcard({  num, ownerNo, name, addr, avgStar, distance }) {
+
+  let addrArray = addr.split("(");
+  let stringDistance = String(distance);
+  let usingDistance = stringDistance.substring(0, 4);
   return (
-    <Col>
+    <div className="cards">
       <Link
         to={`/gym/${ownerNo}`}
         style={{ textDecoration: "none", color: "black" }}
       >
-        <Card>
-          <Card.Img
-            variant="top"
-            width="286px"
-            height="180px"
-            style={{ objectFit: "cover", overflow: "hidden" }}
-            src={require("../../images/" + ownerNo + ".jpg")}
-          />
+        <Card className="cards">
           <Card.Body style={{ paddingTop: "2px" }}>
-            <Card.Text style={{ marginBottom: "0" }}>no.{ownerNo} </Card.Text>
+            <Card.Text style={{ marginBottom: "0" }}>no.{num} </Card.Text>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
               <span>★{avgStar}</span>
               <br />
-              <span>{addr}</span>
+              <span>{addrArray[0]}</span>
               <br />
-              <span>거리 : {distance} km</span>
+              <span>거리 : {usingDistance} km</span>
             </Card.Text>
           </Card.Body>
         </Card>
       </Link>
-    </Col>
+    </div>
+      
+    
   );
 }
 
