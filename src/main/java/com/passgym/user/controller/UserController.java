@@ -12,19 +12,19 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.exception.AddException;
 import com.passgym.exception.FindException;
 import com.passgym.exception.ModifyException;
 import com.passgym.exception.RemoveException;
@@ -65,25 +65,25 @@ public class UserController {
 	
 	@PostMapping("")
 	public void signup(@RequestBody Map <String, Object> requestMap){
-//		String resultMsg = "";
-//		int status = 0;
-//		
-//		try {
-//			String id = (String)requestMap.get("id");
-//			String pwd = (String)requestMap.get("pwd");
-//			User user = service.signup();
-//			user.setUserStatus(1);
-//			service.signup(user);
-//			status = 1;
-//			resultMsg = "가입 성공";
-//		} catch (AddException e) {
-//			e.printStackTrace();
-//			resultMsg = e.getMessage(); //"가입 실패";
-//		}
-//		Map <String, Object> returnMap = new HashMap<>();
-//		returnMap.put("msg", resultMsg);
-//		returnMap.put("status", status);
-//		return returnMap;
+		String resultMsg = "";
+		int status = 0;
+		
+		try {
+			String id = (String)requestMap.get("id");
+			String pwd = (String)requestMap.get("pwd");
+			User user = service.signup();
+			user.setUserStatus(1);
+			service.signup(user);
+			status = 1;
+			resultMsg = "가입 성공";
+		} catch (AddException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage(); //"가입 실패";
+		}
+		Map <String, Object> returnMap = new HashMap<>();
+		returnMap.put("msg", resultMsg);
+		returnMap.put("status", status);
+		return returnMap;
 	}
 	
 	@PostMapping("login")
@@ -126,13 +126,19 @@ public class UserController {
 	}
 	
 	@PostMapping("searchid")
-	@ResponseBody
-	public Map <String, Object> searchid(String name, String phoneNo) throws FindException {
+	public Object searchid(@RequestBody Map <String, String> request) {
 		String resultMsg = "";
 		int status = 0;
+		String name = request.get("name");
+		String phoneNo = request.get("phoneNo");
+		try {
 		String userId = service.searchid(name, phoneNo);
 		status = 1;
 		resultMsg = "아이디 " + userId;
+		} catch(FindException e) {
+			e.printStackTrace();
+			resultMsg = "아이디 찾기 실패";
+		}
 		Map <String, Object> returnMap = new HashMap<>();
 		returnMap.put("msg", resultMsg);
 		returnMap.put("status", status);
@@ -140,13 +146,19 @@ public class UserController {
 	}
 	
 	@PostMapping("searchpwd")
-	@ResponseBody
-	public Map <String, Object> searchpwd(String id, String phoneNo) throws FindException {
+	public Object searchpwd(@RequestBody Map <String, String> request) {
 		String resultMsg = "";
 		int status = 0;
+		String id = request.get("id");
+		String phoneNo = request.get("phoneNo");
+		try {
 		String userPwd = service.searchid(id, phoneNo);
 		status = 1;
 		resultMsg = "비밀번호 " + userPwd;
+		} catch(FindException e) {
+			e.printStackTrace();
+			resultMsg = "비밀번호 찾기 실패";
+		}
 		Map <String, Object> returnMap = new HashMap<>();
 		returnMap.put("msg", resultMsg);
 		returnMap.put("status", status);
