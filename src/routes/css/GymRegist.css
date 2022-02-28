@@ -1,3 +1,7 @@
+.title{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
 .gym__regist{
     display: flex;
     justify-content: center;
@@ -17,6 +21,7 @@
 .gym__regist-phone-no,
 .gym__addr,
 .gym__addr-detail,
+.gym__name,
 .gym__info,
 .gym__notice,
 .gym__operating-time,
@@ -24,7 +29,8 @@
 .gym__equip-list,
 .gym__etc{
     margin-bottom: 10px;
-    width: 460px;
+    margin-top: 5px;
+    width: 480px;
 }
 
 .profile__preview{
@@ -52,7 +58,7 @@
 }
 
 input[class*="pass"]{
-    margin: 10px 0px;
+    margin: 5px 0px;
     display: flex;
     justify-content: center;
 }
@@ -63,4 +69,11 @@ div[class*="pass"]{
 .gym__pass{
     border: 1px solid;
     border-radius: 5px;
+}
+
+.form-label{
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-bottom: 3px;
 }

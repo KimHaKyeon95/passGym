@@ -1,10 +1,9 @@
-import "../css/Ownersignup.css";
+import "../css/ownerSignup.css";
 import {Button, Form} from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import OwnerNoChkModal from "../../components/owner/OwnerNoChkModal";
 import PostcodeModal from "../../components/owner/PostcodeModal";
-import { Link } from "react-router-dom";
 
 function Ownersignup() {
   const [values, setValues] = useState({
@@ -64,7 +63,7 @@ function Ownersignup() {
   })
     
     const idDupChk = () => {
-      let idDupChkUrl = "http://localhost:8082/passgym/ownersignup/iddupchk";
+      let idDupChkUrl = "http://localhost:8082/passgym/owner/iddupchk";
       if(!(chkIdResult.result)){
         setValues({...values, id: ""})
         alert("4~10자리의 영문과 숫자조합을 입력해주세요.");
@@ -100,7 +99,7 @@ function Ownersignup() {
     const nextValues = {
       ...values,
       [name]: value
-  }
+    }
     setValues(nextValues);
 
     const nextResult = {
@@ -152,15 +151,12 @@ function Ownersignup() {
   function onSubmit(event){
     const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
     const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
-    alert(submitInfo);
-    let submitUrl = "http://localhost:8082/passgym/ownersignup/signup";
+    let submitUrl = "http://localhost:8082/passgym/owner/signup";
     if(forSubmitConfirm.idDupChkResult, 
       forSubmitConfirm.ownerNoChkResult, 
       forSubmitConfirm.pwdChkResult === 1){
-        alert("if Test");
       axios.post(submitUrl, submitInfo)
-      .then((response) => {
-        alert("test"); //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
+      .then((response) => {//session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
         if(response.data === "OwnerNo is exists"){
           alert("이미 존재하는 사업자입니다.");
           event.preventDefault();
@@ -173,11 +169,9 @@ function Ownersignup() {
           sessionStorage.setItem("lon", submitInfo.lon);
           window.location.href = "../ownersignup/gymregist";
         }
-        alert("testEnd");
       }
       ).catch((error) => {
       if(error.response){
-          alert(error.response.status);
           event.preventDefault(); //새로고침 막음
         }
       })
@@ -186,44 +180,6 @@ function Ownersignup() {
     }
     event.preventDefault();
   }
-
-  // 테스트용
-  // function onSubmit(event){
-  //   const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
-  //   let testData = {
-  //     "id":"id123",
-  //     "pwd":"kw630916",
-  //     "pwdChk":"kw630916",
-  //     "ownerNo":"7838101646",
-  //     "ownerName":"전민규",
-  //     "zipCode":"15020",
-  //     "addr":"경기 시흥시 함송로 8",
-  //     "addrDetail":"ㅁㅁㅁㅁ"
-  //   }
-  //   const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
-  //   let submitUrl = "http://localhost:8082/passgym/ownersignup/signup";
-  //   // if(forSubmitConfirm.idDupChkResult, 
-  //   //   forSubmitConfirm.ownerNoChkResult, 
-  //   //   forSubmitConfirm.pwdChkResult === 1){
-  //     axios.post(submitUrl, testData)
-  //     .then((response) => { //session에 주소정보를 갖고 헬스장 등록페이지에서 session의 정보를 꺼내쓰도록 함
-  //       sessionStorage.setItem("id", submitInfo.id);
-  //       sessionStorage.setItem("addr", submitInfo.addr);
-  //       sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
-  //     }
-  //     ).catch((error) => {
-  //     if(error.response){
-  //         alert(error.response.status);
-  //         event.preventDefault(); //새로고침 막음
-  //       }
-  //     })
-  //   // } else {
-  //   //   alert("가입 실패");
-  //   // }
-  // }
-
-  
-
 
   const [ownerNoChkodalShow, setOwnerNoChkModalShow] = useState(false);
   const [postcodeModalShow, setPostcodeModalShow] = useState(false);
@@ -241,7 +197,8 @@ function Ownersignup() {
                             chkId(event);
                           }} 
                           value={values.id} 
-                          placeholder="아이디" required/> 
+                          placeholder="아이디" 
+                          autoComplete="off" required/> 
           </Form.Group>
           <Button onClick={idDupChk} className="ownersignup_iddupchk-btn">중복체크</Button>
         </div>
@@ -290,14 +247,15 @@ function Ownersignup() {
             <Button className="ownersignup__search-owneraddr-btn" onClick={() => setPostcodeModalShow(true)} variant="primary">
               검색
             </Button>
+            
           </div>
             <Form.Group className="ownersignup__owneraddr1" controlId="ownersignup__owneraddr1">
                 <Form.Control  placeholder="주소" value={ownerAddr.addr} readOnly required/>
             </Form.Group>
-            <Form.Group className="ownersignup__owneraddr2" controlId="ownersignup__owneraddr2">
-                <Form.Control  placeholder="상세주소" name="addrDetail" onChange={onAddrDetailChange} required/>
-            </Form.Group>
+                <Form.Control className="ownersignup__owneraddr2" placeholder="상세주소" name="addrDetail" 
+                              autoComplete="off" onChange={onAddrDetailChange} required/>           
         </div>
+        
           <Button className="ownersignup__submit" variant="primary" onClick={onSubmit} type="submit">
             회원가입
           </Button>

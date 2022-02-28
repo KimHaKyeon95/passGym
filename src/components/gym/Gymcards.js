@@ -1,11 +1,25 @@
 import { Container, Row, Spinner, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import Gymcard from "../../components/gym/Gymcard";
-function Gymcards({ type }) {
+import axios from "axios";
+function Gymcards(props) {
+
   const [loading, setLoading] = useState(true);
   const [gyms, setGyms] = useState({});
 
   const getGyms = () => {
+    let findGymUrl = "localhost:8082/passgym/gym/sort-gym";
+    axios.get(findGymUrl, {
+      params : {
+        lat : props.lat,
+        lon : props.lon
+      }
+    }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      alert(error.status);
+    })
+
     const json = {
       data: {
         gyms: [
@@ -69,7 +83,7 @@ function Gymcards({ type }) {
       ) : (
         <Container style={{ marginBottom: "50px" }}>
           <Row>
-            <Col style={{ margin: "10px", fontSize: "24px" }}>{type}</Col>
+            <Col style={{ margin: "10px", fontSize: "24px" }}>{props.type}</Col>
           </Row>
           <Row xs={2} md={3} lg={4} className="g-4">
             {gyms.map((gym) => (
