@@ -35,18 +35,13 @@ function Login() {
     setPwd(event.target.value);
   }
 
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    pwd: "p1",
-  };
-
   // useEffect(() => {
   //   if (localStorage.id !== undefined) {
   //     setId(localStorage.id);
   //     setIsRemember(true);
   //   }
   // });
+
   function onCheckHandler(event) {
     const nextIsRememberValue = event.target.checked;
 
@@ -60,6 +55,10 @@ function Login() {
       window.localStorage.removeItem("id", id);
     }
   }
+
+  // useEffect(() => {
+  //   id;
+  // });
 
   function onSubmitHandler(event) {
     console.log("login button clicked");
@@ -76,6 +75,7 @@ function Login() {
             // console.log(response.data);
             sessionStorage.setItem("user", response.data.user);
             navigate("/");
+            navigate(0); //새로고침
             alert("로그인 성공하였습니다.");
           } else {
             alert("로그인 실패하였습니다.");
@@ -126,7 +126,7 @@ function Login() {
             <br />
           </>
           <div className="login__input">
-            <Form.Group className="login__id" controlId="login__id">
+            <Form.Group className="mb-3 login__id" controlId="login__id">
               <Form.Control
                 name="id"
                 onChange={onIdHandler}
@@ -135,10 +135,8 @@ function Login() {
                 placeholder="아이디(이메일)"
                 required
               />
-              {/* <div className="msg">{idChkMsg.msg}</div> */}
-              {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>
-            <Form.Group className="login__pwd" controlId="login__pwd">
+            <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
@@ -164,7 +162,7 @@ function Login() {
             >
               로그인
             </Button>
-            <Link to="../searchIdPwd">
+            <Link to="../searchidpwd">
               <Button className="login__findBtn" variant="link">
                 이메일/비밀번호 찾기
               </Button>

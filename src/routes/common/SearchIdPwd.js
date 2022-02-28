@@ -17,20 +17,12 @@ function SearchIdPwd() {
       activeKey={key}
       onSelect={onTabHandler}
       className="mb-3"
-      // style={{ width: "460px" }}
+      style={{ width: "460px" }}
     >
-      <Tab
-        eventKey="searchId"
-        title="아이디 찾기"
-        // style={{ width: "230px" }}
-      >
+      <Tab eventKey="searchId" title="아이디 찾기">
         <SearchId />
       </Tab>
-      <Tab
-        eventKey="searchPwd"
-        title="비밀번호 찾기"
-        // style={{ width: "230px" }}
-      >
+      <Tab eventKey="searchPwd" title="비밀번호 찾기">
         <SearchPwd />
       </Tab>
     </Tabs>

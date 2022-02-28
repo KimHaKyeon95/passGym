@@ -6,31 +6,29 @@ import axios from "axios";
 
 function Header() {
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  function onLogoutHandler() {
+  function onLogoutHandler(event) {
     console.log("로그아웃 버튼 클릭");
     axios
-      .get("/logout")
-      .then((response) => {
-        console.log(response.data);
+      .get("http://localhost:9999/passgym/user/logout")
+      .then(() => {
         sessionStorage.removeItem("user");
         navigate("/");
+        navigate(0);
       })
       .catch((error) => {
         console.log(error.response.status);
+        event.preventDefault();
       });
   }
 
   function showUser() {
-    const user = {
-      data: {
-        name: 
-      }
+    if (sessionStorage.length !== 0) {
+      setShow(true);
+    } else if (sessionStorage.user !== null) {
+      setShow(false);
     }
-    setUser(json.data.user);
-    setShow(true);
   }
 
   useEffect(() => {
@@ -55,23 +53,28 @@ function Header() {
             <Link to="/" className="nav-link">
               문의하기
             </Link>
-            <Link to={"/mypage"} className="nav-link">
-              마이페이지
-            </Link>
-            <Link to={"/"} className="nav-link">
-              <Button
-                variant="outline-light"
-                size="sm"
-                onClick={onLogoutHandler}
-              >
-                로그아웃
-              </Button>
-            </Link>
-            <Link to={"/login"} className="nav-link">
-              <Button variant="outline-light" size="sm">
-                로그인
-              </Button>
-            </Link>
+            {show ? (
+              <>
+                <Link to={"/mypage"} className="nav-link">
+                  마이페이지
+                </Link>
+                <Link to={"/"} className="nav-link">
+                  <Button
+                    variant="outline-light"
+                    size="sm"
+                    onClick={onLogoutHandler}
+                  >
+                    로그아웃
+                  </Button>
+                </Link>{" "}
+              </>
+            ) : (
+              <Link to={"/login"} className="nav-link">
+                <Button variant="outline-light" size="sm">
+                  로그인
+                </Button>
+              </Link>
+            )}
           </Nav>
         </Container>
       </Navbar>

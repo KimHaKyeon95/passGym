@@ -1,6 +1,7 @@
 import React from "react";
 import { axios } from "axios";
 import { Form, Button } from "react-bootstrap";
+import "../css/searchidpwd.css";
 
 function SearchPwd() {
   const [id, setId] = React.useState("");
@@ -17,42 +18,27 @@ function SearchPwd() {
     }
   }
 
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    pwd: "1qaz2wsx",
-    name: "패스짐",
-    phoneNo: "01012345678",
-  };
-
   function onSearchHandler(event) {
-    const submitInfo = Object.assign(id, phoneNo);
-    console.log(submitInfo);
-    let submitUrl = "http://localhost:3000/searchidpwd/findid";
-    if (response.id === submitInfo.id) {
-      if (response.phoneNo === submitInfo.phoneNo) {
-        axios
-          .post(submitUrl, submitInfo)
-          .then(() => {
-            alert(`비밀번호는 "${response.password}" 입니다.`);
-          })
-          .cath((error) => {
-            if (error.response) {
-              alert(error.response.status);
-              event.preventDefault();
-            }
-          });
-      } else {
-        alert("아이디를 찾을 수 없습니다.");
-      }
-    } else {
-      alert("아이디를 찾을 수 없습니다.");
-    }
+    const submitInfo = { id, phoneNo };
+    // console.log(submitInfo);
+    let submitUrl = "http://localhost:9999/user/findid";
+
+    axios
+      .post(submitUrl, submitInfo)
+      .then((response) => {
+        alert(`비밀번호는 "${response.data.password}" 입니다.`);
+      })
+      .cath((error) => {
+        if (error.response) {
+          alert(error.response.status);
+          event.preventDefault();
+        }
+      });
   }
 
   return (
-    <div>
-      <Form>
+    <div className="container">
+      <Form className="form">
         <Form.Group className="mb-3" controlId="Id">
           <Form.Control
             name="id"
@@ -70,7 +56,12 @@ function SearchPwd() {
             required
           />
         </Form.Group>
-        <Button className="resetbtn" onClick={onSearchHandler} type="submit">
+        <Button
+          className="button"
+          onClick={onSearchHandler}
+          type="submit"
+          variant="outline-dark"
+        >
           검색
         </Button>
       </Form>

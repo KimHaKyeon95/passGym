@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { axios } from "axios";
+import "../css/searchidpwd.css";
 
 function SearchId() {
   const [name, setName] = React.useState("");
@@ -28,43 +29,30 @@ function SearchId() {
     }
   }
 
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    pwd: "1qaz2wsx",
-    name: "패스짐",
-    phoneNo: "01012345678",
-  };
-
   function onSearchHandler(event) {
-    const submitInfo = Object.assign(name, phoneNo);
+    const submitInfo = { name, phoneNo };
     console.log(submitInfo);
-    let submitUrl = "http://localhost:3000/searchidpwd/findid";
-    if (response.name === submitInfo.name) {
-      if (response.phoneNo === submitInfo.phoneNo) {
-        alert(`아이디는 "${response.id}" 입니다.`);
-        // axios
-        //   .post(submitUrl, submitInfo)
-        //   .then(() => {
-        //     alert(`아이디는 "${response.id}" 입니다.`);
-        //   })
-        //   .cath((error) => {
-        //     if (error.response) {
-        //       alert(error.response.status);
-        //       event.preventDefault();
-        //     }
-        //   });
-      } else {
-        alert("아이디를 찾을 수 없습니다.");
-      }
-    } else {
-      alert("아이디를 찾을 수 없습니다.");
-    }
+    event.preventDefault();
+    let submitUrl = "http://localhost:9999/user/findid";
+    axios
+      .post(submitUrl, submitInfo)
+      .then((response) => {
+        console.log("then문");
+        // alert(`아이디는 "${response.data.id}" 입니다.`);
+        event.preventDefault();
+      })
+      .cath((error) => {
+        if (error.response) {
+          console.log("error" + error);
+          // alert(error.response.status);
+          event.preventDefault();
+        }
+      });
   }
 
   return (
-    <div>
-      <Form>
+    <div className="container">
+      <Form className="form">
         <Form.Group className="mb-3" controlId="findByName">
           <Form.Control
             name="name"
@@ -73,9 +61,6 @@ function SearchId() {
             placeholder="이름"
             required
           />
-          {/* <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text> */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="findByPhoneNo">
@@ -89,10 +74,10 @@ function SearchId() {
           />
         </Form.Group>
         <Button
-          className="searchbtn"
+          className="button"
           onClick={onSearchHandler}
           type="submit"
-          sytle={{ width: "100%" }}
+          variant="outline-dark"
         >
           검색
         </Button>
