@@ -54,14 +54,14 @@ function App() {
          <Route path="/owner/passInfo" element={<PassInfo />} />  
         </Routes>
         <Routes>
-         <Route path="/owner/modify" element={<OwnerModify />} />  
+         <Route path="/owner/modify/" element={<OwnerModify />} />  
         </Routes>
         <Routes>
-         <Route path="/owner/write" element={<OwnerWrite />} />  
+         <Route path="/owner/write/:ownerNo" element={<OwnerWrite />} />  
         </Routes>
-        <Routes>
+        {/* <Routes>
          <Route path="/owner/board" element={<OwnerBoard />} />  
-        </Routes>
+        </Routes> */}
       </section>
       <Footer />
     </Router>

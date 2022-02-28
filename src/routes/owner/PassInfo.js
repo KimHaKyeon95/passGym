@@ -4,17 +4,15 @@ import PassItem from '../../components/owner/PassItem';
 const PassInfo = () => {
     
   const [pass, setPass] = useState([]);
-  const [loading, setLoading] = useState(true);
    
   // const [SelectedPass, setSelectedPass] = useState();
   const getPass = () => {
-    const url = "http://localhost:9990/gym/gympass/user" ;
+    const url = "http://localhost:9979/gym/gympass/user" ;
     axios
       .get(url)
       .then(function (response) {
         console.log(response);
         setPass(response.data);
-        setLoading(false);
       })
       .catch(function (error) {
         alert(error.response.status);
