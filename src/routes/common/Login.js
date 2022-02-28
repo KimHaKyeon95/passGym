@@ -4,8 +4,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/login.css";
-import HorizonLine from "./HorizonLine";
-
+import HorizonLine from "../../components/common/HorizonLine";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
@@ -17,7 +16,7 @@ function Login() {
   const [pwd, setPwd] = useState("");
   const [isRemember, setIsRemember] = useState(false);
 
-  const [submit, setSubmit] = useState(false);
+  // const [submit, setSubmit] = useState(false);
   // const [error, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -33,23 +32,17 @@ function Login() {
     setPwd(event.target.value);
   }
 
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    pwd: "p1",
-  };
-
-  //이거 때문에 id의 value가 ""으로 설정되어 아이디가 입력되지 않는 현상이 발생
-  // useEffect(() => {
-  //   if (localStorage.id !== undefined) {
-  //     setId(localStorage.id);
-  //     setIsRemember(true);
-  //   }
-  // });
+  //아이디 저장 체크한 경우
+  //아이디 수정입력안됨 오류 ----------------------
+  useEffect(() => {
+    if (localStorage.id) {
+      setId(localStorage.id);
+      setIsRemember(true);
+    }
+  });
 
   function onCheckHandler(event) {
     const nextIsRememberValue = event.target.checked;
-
     setIsRemember(nextIsRememberValue);
 
     if (nextIsRememberValue) {
@@ -57,33 +50,38 @@ function Login() {
       window.localStorage.setItem("id", id);
     } else {
       console.log("isRemeberValue false");
+      window.localStorage.removeItem("id", id);
     }
   }
 
   function onSubmitHandler(event) {
     console.log("login button clicked");
+    console.log(radioValue);
     const submitInfo = { id, pwd };
-    let userSubmitUrl = "http://localhost:3000/userlogin/login";
-    let ownerSubmitUrl = "http://localhost:8082/passgym/owner/login";
+
+    // console.log(submitInfo);
+    let userSubmitUrl = "http://localhost:9999/passgym/user/login";
+    // let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
+
     if (radioValue == 1) {
-      if (response.id === submitInfo.id) {
-        console.log("사용자 로그인");
-        sessionStorage.setItem("id", submitInfo.id);
-        navigate("/");
-        // axios
-        //   .post(userSubmitUrl, submitInfo)
-        //   .then(() => {
-        //     sessionStorage.setItem("id", submitInfo.id);
-        //     navigate("/");
-        //   })
-        //   .catch((error) => {
-        //     if (error.response) {
-        //       alert(error.response.status);
-        //     }
-        //   });
-      } else {
-        alert("로그인 실패");
-      }
+      axios
+        .post(userSubmitUrl, submitInfo)
+        .then((response) => {
+          if (response.data.status == 1) {
+            // console.log(response.data);
+            sessionStorage.setItem("userNo", response.data.user);
+            navigate("/");
+            navigate(0); //새로고침
+            alert("로그인 성공하였습니다.");
+          } else {
+            alert("로그인 실패하였습니다.");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
     } else if (radioValue == 2) {
         axios
           .post(ownerSubmitUrl, submitInfo)
@@ -110,10 +108,16 @@ function Login() {
     event.preventDefault();
   }
 
+  function onEnterHandler(event) {
+    if (event.key === "Enter") {
+      onSubmitHandler();
+    }
+  }
+
   return (
     <div>
       <div className="login">
-        <Form className="login__form">
+        <Form className="login__form" onKeyPress={onEnterHandler}>
           <>
             <ButtonGroup className="radioBtn">
               {radios.map((radio, idx) => (
@@ -152,8 +156,9 @@ function Login() {
             />}
               {/* <div className="msg">{idChkMsg.msg}</div> */}
               {/* <div className="msg">{idChkResult.resultMsg}</div> */}
+
             </Form.Group>
-            <Form.Group className="login__pwd" controlId="login__pwd">
+            <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
@@ -179,7 +184,7 @@ function Login() {
             >
               로그인
             </Button>
-            <Link to="../searchIdPwd">
+            <Link to="../searchidpwd">
               <Button className="login__findBtn" variant="link">
                 이메일/비밀번호 찾기
               </Button>

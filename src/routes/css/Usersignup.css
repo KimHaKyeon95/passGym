@@ -19,25 +19,24 @@
 
 .usersignup__email,
 .usersignup__pwdchk {
-  /* display: flex; */
-  margin-bottom: 2em;
+  margin-bottom: 0;
 }
+
 .usersignup__pwd,
 .usersignup__name,
 .usersignup__phoneNo,
 .usersignup__phoneNoVarifCode,
 .usersignup__zipcode,
 .usersignup__addr,
-.usersignup__addr2 {
+.usersignup__addrDetail {
   margin-bottom: 10px;
 }
 
-.usersignup__phonenovarifbtn {
+.usersignup__phoneNoVarifBtn {
   display: inline-block;
 }
 
 .usersignup__submitBtn {
-  display: flex;
   width: 100%;
   margin-bottom: 10px;
   padding: 15px 0 15px;
@@ -45,14 +44,14 @@
   text-align: center;
 }
 
-.msg {
+/* .msg {
   margin-top: 9px;
   margin-bottom: -2px;
   margin-left: 9px;
-}
+} */
 
-.snsBtn {
+/* .snsBtn {
   display: inline-block;
   width: 60vw;
   height: 60vh;
-}
+} */

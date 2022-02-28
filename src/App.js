@@ -20,6 +20,7 @@ import OwnerModify from "./routes/owner/OwnerModify";
 import OwnerQnaList from "./routes/owner/OwnerQnaList";
 import OwnerQna from "./routes/owner/OwnerQna";
 
+
 function App() {
   return (
     <Router>
