@@ -17,7 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import com.passgym.gym.entity.Gym;
 import com.passgym.gympass.entity.GymPass;
 import com.passgym.owner.entity.Owner;
-import com.passgym.owner.repository.OwnerRepository;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
 import com.passgym.payment.entity.Payment;
@@ -153,7 +152,7 @@ public class GymRepositoryTests {
 		gymRepository.save(gym);
 
 	}
-}
+ 
 	
 	
 	

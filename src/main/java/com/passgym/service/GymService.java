@@ -1,7 +1,5 @@
 package com.passgym.service;
 
- 
- 
 import java.util.List;
 import java.util.Optional;
 
@@ -35,29 +33,28 @@ public class GymService {
 
 	@Autowired
 	ObjectMapper mapper;
-	
-	public Gym findByOwnerNo(String ownerNo) throws FindException{
+
+	public Gym findByOwnerNo(String ownerNo) throws FindException {
 		try {
 			Optional<Gym> optGym = gymRepository.findById(ownerNo);
-			if(!optGym.isPresent()) {
+			if (!optGym.isPresent()) {
 				throw new FindException("Gym 조회 실패");
 			}
 			return optGym.get();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FindException("Gym 조회 실패");
 		}
 	}
 
-	
-	public void gymSetting(List<MultipartFile> files, List<MultipartFile> detailFiles,
-						  String gymInfo, String passes) throws IOException {
+	public void gymSetting(List<MultipartFile> files, List<MultipartFile> detailFiles, String gymInfo, String passes)
+			throws IOException {
 
-		Map<String, String> gym = mapper.readValue(gymInfo,
-				new TypeReference<Map<String, String>>(){});
+		Map<String, String> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, String>>() {
+		});
 
-		List<Map<String,String>> mapPasses = mapper.readValue(passes,
-				new TypeReference<List<Map<String, String>>>(){});
+		List<Map<String, String>> mapPasses = mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
+		});
 		List<Pass> realPasses = new ArrayList<>();
 		for (Map<String, String> pass : mapPasses) {
 			PassPK passPK = new PassPK();
@@ -75,26 +72,26 @@ public class GymService {
 			realPass.setPauseDate(Integer.parseInt(pass.get("pauseDate")));
 			realPass.setRemarks(pass.get("remarks"));
 
-
 			realPasses.add(realPass);
 		}
 
-		for(MultipartFile file : files) {
+		for (MultipartFile file : files) {
 			String imgName = (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
 			String originFileName = file.getOriginalFilename();
 			String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-			File imgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") , imgName + "." + fileExtension);
+			File imgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo"), imgName + "." + fileExtension);
 			if (!imgDirectory.exists()) {
 				imgDirectory.mkdirs();
 			}
 			file.transferTo(imgDirectory);
 		}
 
-		for(MultipartFile detailFile : detailFiles){
-			String detailImgName =  (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
+		for (MultipartFile detailFile : detailFiles) {
+			String detailImgName = (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
 			String originDetailFileName = detailFile.getOriginalFilename();
 			String detailFileExtension = originDetailFileName.substring(originDetailFileName.lastIndexOf(".") + 1);
-			File detailImgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") + "/detailImg" , detailImgName + "." + detailFileExtension);
+			File detailImgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") + "/detailImg",
+					detailImgName + "." + detailFileExtension);
 			if (!detailImgDirectory.exists()) {
 				detailImgDirectory.mkdirs();
 			}
@@ -117,8 +114,7 @@ public class GymService {
 		String endHour = gym.get("endHour");
 		String endMinute = gym.get("endMinute");
 
-		String operatingTime = startHour + ":" + startMinute
-				+ " ~ " + endHour + ":" + endMinute;
+		String operatingTime = startHour + ":" + startMinute + " ~ " + endHour + ":" + endMinute;
 		realGym.setOperatingTime(operatingTime);
 
 		realGym.setExtraService(gym.get("extraService"));
@@ -134,9 +130,64 @@ public class GymService {
 		gymRepository.save(realGym);
 	}
 
-	
 	@Transactional(readOnly = true)
 	public List<Pass> gymUserSelect(Gym gym) {
 		return gym.getPasses();
 	}
+
+	
+	
+	public void gymModifySetting(String gymInfo, String passes) throws IOException {
+
+		Map<String, String> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, String>>() {
+		});
+
+		List<Map<String, String>> mapPasses = mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
+		});
+		List<Pass> realPasses = new ArrayList<>();
+		for (Map<String, String> pass : mapPasses) {
+			PassPK passPK = new PassPK();
+			passPK.setOwnerNo(gym.get("ownerNo"));
+			passPK.setPassNo(Integer.parseInt(pass.get("passNo")));
+
+			Pass realPass = new Pass();
+			realPass.setPassPk(passPK);
+			realPass.setPassName(pass.get("passName"));
+			realPass.setPassPrice(Integer.parseInt(pass.get("passPrice")));
+			realPass.setPassDate(new Date());
+			realPass.setPassStatus(1);
+			realPass.setPassMonth(Integer.parseInt(pass.get("passMonth")));
+			realPass.setPauseCount(Integer.parseInt(pass.get("pauseCount")));
+			realPass.setPauseDate(Integer.parseInt(pass.get("pauseDate")));
+			realPass.setRemarks(pass.get("remarks"));
+
+			realPasses.add(realPass);
+		}
+		Gym realGym = new Gym();
+			realGym.setOwnerNo(gym.get("ownerNo"));
+			realGym.setName(gym.get("name"));
+			realGym.setPhoneNo(gym.get("phoneNo"));
+			realGym.setZipcode(gym.get("zipcode"));
+			realGym.setAddr(gym.get("addr"));
+			realGym.setAddrDetail(gym.get("addrDetail"));
+			realGym.setIntroduce(gym.get("introduce"));
+			realGym.setNotice(gym.get("notice"));
+			realGym.setOperatingTime(gym.get("operatingProgram"));
+			realGym.setExtraService(gym.get("extraService"));
+			realGym.setEtc(gym.get("etc"));
+	
+			realGym.setPasses(realPasses);
+
+		Optional<Owner> owner = ownerRepository.findById(gym.get("ownerNo"));
+			realGym.setOwner(owner.get());
+
+		gymRepository.save(realGym);
+	}
+	
+	@Transactional
+	public String Delete(String ownerNo) {
+		ownerRepository.deleteById(ownerNo);
+		 return "ok";
+	}
+
 }

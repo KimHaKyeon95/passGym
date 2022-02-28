@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.passgym.gym.entity.Gym;
-import com.passgym.owner.repository.OwnerRepository;
+import com.passgym.repository.OwnerRepository;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
-import com.passgym.pass.repository.PassRepository;
+import com.passgym.repository.PassRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
