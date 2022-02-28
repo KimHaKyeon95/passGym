@@ -11,9 +11,7 @@ import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -41,8 +39,8 @@ public class GymService {
 		}
 	}
 
-	public void gymSetting(List<MultipartFile> files, List<MultipartFile> detailFiles,
-						  String gymInfo, String passes) throws IOException {
+	//Gym과 Pass에 관한 값들을 저장하고 해당 Gym의 ownerNo를 반환함
+	public String gymSetting(String gymInfo, String passes) throws IOException {
 
 		Map<String, String> gym = mapper.readValue(gymInfo,
 				new TypeReference<Map<String, String>>(){});
@@ -50,6 +48,7 @@ public class GymService {
 		List<Map<String,String>> mapPasses = mapper.readValue(passes,
 				new TypeReference<List<Map<String, String>>>(){});
 		List<Pass> realPasses = new ArrayList<>();
+
 		for (Map<String, String> pass : mapPasses) {
 			PassPK passPK = new PassPK();
 			passPK.setOwnerNo(gym.get("ownerNo"));
@@ -68,28 +67,6 @@ public class GymService {
 
 
 			realPasses.add(realPass);
-		}
-
-		for(MultipartFile file : files) {
-			String imgName = (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
-			String originFileName = file.getOriginalFilename();
-			String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-			File imgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") , imgName + "." + fileExtension);
-			if (!imgDirectory.exists()) {
-				imgDirectory.mkdirs();
-			}
-			file.transferTo(imgDirectory);
-		}
-
-		for(MultipartFile detailFile : detailFiles){
-			String detailImgName =  (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
-			String originDetailFileName = detailFile.getOriginalFilename();
-			String detailFileExtension = originDetailFileName.substring(originDetailFileName.lastIndexOf(".") + 1);
-			File detailImgDirectory = new File("C:/passGymImg/" + gym.get("ownerNo") + "/detailImg" , detailImgName + "." + detailFileExtension);
-			if (!detailImgDirectory.exists()) {
-				detailImgDirectory.mkdirs();
-			}
-			detailFile.transferTo(detailImgDirectory);
 		}
 
 		Gym realGym = new Gym();
@@ -123,6 +100,38 @@ public class GymService {
 		realGym.setOwner(owner.get());
 
 		gymRepository.save(realGym);
+
+		return gym.get("ownerNo");
 	}
 
+	// This function converts decimal degrees to radians
+	private double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	// This function converts radians to decimal degrees
+	private double rad2deg(double rad) {
+		return (rad * 180 / Math.PI);
+	}
+
+	public double gymDistance(double userLat, double userLon,
+							  double gymLat, double gymLon, String unit){
+
+		double theta = userLon - gymLon;
+		double dist = Math.sin(deg2rad(userLat)) * Math.sin(deg2rad(gymLat))
+						+ Math.cos(deg2rad(userLat)) * Math.cos(deg2rad(gymLat))
+						* Math.cos(deg2rad(theta));
+
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+
+		if (unit.equals("kilometer")) {
+			dist = dist * 1.609344;
+		} else if(unit.equals("meter")){
+			dist = dist * 1609.344;
+		}
+
+		return (dist);
+	}
 }
