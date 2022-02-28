@@ -16,6 +16,7 @@ import GymRegist from "./routes/owner/GymRegist";
 import OwnerHome from "./routes/owner/OwnerHome";
 import PassInfo from "./routes/owner/PassInfo";
 import OwnerModify from "./routes/owner/OwnerModify";
+import OwnerWrite from "./routes/owner/OwnerWrite";
 
 function App() {
   return (
@@ -59,8 +60,14 @@ function App() {
           <Route path="/owner/passInfo" element={<PassInfo />} />
         </Routes>
         <Routes>
-          <Route path="/owner/modify/:ownerNo" element={<OwnerModify />} />
+          <Route path="/owner/modify" element={<OwnerModify />} />
         </Routes>
+        <Routes>
+          <Route path="/owner/write" element={<OwnerWrite />} />
+        </Routes>
+        {/* <Routes>
+          <Route path="/owner/board" element={<OwnerBoard />} />
+        </Routes> */}
       </section>
       <Footer />
     </Router>
