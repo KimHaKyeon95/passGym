@@ -115,8 +115,7 @@ public class UserService {
 	}
 	
 
-	@Autowired
-	UserRepository userRepository;
+	 
 	
 	public User findById(int userNo) throws FindException{
 		User user;
