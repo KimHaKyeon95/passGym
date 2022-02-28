@@ -5,7 +5,7 @@ import PostcodeModal from "../../components/owner/PostcodeModal";
 // import HorizonLine from "../common/HorizonLine";
 // import kakao from "../../images/kakao.png";
 // import naver from "../../images/naver.png";
-import "../css/userSignup.css";
+import "../../css/user/usersignup.css";
 import { Navigate } from "react-router";
 
 function Usersignup() {

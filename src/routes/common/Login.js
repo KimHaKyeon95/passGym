@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
-import "../css/login.css";
+import "../../css/owner/login.css";
 import HorizonLine from "./HorizonLine";
 
 

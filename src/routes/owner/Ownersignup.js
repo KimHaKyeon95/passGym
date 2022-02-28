@@ -1,4 +1,4 @@
-import "../css/ownerSignup.css";
+import "../../css/owner/ownersignup.css";
 import {Button, Form} from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";

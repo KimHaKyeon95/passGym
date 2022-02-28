@@ -1,6 +1,6 @@
 import GymCardsDistance from "../../components/gym/GymCardsDistance";
 import React, { useEffect, useState } from 'react';
-import "../css/home.css";
+import "../../css/owner/home.css";
 
 function Home() {
   const [lat, setLat] = useState("");

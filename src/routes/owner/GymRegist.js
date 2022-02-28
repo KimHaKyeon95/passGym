@@ -1,5 +1,5 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "../css/gymRegist.css";
+import "../../css/owner/gymregist.css";
 import { useState } from "react";
 import axios from "axios";
 import PassList from "../../components/owner/PassList";
