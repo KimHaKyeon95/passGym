@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("gym/*")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 public class GymController {
 	@Autowired
 	private GymService service;
@@ -125,7 +125,6 @@ public class GymController {
 	public List<GymSortDto> gymSortingByDistance(@RequestParam String lat, @RequestParam String lon){
 		double userLat = Double.parseDouble(lat);
 		double userLon = Double.parseDouble(lon);
-
 		List<Gym> gymList = gymRepository.findAll();
 		List<GymSortDto> gymDtoList = new ArrayList<>();
 
