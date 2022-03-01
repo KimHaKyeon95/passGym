@@ -49,9 +49,9 @@ function App() {
         <Routes>
           <Route path="/usersignup" element={<Usersignup />} />
         </Routes>
-        <Routes>
+        {/* <Routes>
           <Route path="/searchidpwd" element={<SearchIdPwd />} />
-        </Routes>
+        </Routes> */}
         <Routes>
           <Route path="/ownersignup/gymregist" element={<GymRegist />} />
         </Routes>

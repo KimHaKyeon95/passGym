@@ -68,7 +68,7 @@ function SearchId() {
           />
         </Form.Group>
         <Button
-          className="button"
+          className="searchbutton"
           onClick={onSearchHandler}
           type="submit"
           variant="outline-dark"

@@ -15,14 +15,14 @@ function Header() {
     axios
       .get("http://localhost:9999/passgym/user/logout")
       .then(() => {
-        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("userNo");
         navigate("/");
         navigate(0);
       })
       .catch((error) => {
         console.log(error.response.status);
-        event.preventDefault();
       });
+    event.preventDefault();
   }
 
   function showUser() {

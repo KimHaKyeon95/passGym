@@ -15,8 +15,8 @@ function Usersignup() {
   const [address, setAddress] = React.useState({
     zipCode: "",
     addr: "",
-    addrDetail: "",
   });
+  const [addrDetail, setAddrDetail] = React.useState("");
 
   const [postcodeModalShow, setPostcodeModalShow] = React.useState(false);
 
@@ -156,7 +156,10 @@ function Usersignup() {
         setResults({ ...chkResults, pwdChkResult: 1 });
       }
     }
+    console.log(pwd);
+    console.log(pwdChk);
     if (nextResult.result && pwd === pwdChk) {
+      console.log("비밀번호 체크");
       setResults({ chkResults, pwdChkResult: 1 });
     } else {
       setResults({ chkResults, pwdChkResult: 0 });
@@ -183,8 +186,11 @@ function Usersignup() {
     }
   }
 
+  function onAddrDetailHandler(event) {
+    setAddrDetail(event.target.value);
+  }
+
   function onSubmitHandler(event) {
-    event.preventDefault();
     const submitInfo = [
       id,
       pwd,
@@ -192,31 +198,31 @@ function Usersignup() {
       phoneNo,
       address.zipCode,
       address.addr,
-      address.addrDetail,
+      addrDetail,
     ];
     console.log(submitInfo);
 
-    //   let submitUrl = "http://localhost:9999/passgym/user/";
-    //   if (
-    //     (chkResults.idChkResult,
-    //     chkResults.idDupChkResult,
-    //     chkResults.pwdChkResult === 1)
-    //   ) {
-    //     axios
-    //       .post(submitUrl, submitInfo)
-    //       .then(() => {
-    //         sessionStorage.setItem("id", submitInfo.id);
-    //         Navigate("/login");
-    //       })
-    //       .catch((error) => {
-    //         if (error.response) {
-    //           alert(error.response.status);
-    //           event.preventDefault();
-    //         }
-    //       });
-    //   } else {
-    //     alert("가입 실패하였습니다.");
-    // }
+    let submitUrl = "http://localhost:9999/passgym/user";
+    if (
+      (chkResults.idChkResult,
+      chkResults.idDupChkResult,
+      chkResults.pwdChkResult === 1)
+    ) {
+      axios
+        .post(submitUrl, submitInfo)
+        .then(() => {
+          sessionStorage.setItem("id", submitInfo.id);
+          Navigate("/login");
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
+    } else {
+      alert("가입 실패하였습니다.");
+    }
+    event.preventDefault();
   }
 
   return (
@@ -361,32 +367,6 @@ function Usersignup() {
                 검색
               </Button>
             </InputGroup>
-            {/* <div className="usersignup__address">
-            <Form.Group
-              className="mb-3 usersignup__zipcode"
-              controlId="usersignup__zipcode"
-            >
-              <Form.Control
-                value={address.zipCode}
-                placeholder="우편번호"
-                readOnly
-                required
-              />
-            </Form.Group>
-            <PostcodeModal
-              show={postcodeModalShow}
-              onHide={() => {
-                setPostcodeModalShow(false);
-              }}
-              setValues={setAddress}
-            />
-            <Button
-              className="usersignup__zipcodebtn"
-              onClick={() => setPostcodeModalShow(true)}
-              variant="outline-dark"
-            >
-              검색
-            </Button> */}
             <Form.Group
               className="mb-3 usersignup__addr"
               controlId="usersignup__addr"
@@ -402,14 +382,18 @@ function Usersignup() {
               className="mb-3 usersignup__addrDetail"
               controlId="usersignup__addrDetail"
             >
-              <Form.Control value={address.addrDetail} placeholder="상세주소" />
+              <Form.Control
+                value={addrDetail}
+                placeholder="상세주소"
+                onChange={onAddrDetailHandler}
+              />
             </Form.Group>
           </div>
           <Button
             className="usersignup__submitBtn"
             variant="outline-dark"
             type="submit"
-            onSubmit={onSubmitHandler}
+            onClick={onSubmitHandler}
           >
             회원가입
           </Button>

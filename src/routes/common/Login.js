@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../../css/common/login.css";
 import HorizonLine from "../../components/common/HorizonLine";
+import SearchIdModal from "../common/SearchIdModal";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
@@ -15,10 +16,8 @@ function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [isRemember, setIsRemember] = useState(false);
-
-  // const [submit, setSubmit] = useState(false);
-  // const [error, setErrors] = useState({});
   const navigate = useNavigate();
+  const [searchIdModalShow, setSearchIdModalShow] = useState(false);
 
   const onRadioChkHandler = (event) => {
     setRadioValue(event.currentTarget.value);
@@ -184,11 +183,23 @@ function Login() {
             >
               로그인
             </Button>
-            <Link to="../searchidpwd">
-              <Button className="login__findBtn" variant="link">
-                이메일/비밀번호 찾기
+            <div>
+              {/* <Link to="../searchidpwd"> */}
+              <Button
+                className="login__findBtn"
+                variant="link"
+                onClick={() => setSearchIdModalShow(true)}
+              >
+                아이디(이메일) 찾기
               </Button>
-            </Link>
+              <SearchIdModal
+                show={searchIdModalShow}
+                onHide={() => {
+                  setSearchIdModalShow(false);
+                }}
+              />
+              {/* </Link> */}
+            </div>
             {/* <HorizonLine text="SNS 로그인"></HorizonLine>
             <Button
               // href={KAKAO_AUTH_URL}
