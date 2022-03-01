@@ -10,6 +10,8 @@ function Header() {
 
   function onLogoutHandler(event) {
     console.log("로그아웃 버튼 클릭");
+    sessionStorage.removeItem("ownerNo");
+
     axios
       .get("http://localhost:9999/passgym/user/logout")
       .then(() => {
@@ -37,7 +39,7 @@ function Header() {
 
   return (
     <div>
-      <Navbar expand="sm" bg="dark" variant="dark">
+      <Navbar bg="dark" variant="dark"  style={{ height:'80px' }} className="mb-4">
         <Container>
           <Link to={"/"} className="navbar-brand">
             패스짐&nbsp;&nbsp;

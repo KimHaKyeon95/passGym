@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../css/login.css";
-// import { KAKAO_AUTH_URL } from "./Oauth";
 import HorizonLine from "../../components/common/HorizonLine";
-// import kakao from "../../images/kakao.png";
-// import naver from "../../images/naver.png";
 import SearchIdModal from "../common/SearchIdModal";
 
 function Login() {
@@ -59,9 +56,11 @@ function Login() {
     console.log("login button clicked");
     console.log(radioValue);
     const submitInfo = { id, pwd };
+
     // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     // let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
+
     if (radioValue == 1) {
       axios
         .post(userSubmitUrl, submitInfo)
@@ -82,15 +81,25 @@ function Login() {
           }
         });
     } else if (radioValue == 2) {
-      // console.log("사업자 로그인");
-      //   axios
-      //     .post(ownerSubmitUrl, submitInfo)
-      //     .then()
-      //     .catch((error) => {
-      //       if (error.response) {
-      //         alert(error.response.status);
-      //       }
-      //     });
+      axios
+        .post(ownerSubmitUrl, submitInfo)
+        .then((response) => {
+          if (response.data === "id fail") {
+            alert("아이디가 존재하지 않습니다.");
+            setId("");
+          } else if (response.data === "pwd fail") {
+            alert("비밀번호가 틀렸습니다.");
+            setPwd("");
+          } else {
+            sessionStorage.setItem("ownerNo", response.data);
+            window.location.href = "../owner/home";
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
     } else {
       alert("로그인에 실패하였습니다.");
     }
@@ -127,15 +136,27 @@ function Login() {
             <br />
           </>
           <div className="login__input">
-            <Form.Group className="mb-3 login__id" controlId="login__id">
-              <Form.Control
-                name="id"
-                onChange={onIdHandler}
-                value={id}
-                type="email"
-                placeholder="아이디(이메일)"
-                required
-              />
+            <Form.Group className="login__id" controlId="login__id">
+              {radioValue == 1 ? (
+                <Form.Control
+                  name="id"
+                  onChange={onIdHandler}
+                  value={id}
+                  type="email"
+                  placeholder="아이디(이메일)"
+                  required
+                />
+              ) : (
+                <Form.Control
+                  name="id"
+                  onChange={onIdHandler}
+                  value={id}
+                  placeholder="아이디"
+                  required
+                />
+              )}
+              {/* <div className="msg">{idChkMsg.msg}</div> */}
+              {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>
             <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control

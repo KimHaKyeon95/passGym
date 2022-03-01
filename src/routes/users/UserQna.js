@@ -1,0 +1,57 @@
+import axios from "axios";
+import { useState } from "react";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
+
+function UserQna() {
+  const [UserQna, setUserQna] = useState({ userNo: 1, title: "", content: "" });
+  const navigate = useNavigate();
+
+  const changValue = (e) => {
+    setUserQna({
+      ...UserQna,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitQna = (e) => {
+    const url = "http://localhost:9998/passgym/userqna/";
+    axios
+      .post(url, UserQna)
+      .then((response) => {
+        if (response.data.status == 1) {
+          navigate("/mypage");
+        } else {
+          alert(response.data.status);
+        }
+      })
+      .catch((error) => {
+        alert(error.response.status);
+      });
+    e.preventDefault();
+  };
+
+  return (
+    <>
+      <Form onSubmit={submitQna}>
+        <FloatingLabel controlId="floatingTextarea" label="문의제목">
+          <Form.Control as="textarea" name="title" onChange={changValue} />
+        </FloatingLabel>
+        <FloatingLabel controlId="floatingTextarea2" label="문의내용">
+          <Form.Control
+            as="textarea"
+            style={{ width: "500px", height: "350px" }}
+            maxLength={500}
+            name="content"
+            onChange={changValue}
+          />
+        </FloatingLabel>
+        <Button variant="primary" type="submit">
+          글쓰기
+        </Button>
+      </Form>
+    </>
+  );
+}
+
+export default UserQna;

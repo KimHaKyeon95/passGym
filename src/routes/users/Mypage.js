@@ -1,0 +1,76 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Spinner, Tabs, Tab } from "react-bootstrap";
+import GymPassList from "../../components/users/GymPassList";
+import Profile from "../../components/users/Profile";
+import UserQnaList from "../../components/users/UserQnaList";
+import ZzimList from "../../components/users/ZzimList";
+
+function Mypage() {
+  //임시
+  const [User, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const getUser = () => {
+    const url = "http://localhost:9999/passgym/user/";
+    axios
+      .get(url)
+      .then(function (response) {
+        setUser(response.data);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error.response.status);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+  return (
+    <>
+      {loading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        <Profile
+          key={User.userNo}
+          userNo={User.userNo}
+          id={User.id}
+          name={User.name}
+          zipcode={User.zipcode}
+          addr={User.addr}
+          addrDetail={User.addrDetail}
+        />
+      )}
+      <Tabs
+        defaultActiveKey="gympass"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+        style={{ margin: "10vh 0" }}
+      >
+        <Tab eventKey="gympass" title="이용권 목록">
+          {loading ? (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <GymPassList />
+          )}
+        </Tab>
+        <Tab eventKey="question" title="1:1문의 목록">
+          {loading ? (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <UserQnaList />
+          )}
+        </Tab>
+      </Tabs>
+    </>
+  );
+}
+
+export default Mypage;
