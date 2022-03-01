@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Modal } from "react-bootstrap";
-import "../css/searchidmodal.css";
+import "../../css/user/searchidmodal.css";
 
 function SearchIdModal(props) {
   const [name, setName] = useState("");
