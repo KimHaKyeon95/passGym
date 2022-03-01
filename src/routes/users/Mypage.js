@@ -9,9 +9,6 @@ import ZzimList from "../../components/users/ZzimList";
 function Mypage() {
   //임시
   const [User, setUser] = useState({});
-  //const [GymPasses, setGymPasses] = useState({});
-  //const [Zzims, setZzims] = useState({});
-  const [UserQnas, setUserQnas] = useState({});
   const [loading, setLoading] = useState(true);
 
   const getUser = () => {
@@ -19,7 +16,6 @@ function Mypage() {
     axios
       .get(url)
       .then(function (response) {
-        console.log(response);
         setUser(response.data);
         setLoading(false);
       })
@@ -28,122 +24,8 @@ function Mypage() {
       });
   };
 
-  // const getGymPasses = () => {
-  //   const json = {
-  //     data: {
-  //       gympasses: [
-  //         {
-  //           paymentNo: 1,
-  //           pass: {
-  //             gym: {
-  //               ownerNo: 1,
-  //               name: "배달의 짐",
-  //               totalStar: 10.0,
-  //               totalMember: 5,
-  //             },
-  //             passNo: 1,
-  //             passName: "1개월권",
-  //           },
-  //           user: {
-  //             id: "dlgusrb1913@naver.com",
-  //             name: "이현규",
-  //             addr: "수원시 팔달구 지동 276",
-  //             addrDetail: "포레스트 311호",
-  //             zipcode: "15647",
-  //           },
-  //           startDate: new Date("2022-02-22"),
-  //           endDate: new Date("2022-03-21"),
-  //           star: { star: 0 },
-  //         },
-  //         {
-  //           paymentNo: 1,
-  //           pass: {
-  //             gym: {
-  //               ownerNo: 1,
-  //               name: "배달의 짐",
-  //               totalStar: 10.0,
-  //               totalMember: 5,
-  //             },
-  //             passNo: 2,
-  //             passName: "3개월권",
-  //           },
-  //           user: {
-  //             id: "dlgusrb1913@naver.com",
-  //             name: "이현규",
-  //             addr: "수원시 팔달구 지동 276",
-  //             addrDetail: "포레스트 311호",
-  //             zipcode: "15647",
-  //           },
-  //           startDate: new Date("2022-02-22"),
-  //           endDate: new Date("2022-05-21"),
-  //           star: { star: 1 },
-  //         },
-  //         {
-  //           paymentNo: 1,
-  //           pass: {
-  //             gym: {
-  //               ownerNo: 1,
-  //               name: "배달의 짐",
-  //               totalStar: 10.0,
-  //               totalMember: 5,
-  //             },
-  //             passNo: 3,
-  //             passName: "6개월권",
-  //           },
-  //           user: {
-  //             id: "dlgusrb1913@naver.com",
-  //             name: "이현규",
-  //             addr: "수원시 팔달구 지동 276",
-  //             addrDetail: "포레스트 311호",
-  //             zipcode: "15647",
-  //           },
-  //           startDate: new Date("2022-02-22"),
-  //           endDate: new Date("2022-07-21"),
-  //           star: { star: 2 },
-  //         },
-  //       ],
-  //     },
-  //   };
-  //   setGymPasses(json.data.gympasses);
-  // };
-
-  // const getZzims = () => {
-  //   const json = {
-  //     data: {
-  //       user: {
-  //         userNo: 1,
-  //         id: "dlgusrb1913@naver.com",
-  //         name: "이현규",
-  //         addr: "수원시 팔달구 지동 276",
-  //         addrDetail: "포레스트 311호",
-  //         zipcode: "15647",
-  //       },
-  //     },
-  //   };
-  //   setZzims(json.data.user);
-  // };
-
-  const getUserQnas = () => {
-    const json = {
-      data: {
-        user: {
-          userNo: 1,
-          id: "dlgusrb1913@naver.com",
-          name: "이현규",
-          addr: "수원시 팔달구 지동 276",
-          addrDetail: "포레스트 311호",
-          zipcode: "15647",
-        },
-      },
-    };
-    setUserQnas(json.data.user);
-  };
-
   useEffect(() => {
     getUser();
-    //getGymPasses();
-    //getZzims();
-    getUserQnas();
   }, []);
   return (
     <>

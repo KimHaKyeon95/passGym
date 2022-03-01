@@ -1,17 +1,41 @@
+import axios from "axios";
 import { Button, Col, Container, Row, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function GymPass({
   paymentNo,
   ownerNo,
   name,
   passName,
+  star,
   avgStar,
   startDate,
   endDate,
-  remain,
   status,
 }) {
+  const navigate = useNavigate();
+
+  const addStar = (event) => {
+    console.log(event.target.id);
+    const url = "http://localhost:9999/passgym/star/";
+    const data = {
+      paymentNo: paymentNo,
+      star: event.target.id,
+    };
+    axios
+      .post(url, data)
+      .then(function (response) {
+        if (response.data.status == 1) {
+          navigate(0);
+        } else {
+          alert(response.data.msg);
+        }
+      })
+      .catch(function (error) {
+        alert(error.response.status);
+        console.log(error);
+      });
+  };
   return (
     <>
       <Row
@@ -28,44 +52,87 @@ function GymPass({
         <Col
           lg={{ span: 2 }}
           md={{ span: 2 }}
-          style={{ width: "230px", maxWidth: "40%" }}
+          style={{
+            width: "180px",
+            maxWidth: "40%",
+            height: "180px",
+            padding: "0",
+          }}
         >
-          <Image
-            fluid
-            style={{
-              objectFit: "cover",
-              overflow: "hidden",
-              width: "100%",
-              height: "100%",
-            }}
-            src={require("../../images/" + ownerNo + ".jpg")}
-          ></Image>
+          <Link
+            to={`/gym/${ownerNo}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Image
+              fluid
+              style={{
+                objectFit: "cover",
+                overflow: "hidden",
+                width: "100%",
+                height: "100%",
+              }}
+              src={require("../../images/" + ownerNo + ".jpg")}
+            ></Image>
+          </Link>
         </Col>
-        <Col lg={{ span: 6 }} md={{ span: 6 }}>
-          <Row>
-            <Col>번호 : {paymentNo}</Col>
+        <Col lg={{ span: 6 }} md={{ span: 6 }} style={{ height: "180px" }}>
+          <Row style={{ padding: "5px 0 0 0" }}>
+            <Col>no.{paymentNo}</Col>
+            <Col>{status}</Col>
           </Row>
-          <Row>
-            <Col>상태 : {status}</Col>
+          <Row style={{ padding: "30px 0 5px 0" }}>
+            <Col>
+              {name}
+              {star > 0 ? (
+                <>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      color: "yellow",
+                      padding: "0 10px 0 20px",
+                    }}
+                  >
+                    ★
+                  </span>
+                  {avgStar}
+                </>
+              ) : (
+                <>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "0 10px 0 20px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <span id="1" onClick={addStar}>
+                      ☆
+                    </span>
+                    <span id="2" onClick={addStar}>
+                      ☆
+                    </span>
+                    <span id="3" onClick={addStar}>
+                      ☆
+                    </span>
+                    <span id="4" onClick={addStar}>
+                      ☆
+                    </span>
+                    <span id="5" onClick={addStar}>
+                      ☆
+                    </span>
+                  </span>{" "}
+                  별점을 입력하세요
+                </>
+              )}
+            </Col>
           </Row>
-          <Row>
-            <Col>이름 : {name}</Col>
-          </Row>
-          <Row>
-            <Col>회원권 이름 : {passName}</Col>
-          </Row>
-          <Row>
-            <Col>평균별점 : </Col>
-            <Col style={{ display: "inline-block", color: "yellow" }}>★</Col>
-            <Col>{avgStar}</Col>
+          <Row style={{ padding: "0 0 10px 0" }}>
+            <Col>{passName}</Col>
           </Row>
           <Row>
             <Col>
               {startDate} ~{endDate}
             </Col>
-          </Row>
-          <Row>
-            <Col>{remain}</Col>
           </Row>
         </Col>
         <Col

@@ -1,8 +1,9 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import { axios } from "axios";
+import axios from "axios";
+import "../css/searchidpwd.css";
 
-function FindId() {
+function SearchId() {
   const [name, setName] = React.useState("");
   const [phoneNo, setPhoneNo] = React.useState("");
   // const [nameRegexChkResult, setNameRegexChkResult] = React.useState({
@@ -22,46 +23,42 @@ function FindId() {
   }
 
   function onPhoneNoHandler(event) {
-    setPhoneNo(event.target.value);
-    console.log(phoneNo);
-  }
-
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    name: "패스짐",
-    phoneNo: "01012345678",
-  };
-
-  function onSearchHandler(event) {
-    const submitInfo = Object.assign(name, phoneNo);
-    console.log(submitInfo);
-    let submitUrl = "http://localhost:3000/searchidpwd/findid";
-    if (response.name === submitInfo.name) {
-      if (response.phoneNo === submitInfo.phoneNo) {
-        axios
-          .post(submitUrl, submitInfo)
-          .then(() => {
-            alert(`아이디는 "${response.id}" 입니다.`);
-          })
-          .cath((error) => {
-            if (error.response) {
-              alert(error.response.status);
-              event.preventDefault();
-            }
-          });
-      } else {
-        alert("아이디를 찾을 수 없습니다.");
-      }
-    } else {
-      alert("아이디를 찾을 수 없습니다.");
+    const regex = /^[0-9]{0,11}$/;
+    if (regex.test(event.target.value)) {
+      setPhoneNo(event.target.value);
     }
   }
 
+  const nextValue = {
+    name,
+    phoneNo,
+  };
+
+  function onSearchHandler(event) {
+    const submitInfo = nextValue;
+    console.log(submitInfo);
+    event.preventDefault();
+    let submitUrl = "http://localhost:9999/passgym/user/searchid";
+    axios
+      .post(submitUrl, submitInfo)
+      .then((response) => {
+        console.log(response);
+        alert(`아이디는 "${response.data.msg}" 입니다.`);
+        event.preventDefault();
+      })
+      .cath((error) => {
+        if (error.response) {
+          console.log("error" + error);
+          alert(error.response.status);
+          event.preventDefault();
+        }
+      });
+  }
+
   return (
-    <div>
-      <Form>
-        <Form.Group className="findByName" controlId="findByName">
+    <div className="container">
+      <Form className="form">
+        <Form.Group className="mb-3" controlId="findByName">
           <Form.Control
             name="name"
             onChange={onNameHandler}
@@ -69,12 +66,9 @@ function FindId() {
             placeholder="이름"
             required
           />
-          {/* <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text> */}
         </Form.Group>
 
-        <Form.Group className="findByPhoneNo" controlId="findByPhoneNo">
+        <Form.Group className="mb-3" controlId="findByPhoneNo">
           <Form.Control
             name="phoneNo"
             onChange={onPhoneNoHandler}
@@ -85,10 +79,10 @@ function FindId() {
           />
         </Form.Group>
         <Button
-          className="searchbtn"
+          className="button"
           onClick={onSearchHandler}
           type="submit"
-          sytle={{ width: "100%" }}
+          variant="outline-dark"
         >
           검색
         </Button>
@@ -97,4 +91,4 @@ function FindId() {
   );
 }
 
-export default FindId;
+export default SearchId;

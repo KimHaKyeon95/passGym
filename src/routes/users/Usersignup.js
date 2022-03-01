@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import PostcodeModal from "../../components/owner/PostcodeModal";
-// import HorizonLine from "../common/HorizonLine";
-// import kakao from "../../images/kakao.png";
-// import naver from "../../images/naver.png";
 import "../../css/user/usersignup.css";
 import { Navigate } from "react-router";
 
@@ -18,8 +15,9 @@ function Usersignup() {
   const [address, setAddress] = React.useState({
     zipCode: "",
     addr: "",
-    addr2: "",
+    addrDetail: "",
   });
+
   const [postcodeModalShow, setPostcodeModalShow] = React.useState(false);
 
   const [chkResults, setResults] = React.useState({
@@ -43,7 +41,7 @@ function Usersignup() {
   });
 
   const [pwdChkMsg, setPwdChkMsg] = React.useState({
-    msg: "비밀번호를 입력하세요",
+    msg: "",
   });
 
   function onIdRegexChkHandler(value) {
@@ -54,14 +52,27 @@ function Usersignup() {
   }
 
   function onIdHandler(event) {
-    const value = event.target.value;
-    setId(value);
+    // console.log(event.target.value);
+    // const value = event.target.value;
+    setId(event.target.value);
+    // console.log(id);
+    // return id;
+  }
+
+  // useEffect(() => {}, [id]);
+
+  let idDupChkUrl = "http://localhost:9999/passgym/user/iddupchk";
+
+  function onIdDupChkHandler() {
     const nextResult = {
-      result: onIdRegexChkHandler(value),
+      result: onIdRegexChkHandler(id),
       resultMsg: "",
     };
 
-    let idDupChkUrl = "http://localhost:3000/usersignup/iddupchk";
+    // const nextValue = {
+    //   id,
+    // };
+    // console.log(nextValue.id);
 
     if (!nextResult.result) {
       setIdRegexChkResult({ resultMsg: "아이디를 이메일형식으로 입력하세요." });
@@ -69,29 +80,26 @@ function Usersignup() {
       setIdChkMsg({ msg: "" });
       setResults({ ...chkResults, idDupChkResult: 0 });
     } else {
-      setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-      setResults({ ...chkResults, idDupChkResult: 1 });
-      // axios
-      //   .get(idDupChkUrl, id)
-      //   .then((res) => {
-      //     if (res.id === value) {
-      //       setIdChkMsg({ msg: "이미 존재하는 아이디입니다." });
-      //       setResults({ ...chkResults, idDupChkResult: 0 });
-      //     } else {
-      //       setIdChkMsg({ msg: "사용가능한 아이디입니다." });
-      //       setResults({ ...chkResults, idDupChkResult: 1 });
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     alert(error.res.status);
-      //   });
+      // console.log(nextResult.result);
+      console.log("아이디:", id);
+      setResults({ ...chkResults, idChkResult: 1 });
+      axios
+        .get(idDupChkUrl, id)
+        .then((response) => {
+          console.log("res", response);
+          if (response.data.status === 0) {
+            setIdChkMsg({ msg: "이미 사용중인 아이디입니다." });
+            setResults({ ...chkResults, idDupChkResult: 0 });
+          } else {
+            setIdChkMsg({ msg: "사용가능한 아이디입니다." });
+            setResults({ ...chkResults, idDupChkResult: 1 });
+          }
+        })
+        .catch((error) => {
+          alert(error.response.status);
+        });
     }
   }
-
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-  };
 
   //비밀번호 형식 체크
   function onPwdRegexChkHandler(value) {
@@ -110,7 +118,9 @@ function Usersignup() {
       result: onPwdRegexChkHandler(value),
       resultMsg: "",
     };
-    // console.log("result:", nextResult.result);
+    if (value == null) {
+      setPwdChkMsg({ msg: "비밀번호를 입력하세요" });
+    }
     if (!nextResult.result) {
       setPwdChkResult({
         resultMsg: "8~10자리 숫자와 영어 조합으로 입력하세요.",
@@ -164,21 +174,6 @@ function Usersignup() {
     }
   }
 
-  //번호 사이에 자동 하이픈'-' 넣기
-  // React.useEffect(() => {
-  //   if (phoneNo.length === 10) {
-  //     setPhoneNo(phoneNo.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
-  //   }
-  //   // if(phoneNo.length === 11){
-  //   //   setPhoneNo(phoneNo.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-  //   // }
-  //   if (phoneNo.length === 13) {
-  //     setPhoneNo(
-  //       phoneNo.replace(/-/g, "").replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
-  //     );
-  //   }
-  // });
-
   function onPhoneNoVarifHandler() {}
 
   function onPhoneNoVarifCodeHandler(event) {
@@ -189,6 +184,7 @@ function Usersignup() {
   }
 
   function onSubmitHandler(event) {
+    event.preventDefault();
     const submitInfo = [
       id,
       pwd,
@@ -196,32 +192,31 @@ function Usersignup() {
       phoneNo,
       address.zipCode,
       address.addr,
-      address.addr2,
+      address.addrDetail,
     ];
-    // console.log(submitInfo);
-    let submitUrl = "http://localhost:3000/usersignup/signup";
-    if (
-      (chkResults.idChkResult,
-      chkResults.idDupChkResult,
-      chkResults.pwdChkResult === 1)
-    ) {
-      event.preventDefault();
-      Navigate("/login");
-      // axios
-      //   .post(submitUrl, submitInfo)
-      //   .then(() => {
-      //     sessionStorage.setItem("id", submitInfo.id);
-      //     Navigate("/login");
-      //   })
-      //   .catch((error) => {
-      //     if (error.response) {
-      //       alert(error.response.status);
-      //       event.preventDefault();
-      //     }
-      // });
-    } else {
-      alert("가입 실패하였습니다.");
-    }
+    console.log(submitInfo);
+
+    //   let submitUrl = "http://localhost:9999/passgym/user/";
+    //   if (
+    //     (chkResults.idChkResult,
+    //     chkResults.idDupChkResult,
+    //     chkResults.pwdChkResult === 1)
+    //   ) {
+    //     axios
+    //       .post(submitUrl, submitInfo)
+    //       .then(() => {
+    //         sessionStorage.setItem("id", submitInfo.id);
+    //         Navigate("/login");
+    //       })
+    //       .catch((error) => {
+    //         if (error.response) {
+    //           alert(error.response.status);
+    //           event.preventDefault();
+    //         }
+    //       });
+    //   } else {
+    //     alert("가입 실패하였습니다.");
+    // }
   }
 
   return (
@@ -230,24 +225,39 @@ function Usersignup() {
         <Form className="usersignup__form">
           <h1 className="h1__title">사용자 회원가입</h1>
           <div className="usersignup__id">
-            <Form.Group
-              className="usersignup__email"
+            <InputGroup
+              className="mb-3 usersignup__email"
               controlId="usersignup__email"
             >
               <Form.Control
                 name="id"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon"
                 onChange={onIdHandler}
                 value={id}
                 placeholder="아이디(이메일)"
               />
-              <Form.Text className="msg">
-                {idRegexChkResult.resultMsg}
-              </Form.Text>
-              <Form.Text className="msg">{idChkMsg.msg}</Form.Text>
-            </Form.Group>
+
+              <Button
+                className="usersignup__idDupChkBtn"
+                id="button-addon"
+                onClick={onIdDupChkHandler}
+                variant="outline-dark"
+              >
+                중복확인
+              </Button>
+            </InputGroup>
+            <Form.Text className="text-muted msg">
+              {idRegexChkResult.resultMsg}
+            </Form.Text>
+            <Form.Text className="text-muted msg">{idChkMsg.msg}</Form.Text>
           </div>
+
           <div className="usersignup__password">
-            <Form.Group className="usersignup__pwd" controlId="usersignup__pwd">
+            <Form.Group
+              className="mb-3 usersignup__pwd"
+              controlId="usersignup__pwd"
+            >
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
@@ -258,7 +268,7 @@ function Usersignup() {
               />
             </Form.Group>
             <Form.Group
-              className="usersignup__pwdChk"
+              className="mb-3 usersignup__pwdChk"
               controlId="usersignup__pwdChk"
             >
               <Form.Control
@@ -269,11 +279,16 @@ function Usersignup() {
                 placeholder="비밀번호 확인"
                 required
               />
-              <Form.Text className="msg">{pwdChkResult.resultMsg}</Form.Text>
-              <Form.Text className="msg">{pwdChkMsg.msg}</Form.Text>
             </Form.Group>
+            <Form.Text className="text-muted msg">
+              {pwdChkResult.resultMsg}
+            </Form.Text>
+            <Form.Text className="text-muted msg">{pwdChkMsg.msg}</Form.Text>
           </div>
-          <Form.Group className="usersignup__name" controlId="usersignup__name">
+          <Form.Group
+            className="mb-3 usersignup__name"
+            controlId="usersignup__name"
+          >
             <Form.Control
               name="name"
               onChange={onNameHandler}
@@ -283,9 +298,11 @@ function Usersignup() {
             />
           </Form.Group>
           <div className="usersignup__phone">
-            <Form.Group
-              className="usersignup__phoneNo"
+            <InputGroup
+              className="mb-3 usersignup__phoneNo"
               controlId="usersignup__phoneNo"
+              aria-label="Example text with button addon"
+              aria-describedby="basic-addon1"
             >
               <Form.Control
                 name="phoneNo"
@@ -294,16 +311,17 @@ function Usersignup() {
                 // type="text"
                 placeholder="휴대전화번호"
               />
-            </Form.Group>
-            <Button
-              onClick={onPhoneNoVarifHandler}
-              className="usersignup__phonenovarifbtn"
-              variant="outline-dark"
-            >
-              인증
-            </Button>
+              <Button
+                className="usersignup__phoneNoVarifBtn"
+                id="button-addon1"
+                onClick={onPhoneNoVarifHandler}
+                variant="outline-dark"
+              >
+                인증
+              </Button>
+            </InputGroup>
             <Form.Group
-              className="usersignup__phoneNoVarifCode"
+              className="mb-3 usersignup__phoneNoVarifCode"
               controlId="usersignup__phoneNoVarifCode"
             >
               <Form.Control
@@ -315,8 +333,37 @@ function Usersignup() {
             </Form.Group>
           </div>
           <div className="usersignup__address">
+            <InputGroup
+              className="mb-3 usersignup__zipcode"
+              controlId="usersignup__zipcode"
+            >
+              <Form.Control
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                value={address.zipCode}
+                placeholder="우편번호"
+                readOnly
+                required
+              />
+              <PostcodeModal
+                show={postcodeModalShow}
+                onHide={() => {
+                  setPostcodeModalShow(false);
+                }}
+                setValues={setAddress}
+              />
+              <Button
+                className="usersignup__zipcodebtn"
+                button-addon2
+                onClick={() => setPostcodeModalShow(true)}
+                variant="outline-dark"
+              >
+                검색
+              </Button>
+            </InputGroup>
+            {/* <div className="usersignup__address">
             <Form.Group
-              className="usersignup__zipcode"
+              className="mb-3 usersignup__zipcode"
               controlId="usersignup__zipcode"
             >
               <Form.Control
@@ -339,9 +386,9 @@ function Usersignup() {
               variant="outline-dark"
             >
               검색
-            </Button>
+            </Button> */}
             <Form.Group
-              className="usersignup__addr"
+              className="mb-3 usersignup__addr"
               controlId="usersignup__addr"
             >
               <Form.Control
@@ -352,10 +399,10 @@ function Usersignup() {
               />
             </Form.Group>
             <Form.Group
-              className="usersignup__addr2"
-              controlId="usersignup__addr2"
+              className="mb-3 usersignup__addrDetail"
+              controlId="usersignup__addrDetail"
             >
-              <Form.Control value={address.addr2} placeholder="상세주소" />
+              <Form.Control value={address.addrDetail} placeholder="상세주소" />
             </Form.Group>
           </div>
           <Button

@@ -115,7 +115,7 @@ function Payment() {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Container style={{ border: " 1px solid" }}>
+        <Container style={{ border: "1px solid" }}>
           <Row>
             <Col md={{ span: 10, offset: 1 }}>
               <h3>payment</h3>

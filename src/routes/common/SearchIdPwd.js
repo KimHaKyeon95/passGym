@@ -1,11 +1,11 @@
 import React from "react";
 // import { render } from "react-dom";
 import { Tab, Tabs } from "react-bootstrap";
-import FindId from "./FindId";
-import ResetPwd from "./ResetPwd";
+import SearchId from "./SearchId";
+import SearchPwd from "./SearchPwd";
 
 function SearchIdPwd() {
-  const [key, setKey] = React.useState("findId");
+  const [key, setKey] = React.useState("searchId");
 
   function onTabHandler(k) {
     setKey(k);
@@ -17,21 +17,13 @@ function SearchIdPwd() {
       activeKey={key}
       onSelect={onTabHandler}
       className="mb-3"
-      // style={{ width: "460px" }}
+      style={{ width: "460px" }}
     >
-      <Tab
-        eventKey="findId"
-        title="아이디 찾기"
-        // style={{ width: "230px" }}
-      >
-        <FindId />
+      <Tab eventKey="searchId" title="아이디 찾기">
+        <SearchId />
       </Tab>
-      <Tab
-        eventKey="resetPwd"
-        title="비밀번호 재설정"
-        // style={{ width: "230px" }}
-      >
-        <ResetPwd />
+      <Tab eventKey="searchPwd" title="비밀번호 찾기">
+        <SearchPwd />
       </Tab>
     </Tabs>
   );
