@@ -151,7 +151,7 @@ function Ownersignup() {
   function onSubmit(event){
     const submitInfo = Object.assign(values, ownerInfo, ownerAddr); //Object.assign(): 객체 합치기
     const forSubmitConfirm = Object.assign(chkResults, ownerNoChkResult);
-    let submitUrl = "http://localhost:8082/passgym/owner/signup";
+    let submitUrl = "http://localhost:9999/passgym/owner/signup";
     if(forSubmitConfirm.idDupChkResult, 
       forSubmitConfirm.ownerNoChkResult, 
       forSubmitConfirm.pwdChkResult === 1){

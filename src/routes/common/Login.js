@@ -61,7 +61,8 @@ function Login() {
 
     // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
-    let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
+    let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
+
 
     if (radioValue == 1) {
       axios

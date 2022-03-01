@@ -1,5 +1,7 @@
 import GymCardsDistance from "../../components/gym/GymCardsDistance";
-import React, { useEffect, useState } from "react";
+import GymCardsStar from "../../components/gym/GymCardsStar";
+import React, { useEffect, useState } from 'react';
+
 import "../../css/common/home.css";
 
 function Home() {
@@ -30,13 +32,18 @@ function Home() {
 
   return (
     <>
-      {lat !== "" && lon !== "" ? (
-        <div className="distance-card">
-          <GymCardsDistance lat={lat} lon={lon} />
-        </div>
-      ) : (
-        <></>
-      )}
+    {
+        lat !== "" && lon !== "" ? 
+        (<>
+          <div className="distance-card">
+            <GymCardsDistance lat={lat} lon={lon} />
+          </div>
+          <div className="distance-card">
+          <GymCardsStar lat={lat} lon={lon} />
+          </div>
+        </>)
+        : <></>
+      }
     </>
   );
 }

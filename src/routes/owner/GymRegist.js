@@ -73,39 +73,37 @@ function GymRegist() {
     event.preventDefault();
   };
 
-  const onSubmit = (event) => {
-    let uploadRefFile = fileState.refFile;
-    formData.append("files", uploadRefFile);
-    formData.append("gymInfo", JSON.stringify(gymInfo));
-    formData.append("passes", JSON.stringify(passInfoList));
-    let fileStateClone = { ...detailFileState };
-    let detailFilesLength = Object.keys(fileStateClone).length;
-    for (let i = 0; i < detailFilesLength; i++) {
-      let name = "detailImg" + i;
-      let uploadDetailFile = detailFileState[name];
-      formData.append("detailFiles", uploadDetailFile);
-    }
-    let submitUrl = "http://localhost:8082/passgym/gym/gymregist";
-    axios
-      .post(submitUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        if (response.data === "error") {
-          alert("가입 실패(서버문제 발생)");
-          event.preventDefault();
-        } else {
-          sessionStorage.clear();
-          window.location.href = "../login";
+    const onSubmit = (event) =>{ 
+        let uploadRefFile = fileState.refFile;
+        formData.append("files", uploadRefFile);
+        formData.append("gymInfo", JSON.stringify(gymInfo));
+        formData.append("passes", JSON.stringify(passInfoList)); 
+        let fileStateClone = {...detailFileState};
+        let detailFilesLength = Object.keys(fileStateClone).length;
+        for(let i = 0; i < detailFilesLength; i++){
+            let name = "detailImg" + i;
+            let uploadDetailFile = detailFileState[name];
+            formData.append("detailFiles", uploadDetailFile);
         }
-      })
-      .catch((error) => {
-        alert(error.response.status);
-      });
-    event.preventDefault();
-  };
+       let submitUrl = "http://localhost:9999/passgym/gym/gymregist";
+       axios.post(submitUrl, formData, {
+           headers: {
+               "Content-Type": "multipart/form-data"
+           }
+       }).then((response) => {
+           if(response.data === "error"){
+               alert("가입 실패(서버문제 발생)");
+               event.preventDefault();
+           }else{
+            sessionStorage.clear();
+            window.location.href="../login"
+           }          
+       }).catch((error) => {
+            alert(error.response.status);
+       });
+        event.preventDefault();
+    }
+
 
   const passComponentPlus = () => {
     let countArr = [...passInfoList];
