@@ -1,18 +1,17 @@
-import { Card } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function Gymcard({  num, ownerNo, name, addr, avgStar, distance }) {
-
+function Gymcard({ num, ownerNo, name, addr, avgStar, distance }) {
   let addrArray = addr.split("(");
   let stringDistance = String(distance);
   let usingDistance = stringDistance.substring(0, 4);
   return (
-    <div className="cards">
+    <Col>
       <Link
         to={`/gym/${ownerNo}`}
         style={{ textDecoration: "none", color: "black" }}
       >
-        <Card className="cards">
+        <Card>
           <Card.Body style={{ paddingTop: "2px" }}>
             <Card.Text style={{ marginBottom: "0" }}>no.{num} </Card.Text>
             <Card.Title>{name}</Card.Title>
@@ -26,9 +25,7 @@ function Gymcard({  num, ownerNo, name, addr, avgStar, distance }) {
           </Card.Body>
         </Card>
       </Link>
-    </div>
-      
-    
+    </Col>
   );
 }
 

@@ -76,7 +76,7 @@ function Gymdetail() {
                 <Col xs={8}>
                   <h4>{Gym.name}</h4>
                 </Col>
-                <Col>★{Gym.avgStar}</Col>
+                <Col>★{Math.round(Gym.avgStar)}</Col>
               </Row>
               <hr />
               <Row style={{ padding: "10px 0" }}>

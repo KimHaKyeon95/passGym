@@ -9,18 +9,20 @@ function Gymcards(props) {
   const getGyms = () => {
     let findGymUrl = "http://localhost:9999/passgym/gym/sort-gym-distance";
 
-    axios.get(findGymUrl, {
-      params : {
-        lat : props.lat,
-        lon : props.lon
-      }
-    }).then((response) => {
-      setGyms({data: response.data});
-    }).catch((error) => {
-      alert(error.status);
-    })
-    
- master
+    axios
+      .get(findGymUrl, {
+        params: {
+          lat: props.lat,
+          lon: props.lon,
+        },
+      })
+      .then((response) => {
+        setGyms({ data: response.data });
+      })
+      .catch((error) => {
+        alert(error.status);
+      });
+
     setLoading(false);
   };
 
@@ -36,20 +38,26 @@ function Gymcards(props) {
         </Spinner>
       ) : (
         <>
-          <div style={{ margin: "10px", fontSize: "24px" }}>가까운 거리순</div>
-          <div>
-            {gyms.data.map((gym, i) => (
-              <Gymcard
-                key={i}
-                num={i + 1}
-                ownerNo={gym.ownerNo}
-                name={gym.name}
-                addr={gym.addr}
-                avgStar={gym.avgStar}
-                distance={gym.distance}
-              />
-            ))}
-          </div>
+          <Container style={{ marginBottom: "50px" }}>
+            <Row>
+              <Col style={{ margin: "10px", fontSize: "24px" }}>
+                가까운 거리순
+              </Col>
+            </Row>
+            <Row xs={2} md={3} lg={4} className="g-4">
+              {gyms.data.map((gym, i) => (
+                <Gymcard
+                  key={i}
+                  num={i + 1}
+                  ownerNo={gym.ownerNo}
+                  name={gym.name}
+                  addr={gym.addr}
+                  avgStar={gym.avgStar}
+                  distance={gym.distance}
+                />
+              ))}
+            </Row>
+          </Container>
         </>
       )}
     </>

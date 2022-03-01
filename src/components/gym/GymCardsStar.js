@@ -3,23 +3,25 @@ import { useEffect, useState } from "react";
 import Gymcard from "./Gymcard";
 import axios from "axios";
 function Gymcards(props) {
-
   const [loading, setLoading] = useState(true);
-  const [gyms, setGyms] = useState({data : []});
+  const [gyms, setGyms] = useState({ data: [] });
 
   const getGyms = () => {
     let findGymUrl = "http://localhost:9999/passgym/gym/sort-gym-star";
-    axios.get(findGymUrl, {
-      params : {
-        lat : props.lat,
-        lon : props.lon
-      }
-    }).then((response) => {
-      setGyms({data: response.data});
-    }).catch((error) => {
-      alert(error.status);
-    })
-    
+    axios
+      .get(findGymUrl, {
+        params: {
+          lat: props.lat,
+          lon: props.lon,
+        },
+      })
+      .then((response) => {
+        setGyms({ data: response.data });
+      })
+      .catch((error) => {
+        alert(error.status);
+      });
+
     setLoading(false);
   };
 
@@ -35,21 +37,25 @@ function Gymcards(props) {
         </Spinner>
       ) : (
         <>
-          <div style={{ margin: "10px", fontSize: "24px" }}>별점순</div>
-          <div>
-            {gyms.data.map((gym, i) => (
-                  <Gymcard
-                    key={i}
-                    num={i+1}
-                    ownerNo={gym.ownerNo}
-                    name={gym.name}
-                    addr={gym.addr}
-                    avgStar={gym.avgStar}
-                    distance={gym.distance}
-                  />
-                ))}
-          </div>  
-        </>      
+          <Container style={{ marginBottom: "50px" }}>
+            <Row>
+              <Col style={{ margin: "10px", fontSize: "24px" }}>별점순</Col>
+            </Row>
+            <Row xs={2} md={3} lg={4} className="g-4">
+              {gyms.data.map((gym, i) => (
+                <Gymcard
+                  key={i}
+                  num={i + 1}
+                  ownerNo={gym.ownerNo}
+                  name={gym.name}
+                  addr={gym.addr}
+                  avgStar={gym.avgStar}
+                  distance={gym.distance}
+                />
+              ))}
+            </Row>
+          </Container>
+        </>
       )}
     </>
   );
