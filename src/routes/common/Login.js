@@ -54,12 +54,11 @@ function Login() {
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
 
-    if (radioValue === 1) {
+    if (radioValue === "1") {
       axios
         .post(userSubmitUrl, submitInfo, { withCredentials: true })
         .then((response) => {
           if (response.data.status === 1) {
-            // console.log(response.data);
             sessionStorage.setItem("userNo", response.data.user);
             navigate("/");
             navigate(0); //새로고침
@@ -73,7 +72,7 @@ function Login() {
             alert(error.response.status);
           }
         });
-    } else if (radioValue === 2) {
+    } else if (radioValue === "2") {
       axios
         .post(ownerSubmitUrl, submitInfo)
         .then((response) => {

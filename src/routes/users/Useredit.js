@@ -32,7 +32,7 @@ function Useredit() {
   const getUser = () => {
     const url = "http://localhost:9999/passgym/user/";
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then((response) => {
         setUser(response.data);
         setLoading(false);
