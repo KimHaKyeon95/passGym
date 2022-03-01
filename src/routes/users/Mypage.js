@@ -1,23 +1,31 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Spinner, Tabs, Tab } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import GymPassList from "../../components/users/GymPassList";
 import Profile from "../../components/users/Profile";
 import UserQnaList from "../../components/users/UserQnaList";
-import ZzimList from "../../components/users/ZzimList";
 
 function Mypage() {
   //임시
   const [User, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   const getUser = () => {
     const url = "http://localhost:9999/passgym/user/";
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then(function (response) {
-        setUser(response.data);
-        setLoading(false);
+        if (response.data.status === 0) {
+          alert(response.data.msg);
+          navigate("/");
+        } else {
+          console.log(response);
+          setUser(response.data);
+          setLoading(false);
+        }
       })
       .catch(function (error) {
         alert(error.response.status);

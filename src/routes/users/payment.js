@@ -9,10 +9,10 @@ import {
   Form,
   Spinner,
 } from "react-bootstrap";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Payment() {
-  const userNo = "1"; //임시번호
+  const userNo = sessionStorage.getItem("userNo"); //임시번호
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
@@ -74,9 +74,14 @@ function Payment() {
 
     if (startDate !== "") {
       axios
-        .post(url, data)
-        .then(() => {
-          navigate("/mypage");
+        .post(url, data, { withCredentials: true })
+        .then((response) => {
+          if (response.data.status === 1) {
+            navigate("/mypage");
+            alert(response.data.msg);
+          } else {
+            alert(response.data.msg);
+          }
         })
         .catch((error) => {
           alert(error.response.status);

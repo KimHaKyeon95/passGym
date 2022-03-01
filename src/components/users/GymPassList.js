@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import GymPass from "./GymPass";
 function GymPassList() {
   const [GymPasses, setGymPasses] = useState({});
@@ -10,7 +9,7 @@ function GymPassList() {
   const getGymPasses = () => {
     const url = "http://localhost:9999/passgym/user/gympasses";
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then(function (response) {
         setGymPasses(response.data);
         setLoading(false);

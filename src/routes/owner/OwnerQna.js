@@ -1,77 +1,61 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
-const OwnerQna = (props) => {
-  const [book, setBooks] = useState({
+function OwnerQna() {
+  const [OwnerQna, setOwnerQna] = useState({
+    ownerNo: "1111111111",
     title: "",
-    author: "",
+    content: "",
   });
+  const navigate = useNavigate();
+
   const changValue = (e) => {
-    setBooks({
-      ...book,
+    setOwnerQna({
+      ...OwnerQna,
       [e.target.name]: e.target.value,
     });
   };
 
-  //클릭시
-  const submitBoard = (e) => {
-    e.preventDefault(); //submit 이 action을 안타고 자기 할일을 그만함
-
-    fetch("http://localhost:9990/book", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(book),
-    }) //javastript OBJECT를 JSON으로 응답
-      .then((res) => {
-        //response를 응답
-        if (res.status === 201) {
-          return res.json();
+  const submitQna = (e) => {
+    const url = "http://localhost:9998/passgym/ownerqna/";
+    axios
+      .post(url, OwnerQna)
+      .then((response) => {
+        if (response.data.status === 1) {
+          navigate("/ownerqnalist");
         } else {
-          return null;
+          alert(response.data.status);
         }
       })
-      .then((res) => {
-        console.log(2, res);
-        if (res !== null) {
-          props.history.push("/owner/board");
-        } else {
-          alert("등록에 실패하였습니다. ");
-        }
+      .catch((error) => {
+        alert(error.response.status);
       });
+    e.preventDefault();
   };
 
   return (
-    <div>
-      <Form onSubmit={submitBoard}>
-        <FloatingLabel
-          controlId="floatingTextarea"
-          label="제목"
-          className="mb-3"
-        >
-          <Form.Control
-            as="textarea"
-            placeholder="Leave a comment here"
-            onChange={changValue}
-            name="title"
-          />
+    <>
+      <Form onSubmit={submitQna} style={{ textAlign: "center" }}>
+        <FloatingLabel controlId="floatingTextarea" label="문의제목">
+          <Form.Control as="textarea" name="title" onChange={changValue} />
         </FloatingLabel>
-        <FloatingLabel controlId="floatingTextarea2" label="내용">
+        <FloatingLabel controlId="floatingTextarea2" label="문의내용">
           <Form.Control
             as="textarea"
-            placeholder="Leave a comment here"
-            style={{ height: "350px" }}
-            onChange={changValue}
+            style={{ width: "500px", height: "350px", margin: "20px 0" }}
+            maxLength={500}
             name="content"
+            onChange={changValue}
           />
         </FloatingLabel>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ margin: "20px 0" }}>
           글쓰기
         </Button>
       </Form>
-    </div>
+    </>
   );
-};
+}
 
 export default OwnerQna;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardGroup, Carousel, Col } from "react-bootstrap";
+import React from "react";
+import { Card, CardGroup, Carousel } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const Home = () => {
