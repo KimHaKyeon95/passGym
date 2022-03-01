@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
-import "../css/login.css";
-import HorizonLine from "../../components/common/HorizonLine";
+import "../../css/common/login.css";
+import HorizonLine from "./HorizonLine";
+
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
