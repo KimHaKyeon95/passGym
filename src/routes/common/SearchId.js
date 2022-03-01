@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import "../css/searchidpwd.css";
 
 function SearchId() {
   const [name, setName] = React.useState("");
@@ -79,7 +78,7 @@ function SearchId() {
           />
         </Form.Group>
         <Button
-          className="button"
+          className="searchbutton"
           onClick={onSearchHandler}
           type="submit"
           variant="outline-dark"

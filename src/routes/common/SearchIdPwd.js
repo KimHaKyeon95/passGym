@@ -22,9 +22,9 @@ function SearchIdPwd() {
       <Tab eventKey="searchId" title="아이디 찾기">
         <SearchId />
       </Tab>
-      <Tab eventKey="searchPwd" title="비밀번호 찾기">
+      {/* <Tab eventKey="searchPwd" title="비밀번호 찾기">
         <SearchPwd />
-      </Tab>
+      </Tab> */}
     </Tabs>
   );
 }

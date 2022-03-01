@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
-import "../css/searchidpwd.css";
 
 function SearchPwd() {
   const [id, setId] = React.useState("");
