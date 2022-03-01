@@ -4,8 +4,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../../css/common/login.css";
-import HorizonLine from "./HorizonLine";
-
+import HorizonLine from "../../components/common/HorizonLine";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
