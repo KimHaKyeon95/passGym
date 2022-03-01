@@ -25,7 +25,7 @@ function Gymcard({ num, ownerNo, name, addr, avgStar, distance }) {
             <Card.Text>
               <span>★{avgStar}</span>
               <br />
-              <span>{addrArray[0]}</span>
+              <div style={{height: "30px"}}>{addrArray[0]}</div>
               <br />
               <span>거리 : {usingDistance} km</span>
             </Card.Text>
