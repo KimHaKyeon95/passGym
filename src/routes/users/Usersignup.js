@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import PostcodeModal from "../../components/owner/PostcodeModal";
-import "../css/usersignup.css";
-import InputGroup from "react-bootstrap/InputGroup";
+import "../../css/user/usersignup.css";
 import { Navigate } from "react-router";
 
 function Usersignup() {

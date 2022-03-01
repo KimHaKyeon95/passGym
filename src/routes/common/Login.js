@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
-import "../css/login.css";
+import "../../css/common/login.css";
 import HorizonLine from "../../components/common/HorizonLine";
 import SearchIdModal from "../common/SearchIdModal";
 
@@ -59,11 +59,12 @@ function Login() {
 
     // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
-    // let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
+    let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
+
 
     if (radioValue == 1) {
       axios
-        .post(userSubmitUrl, submitInfo)
+        .post(userSubmitUrl, submitInfo, { withCredentials: true })
         .then((response) => {
           if (response.data.status == 1) {
             // console.log(response.data);
