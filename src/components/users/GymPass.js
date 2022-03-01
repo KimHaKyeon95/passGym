@@ -42,7 +42,7 @@ function GymPass({
         lg={6}
         md={8}
         style={{
-          width: "1000px",
+          width: "890px",
           maxWidth: "65vw",
           border: "1px solid",
           justifyContent: "space-between",

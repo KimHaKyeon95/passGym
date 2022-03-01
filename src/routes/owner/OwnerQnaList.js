@@ -55,7 +55,7 @@ function UserQnaList() {
                     <Col>{OwnerQna.title}</Col>
                     <Col>{OwnerQna.qnaDate.substring(0, 10)}</Col>
                     <Col>
-                      {OwnerQna.replyStatus == 0 ? "답변대기중" : "답변완료"}
+                      {OwnerQna.replyStatus === 0 ? "답변대기중" : "답변완료"}
                     </Col>
                   </Accordion.Header>
                 </Row>
