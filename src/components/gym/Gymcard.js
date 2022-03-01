@@ -12,6 +12,13 @@ function Gymcard({ num, ownerNo, name, addr, avgStar, distance }) {
         style={{ textDecoration: "none", color: "black" }}
       >
         <Card>
+          <Card.Img
+            variant="top"
+            width="286px"
+            height="180px"
+            style={{ objectFit: "cover", overflow: "hidden" }}
+            src={require("../../images/" + ownerNo + ".jpg")}
+          />
           <Card.Body style={{ paddingTop: "2px" }}>
             <Card.Text style={{ marginBottom: "0" }}>no.{num} </Card.Text>
             <Card.Title>{name}</Card.Title>
