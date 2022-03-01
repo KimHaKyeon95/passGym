@@ -37,13 +37,13 @@ import com.passgym.user.service.UserService;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	ObjectMapper objectMapper;
-	
+
 	@GetMapping("iddupchk")
 	@ResponseBody
 	public Map <String, Object> iddupchk(String id) throws FindException{
@@ -62,16 +62,27 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
+
 	@PostMapping("")
-	public void signup(@RequestBody Map <String, Object> requestMap){
+	public Object signup(@RequestBody Map <String, Object> requestMap){
 		String resultMsg = "";
 		int status = 0;
-		
 		try {
 			String id = (String)requestMap.get("id");
 			String pwd = (String)requestMap.get("pwd");
-			User user = service.signup();
+			String name = (String)requestMap.get("name");
+			String phoneNo = (String)requestMap.get("phoneNo");
+			String zipcode = (String)requestMap.get("zipcode");
+			String addr = (String)requestMap.get("addr");
+			String addrDetail = (String)requestMap.get("addrDetail");
+			User user = new User(); //id, pwd, name, phoneNo, zipcode, addr, addrDetail
+			user.setId(id);
+			user.setPwd(pwd);
+			user.setName(name);
+			user.setPhoneNo(phoneNo);
+			user.setZipcode(zipcode);
+			user.setAddr(addr);
+			user.setAddrDetail(addrDetail);
 			user.setUserStatus(1);
 			service.signup(user);
 			status = 1;
@@ -85,18 +96,18 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
+
 	@PostMapping("login")
 	public Map <String, Object> login(@RequestBody Map <String, Object> requestMap, HttpSession session) {
 		//String id, String pwd, HttpSession session) throws FindException{
-		
+
 		session.removeAttribute("user"); //초기화
 		String resultMsg = "";
 		int status = 0;
 		String id = (String)requestMap.get("id");
 		String pwd = (String)requestMap.get("pwd");
 		Map <String, Object> returnMap = new HashMap<>();
-		
+
 		try {
 			User user = service.login(id, pwd);
 			session.setAttribute("user", user);
@@ -107,13 +118,13 @@ public class UserController {
 			e.printStackTrace();
 			resultMsg = "로그인 실패";
 		}
-		
+
 		returnMap.put("msg", resultMsg);
 		returnMap.put("status", status);
-		
+
 		return returnMap;
 	}
-	
+
 	@GetMapping("logout")
 	public Object logout(HttpSession session) {
 		Map <String, Object> returnMap = new HashMap<>();
@@ -124,7 +135,7 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
+
 	@PostMapping("searchid")
 	public Object searchid(@RequestBody Map <String, String> request) {
 		String resultMsg = "";
@@ -132,9 +143,9 @@ public class UserController {
 		String name = request.get("name");
 		String phoneNo = request.get("phoneNo");
 		try {
-		String userId = service.searchid(name, phoneNo);
-		status = 1;
-		resultMsg = "아이디 " + userId;
+			String userId = service.searchid(name, phoneNo);
+			status = 1;
+			resultMsg = userId;
 		} catch(FindException e) {
 			e.printStackTrace();
 			resultMsg = "아이디 찾기 실패";
@@ -144,17 +155,18 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
+
 	@PostMapping("searchpwd")
 	public Object searchpwd(@RequestBody Map <String, String> request) {
 		String resultMsg = "";
 		int status = 0;
-		String id = request.get("id");
-		String phoneNo = request.get("phoneNo");
+		String id = (String)request.get("id");
+		String phoneNo = (String)request.get("phoneNo");
+		logger.info("아이디 전화번호" + id +"  " + phoneNo);
 		try {
-		String userPwd = service.searchid(id, phoneNo);
-		status = 1;
-		resultMsg = "비밀번호 " + userPwd;
+			String userPwd = service.searchpwd(id, phoneNo);
+			status = 1;
+			resultMsg = userPwd;
 		} catch(FindException e) {
 			e.printStackTrace();
 			resultMsg = "비밀번호 찾기 실패";
@@ -164,21 +176,21 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
-	
 
-	
+
+
+
 	@GetMapping("/")
 	public Object user(HttpSession session) {
 		//세션에서 가져올것
-//		User sessionUser = (User)session.getAttribute("User");
-//		if(sessionUser == null) {
-//			logger.info("로그인 안됨");
-//		}
-//		int userNo = sessionUser.getUserNo();
+		//		User sessionUser = (User)session.getAttribute("User");
+		//		if(sessionUser == null) {
+		//			logger.info("로그인 안됨");
+		//		}
+		//		int userNo = sessionUser.getUserNo();
 		int userNo = 1;
 		Map<String, Object> returnMap = new HashMap<>();
-		
+
 		try {
 			User user = service.findById(userNo);
 			session.setAttribute("user", user);
@@ -189,7 +201,7 @@ public class UserController {
 			String addr = user.getAddr();
 			String addrDetail = user.getAddrDetail();
 			String zipcode = user.getZipcode();
-			
+
 			Map<String, Object> map = new HashMap<>();
 			map.put("userNo", userNo);
 			map.put("name", name);
@@ -200,7 +212,7 @@ public class UserController {
 			map.put("addr", addr);
 			map.put("addrDetail", addrDetail);
 			map.put("zipcode", zipcode);
-			
+
 			String result = objectMapper.writeValueAsString(map);
 			return result;
 		}catch(FindException e) {
@@ -213,18 +225,18 @@ public class UserController {
 		}
 		return returnMap;
 	}
-	
+
 	@PutMapping("/")
 	public Object editUser(@RequestBody Map<String,Object> requestMap, HttpSession session) {
 		//세션에서 가져올것
-//		User sessionUser = (User)session.getAttribute("User");
-//		if(sessionUser == null) {
-//			logger.info("로그인 안됨");
-//		}
-//		int userNo = sessionUser.getUserNo();
+		//		User sessionUser = (User)session.getAttribute("User");
+		//		if(sessionUser == null) {
+		//			logger.info("로그인 안됨");
+		//		}
+		//		int userNo = sessionUser.getUserNo();
 		int userNo = 1;
 		User user;
-		
+
 		//결과값
 		Map<String, Object> returnMap = new HashMap<>();
 		String msg = "";
@@ -238,14 +250,14 @@ public class UserController {
 			String zipcode = (String)requestMap.get("zipcode");
 			String addr = (String)requestMap.get("addr");
 			String addrDetail = (String)requestMap.get("addrDetail");
-			
+
 			user.setName(name);
 			user.setPwd(pwd);
 			user.setPhoneNo(phoneNo);
 			user.setZipcode(zipcode);
 			user.setAddr(addr);
 			user.setAddrDetail(addrDetail);
-			
+
 			service.modifyUser(user);
 			session.setAttribute("user", user);
 			msg = "수정에 성공했습니다.";
@@ -261,18 +273,18 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
+
 	@PutMapping("/withdrawal")
 	public Object withdrawalUser(HttpSession session) {
 		//세션에서 가져올것
-//		User sessionUser = (User)session.getAttribute("User");
-//		if(sessionUser == null) {
-//			logger.info("로그인 안됨");
-//		}
-//		int userNo = sessionUser.getUserNo();
+		//		User sessionUser = (User)session.getAttribute("User");
+		//		if(sessionUser == null) {
+		//			logger.info("로그인 안됨");
+		//		}
+		//		int userNo = sessionUser.getUserNo();
 		int userNo = 1;
 		User user;
-		
+
 		//결과값
 		Map<String, Object> returnMap = new HashMap<>();
 		String msg = "";
@@ -280,7 +292,7 @@ public class UserController {
 		try {
 			user = service.findById(userNo);
 			user.setUserStatus(0);
-			
+
 			service.withdrawalUser(user);
 			session.removeAttribute("User");
 			msg = "회원탈퇴에 성공했습니다.";
@@ -296,24 +308,24 @@ public class UserController {
 		returnMap.put("status", status);
 		return returnMap;
 	}
-	
-	
+
+
 	@GetMapping("/gympasses")
 	public Object getGympasses(HttpSession session) {
 		//세션에서 가져올것
-//		User sessionUser = (User)session.getAttribute("User");
-//		if(sessionUser == null) {
-//			logger.info("로그인 안됨");
-//		}
-//		int userNo = sessionUser.getUserNo();
+		//		User sessionUser = (User)session.getAttribute("User");
+		//		if(sessionUser == null) {
+		//			logger.info("로그인 안됨");
+		//		}
+		//		int userNo = sessionUser.getUserNo();
 		int userNo = 1;
 		try {
-			
+
 			List<Map> GymPasses = new ArrayList<>();
 			//지울것
 			User sessionUser = service.findById(userNo);
 			List<GymPass> gympassList = sessionUser.getGymPasses();
-			
+
 			for(GymPass gp: gympassList) {
 				Map<String, Object> GymPassMap = new HashMap<>();
 				String paymentNo = gp.getPaymentNo();
@@ -331,7 +343,7 @@ public class UserController {
 				String ownerNo = gp.getPass().getGym().getOwnerNo();
 				String passName = gp.getPass().getPassName();
 				int PassNo = gp.getPass().getPassPk().getPassNo();
-				
+
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				String startDate =  formatter.format(gp.getStartDate());
 				String endDate = formatter.format(gp.getEndDate());
@@ -341,7 +353,7 @@ public class UserController {
 				if(gp.getStar() != null) {
 					star = gp.getStar().getStar();
 				}
-				
+
 				GymPassMap.put("paymentNo", paymentNo);
 				GymPassMap.put("ownerNo", ownerNo);
 				GymPassMap.put("status", status);
@@ -353,11 +365,11 @@ public class UserController {
 				GymPassMap.put("avgStar", avgStar);
 				//GymPassMap.put("remain", remain);
 				GymPassMap.put("star", star);
-				
+
 				GymPasses.add(GymPassMap);
 			}
 
-			
+
 			String result = objectMapper.writeValueAsString(GymPasses);
 			return result;
 		}catch(FindException e) {
