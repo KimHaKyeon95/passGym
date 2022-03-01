@@ -19,7 +19,7 @@ function UserQna() {
     axios
       .post(url, UserQna)
       .then((response) => {
-        if (response.data.status == 1) {
+        if (response.data.status === 1) {
           navigate("/mypage");
         } else {
           alert(response.data.status);
@@ -33,20 +33,20 @@ function UserQna() {
 
   return (
     <>
-      <Form onSubmit={submitQna}>
+      <Form onSubmit={submitQna} style={{ textAlign: "center" }}>
         <FloatingLabel controlId="floatingTextarea" label="문의제목">
           <Form.Control as="textarea" name="title" onChange={changValue} />
         </FloatingLabel>
         <FloatingLabel controlId="floatingTextarea2" label="문의내용">
           <Form.Control
             as="textarea"
-            style={{ width: "500px", height: "350px" }}
+            style={{ width: "500px", height: "350px", margin: "20px 0" }}
             maxLength={500}
             name="content"
             onChange={changValue}
           />
         </FloatingLabel>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ margin: "20px 0" }}>
           글쓰기
         </Button>
       </Form>

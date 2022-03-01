@@ -14,17 +14,18 @@ function Gymdetail() {
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
-  const [SelectedPass, setSelectedPass] = useState();
+  const [SelectedPass, setSelectedPass] = useState([]);
   const getGym = () => {
     const url = "http://localhost:9999/passgym/gym/" + ownerNo;
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then(function (response) {
         console.log(response);
         setGym(response.data);
         setLoading(false);
       })
       .catch(function (error) {
+        console.log(error);
         alert(error.response.status);
       });
   };

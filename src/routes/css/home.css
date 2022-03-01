@@ -1,12 +1,12 @@
 .distance-card,
-.g-4{
-    width: 880px;
+.g-4 {
+  width: 880px;
 }
 
-.col,
+/*.col,*/
 .cards,
-.card-body{
-    float: left;
-    width: 280px;
-    margin: 5px;
+.card-body {
+  float: left;
+  width: 280px;
+  margin: 5px;
 }
