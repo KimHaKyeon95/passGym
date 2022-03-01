@@ -7,9 +7,9 @@ import SearchPwd from "./SearchPwd";
 function SearchIdPwd() {
   const [key, setKey] = React.useState("searchId");
 
-  function onTabHandler(k) {
+  const onTabHandler = (k) => {
     setKey(k);
-  }
+  };
 
   return (
     <Tabs

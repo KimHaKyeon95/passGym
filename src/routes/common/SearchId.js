@@ -1,40 +1,29 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import "../../css/user/searchidpwd.css";
 
 function SearchId() {
   const [name, setName] = React.useState("");
   const [phoneNo, setPhoneNo] = React.useState("");
-  // const [nameRegexChkResult, setNameRegexChkResult] = React.useState({
-  //   result: false,
-  //   resultMsg: "",
-  // });
 
-  // function onNameRegexChkHandler(value) {
-  //   const regex = /^[ㄱ-ㅎ|가-힣|]+$/;
-  //   setNameRegexChkResult(result:regex.response(value));
-  //   return regex.response(value);
-  // }
-
-  function onNameHandler(event) {
+  const onNameHandler = (event) => {
     setName(event.target.value);
     console.log(name);
-  }
+  };
 
-  function onPhoneNoHandler(event) {
+  const onPhoneNoHandler = (event) => {
     const regex = /^[0-9]{0,11}$/;
     if (regex.test(event.target.value)) {
       setPhoneNo(event.target.value);
     }
-  }
+  };
 
   const nextValue = {
     name,
     phoneNo,
   };
 
-  function onSearchHandler(event) {
+  const onSearchHandler = (event) => {
     const submitInfo = nextValue;
     console.log(submitInfo);
     event.preventDefault();
@@ -53,7 +42,7 @@ function SearchId() {
           event.preventDefault();
         }
       });
-  }
+  };
 
   return (
     <div className="container">

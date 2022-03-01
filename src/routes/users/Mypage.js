@@ -7,7 +7,6 @@ import Profile from "../../components/users/Profile";
 import UserQnaList from "../../components/users/UserQnaList";
 
 function Mypage() {
-  //임시
   const [User, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -17,17 +16,16 @@ function Mypage() {
     const url = "http://localhost:9999/passgym/user/";
     axios
       .get(url, { withCredentials: true })
-      .then(function (response) {
+      .then((response) => {
         if (response.data.status === 0) {
           alert(response.data.msg);
           navigate("/");
         } else {
-          console.log(response);
           setUser(response.data);
           setLoading(false);
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.response.status);
       });
   };

@@ -1,8 +1,6 @@
 import GymCardsDistance from "../../components/gym/GymCardsDistance";
 import GymCardsStar from "../../components/gym/GymCardsStar";
-import React, { useEffect, useState } from 'react';
-
-import "../../css/common/home.css";
+import React, { useEffect, useState } from "react";
 
 function Home() {
   const [lat, setLat] = useState("");
@@ -32,18 +30,18 @@ function Home() {
 
   return (
     <>
-    {
-        lat !== "" && lon !== "" ? 
-        (<>
+      {lat !== "" && lon !== "" ? (
+        <>
           <div className="distance-card">
             <GymCardsDistance lat={lat} lon={lon} />
           </div>
           <div className="distance-card">
-          <GymCardsStar lat={lat} lon={lon} />
+            <GymCardsStar lat={lat} lon={lon} />
           </div>
-        </>)
-        : <></>
-      }
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

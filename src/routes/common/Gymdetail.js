@@ -19,12 +19,12 @@ function Gymdetail() {
     const url = "http://localhost:9999/passgym/gym/" + ownerNo;
     axios
       .get(url, { withCredentials: true })
-      .then(function (response) {
+      .then((response) => {
         console.log(response);
         setGym(response.data);
         setLoading(false);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
         alert(error.response.status);
       });
@@ -39,7 +39,7 @@ function Gymdetail() {
     sessionStorage.setItem("ownerNo", Gym.ownerNo);
     sessionStorage.setItem("passNo", SelectedPass);
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == SelectedPass) {
+      if (Gym.passes[idx].passNo === SelectedPass) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }
