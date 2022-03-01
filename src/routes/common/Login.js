@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../../css/common/login.css";
-import HorizonLine from "./HorizonLine";
+import HorizonLine from "../../components/common/HorizonLine";
 
 
 function Login() {
@@ -62,7 +62,7 @@ function Login() {
 
     // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
-    // let ownerSubmitUrl = "http://localhost:9999/ownerlogin/login";
+    let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
 
     if (radioValue == 1) {
       axios

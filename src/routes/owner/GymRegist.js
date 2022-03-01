@@ -86,7 +86,7 @@ function GymRegist(){
             let uploadDetailFile = detailFileState[name];
             formData.append("detailFiles", uploadDetailFile);
         }
-       let submitUrl = "http://localhost:8082/passgym/gym/gymregist";
+       let submitUrl = "http://localhost:9999/passgym/gym/gymregist";
        axios.post(submitUrl, formData, {
            headers: {
                "Content-Type": "multipart/form-data"
