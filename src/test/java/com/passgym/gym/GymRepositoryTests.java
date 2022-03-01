@@ -2,7 +2,7 @@ package com.passgym.gym;
 
 import com.passgym.dto.GymSortDto;
 import com.passgym.gym.entity.Gym;
-import com.passgym.gym.utility.GymCompare;
+import com.passgym.gym.utility.GymDistanceCompare;
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
@@ -178,10 +178,10 @@ public class GymRepositoryTests {
 			double distance = service.gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
 			GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
 												gym.getAddr(), distance,
-												gym.getTotalStar(), gym.getTotalMember());
+												gym.getTotalStar(), gym.getTotalMember(), 0, 0);
 			gymDtoList.add(gymDto);
 		}
-		gymDtoList.sort(new GymCompare());
+		gymDtoList.sort(new GymDistanceCompare());
 		for(GymSortDto gym : gymDtoList){
 			System.out.println(gym.getOwnerNo() + " : "
 								 + gym.getAddr() + " : " + gym.getDistance());
