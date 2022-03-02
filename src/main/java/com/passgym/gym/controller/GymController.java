@@ -123,24 +123,8 @@ public class GymController {
 	@GetMapping("/sort-gym-distance")
 	@ResponseBody
 	public List<GymSortDto> gymSortingByDistance(@RequestParam String lat, @RequestParam String lon){
-		double userLat = Double.parseDouble(lat);
-		double userLon = Double.parseDouble(lon);
-		List<Gym> gymList = gymRepository.findAll();
-		List<GymSortDto> gymDtoList = new ArrayList<>();
 
-		for (Gym gym : gymList) {
-			double gymLat = gym.getLat();
-			double gymLon = gym.getLon();
-			double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
-			double gymAvgStar = gym.getTotalStar()/ gym.getTotalMember();
-			double distance = service.gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
-			if(distance <= 1.0){
-				GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
-						gym.getAddr(), distance,
-						gym.getTotalStar(), gym.getTotalMember(), gymAvgStar, gymStarScore);
-				gymDtoList.add(gymDto);
-			}
-		}
+		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
 		gymDtoList.sort(new GymDistanceCompare());
 
 		return gymDtoList;
@@ -149,27 +133,11 @@ public class GymController {
 	@GetMapping("/sort-gym-star")
 	@ResponseBody
 	public List<GymSortDto> gymSortingByStar(@RequestParam String lat, @RequestParam String lon){
-		double userLat = Double.parseDouble(lat);
-		double userLon = Double.parseDouble(lon);
 
-		List<Gym> gymList = gymRepository.findAll();
-		List<GymSortDto> gymDtoList = new ArrayList<>();
-
-		for (Gym gym : gymList) {
-			double gymLat = gym.getLat();
-			double gymLon = gym.getLon();
-			double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
-			double gymAvgStar = gym.getTotalStar() / gym.getTotalMember();
-			double distance = service.gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
-			if(distance <= 1.0){
-				GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
-						gym.getAddr(), distance,
-						gym.getTotalStar(), gym.getTotalMember(), gymAvgStar, gymStarScore);
-				gymDtoList.add(gymDto);
-			}
-		}
+		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
 		gymDtoList.sort(new GymStarCampare());
 
 		return gymDtoList;
 	}
+
 }
