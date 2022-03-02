@@ -1,13 +1,9 @@
-import GymCardsDistance from "../../components/gym/GymCardsDistance";
-import GymCardsStar from "../../components/gym/GymCardsStar";
 import React, { useEffect, useState } from 'react';
-
-import "../../css/common/home.css";
+import GymCards from "../../components/gym/GymCards";
 
 function Home() {
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
-
   const getLocation = () => {
     if (navigator.geolocation) {
       // GPS를 지원하면
@@ -30,22 +26,17 @@ function Home() {
     getLocation();
   }, []);
 
-  return (
-    <>
-    {
-        lat !== "" && lon !== "" ? 
-        (<>
-          <div className="distance-card">
-            <GymCardsDistance lat={lat} lon={lon} />
-          </div>
-          <div className="distance-card">
-          <GymCardsStar lat={lat} lon={lon} />
-          </div>
-        </>)
-        : <></>
-      }
-    </>
-  );
+  if(lat !== "" && lon !== ""){
+    return(
+      <>
+        <GymCards type="distance" lat={lat} lon={lon} />
+        <GymCards type="star" lat={lat} lon={lon}/>  
+      </>
+    )
+  }else{
+    return <></>;
+  }
+ 
 }
 
 export default Home;

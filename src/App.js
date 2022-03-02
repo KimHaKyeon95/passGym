@@ -7,7 +7,6 @@ import Usersignup from "./routes/users/Usersignup";
 import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
 import SearchIdPwd from "./routes/common/SearchIdPwd";
-import "./css/common/index.css";
 import Payment from "./routes/users/Payment";
 import Mypage from "./routes/users/Mypage";
 import Useredit from "./routes/users/Useredit";
@@ -18,7 +17,7 @@ import PassInfo from "./routes/owner/PassInfo";
 import OwnerModify from "./routes/owner/OwnerModify";
 import OwnerQnaList from "./routes/owner/OwnerQnaList";
 import OwnerQna from "./routes/owner/OwnerQna";
-
+import "./css/common/index.css";
 
 function App() {
   return (

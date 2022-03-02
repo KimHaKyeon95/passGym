@@ -1,4 +1,4 @@
-import {Button, Col, Container, Form, Modal, Row} from "react-bootstrap";
+import {Button, Form, Modal} from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import "../../css/owner/ownerNoChkModal.css";
