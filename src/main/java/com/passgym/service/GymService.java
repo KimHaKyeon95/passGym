@@ -1,19 +1,35 @@
 package com.passgym.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.dto.GymSortDto;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
+import com.passgym.gym.utility.GymUtility;
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
+
 
 @Service
 public class GymService {
@@ -25,15 +41,18 @@ public class GymService {
 
 	@Autowired
 	ObjectMapper mapper;
+
+	@Autowired
+	GymUtility utility;
 	
 	public Gym findByOwnerNo(String ownerNo) throws FindException{
 		try {
 			Optional<Gym> optGym = gymRepository.findById(ownerNo);
-			if(!optGym.isPresent()) {
+			if (!optGym.isPresent()) {
 				throw new FindException("Gym 조회 실패");
 			}
 			return optGym.get();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FindException("Gym 조회 실패");
 		}
@@ -42,11 +61,11 @@ public class GymService {
 	//Gym과 Pass에 관한 값들을 저장하고 해당 Gym의 ownerNo를 반환함
 	public String gymSetting(String gymInfo, String passes) throws IOException {
 
-		Map<String, String> gym = mapper.readValue(gymInfo,
-				new TypeReference<Map<String, String>>(){});
+		Map<String, String> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, String>>() {
+		});
 
-		List<Map<String,String>> mapPasses = mapper.readValue(passes,
-				new TypeReference<List<Map<String, String>>>(){});
+		List<Map<String, String>> mapPasses = mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
+		});
 		List<Pass> realPasses = new ArrayList<>();
 
 		for (Map<String, String> pass : mapPasses) {
@@ -64,7 +83,6 @@ public class GymService {
 			realPass.setPauseCount(Integer.parseInt(pass.get("pauseCount")));
 			realPass.setPauseDate(Integer.parseInt(pass.get("pauseDate")));
 			realPass.setRemarks(pass.get("remarks"));
-
 
 			realPasses.add(realPass);
 		}
@@ -85,8 +103,7 @@ public class GymService {
 		String endHour = gym.get("endHour");
 		String endMinute = gym.get("endMinute");
 
-		String operatingTime = startHour + ":" + startMinute
-				+ " ~ " + endHour + ":" + endMinute;
+		String operatingTime = startHour + ":" + startMinute + " ~ " + endHour + ":" + endMinute;
 		realGym.setOperatingTime(operatingTime);
 
 		realGym.setExtraService(gym.get("extraService"));
@@ -114,6 +131,69 @@ public class GymService {
 		return (rad * 180 / Math.PI);
 	}
 
+	@Transactional(readOnly = true)
+	public List<Pass> gymUserSelect(Gym gym) {
+		return gym.getPasses();
+	}
+
+	
+	
+	public String gymModifySetting(String gymInfo) throws IOException{//, String passes) throws IOException {
+		
+		
+		Map<String, Object> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, Object>>() {
+		});
+		List<Map<String, Object>> mapPasses = (List)gym.get("passes");
+				//mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
+		//});
+		List<Pass> realPasses = new ArrayList<>();
+		for (Map<String, Object> pass : mapPasses) {
+			PassPK passPK = new PassPK();
+			passPK.setOwnerNo((String)gym.get("ownerNo"));
+			passPK.setPassNo((Integer)pass.get("passNo"));
+
+			Pass realPass = new Pass();
+			realPass.setPassPk(passPK);
+			realPass.setPassName((String)pass.get("passName"));
+			realPass.setPassPrice((Integer)pass.get("passPrice"));
+			realPass.setPassDate(new Date());
+			realPass.setPassStatus(1);
+			realPass.setPassMonth((Integer)pass.get("passMonth"));
+			realPass.setPauseCount((Integer)pass.get("pauseCount"));
+			realPass.setPauseDate((Integer)pass.get("pauseDate"));
+			realPass.setRemarks((String)pass.get("remarks"));
+
+			realPasses.add(realPass);
+		}
+		Gym realGym = new Gym();
+			realGym.setOwnerNo((String)gym.get("ownerNo"));
+			realGym.setName((String)gym.get("name"));
+			realGym.setPhoneNo((String)gym.get("phoneNo"));
+			realGym.setZipcode((String)gym.get("zipcode"));
+			realGym.setAddr((String)gym.get("addr"));
+			realGym.setAddrDetail((String)gym.get("addrDetail"));
+			realGym.setIntroduce((String)gym.get("introduce"));
+			realGym.setNotice((String)gym.get("notice"));
+			realGym.setOperatingTime((String)gym.get("operatingProgram"));
+			realGym.setExtraService((String)gym.get("extraService"));
+			realGym.setEtc((String)gym.get("etc"));
+	
+			//realGym.setPasses(realPasses);
+
+		Optional<Owner> owner = ownerRepository.findById((String)gym.get("ownerNo"));
+			realGym.setOwner(owner.get());
+
+		gymRepository.save(realGym);
+		return (String)gym.get("ownerNo");
+ 
+	}
+	
+	@Transactional
+	public String Delete(String ownerNo) {
+		ownerRepository.deleteById(ownerNo);
+		 return "ok";
+	}
+
 	public double gymDistance(double userLat, double userLon,
 							  double gymLat, double gymLon, String unit){
 
@@ -133,5 +213,38 @@ public class GymService {
 		}
 
 		return (dist);
+	}
+
+	public byte[] imgToByte(String ownerNo) throws IOException {
+		InputStream in = getClass().getResourceAsStream("C://passGymImg/" + ownerNo +"/"+ ownerNo + ".jpg");
+		byte[] imgByte = IOUtils.toByteArray(in);
+		return imgByte;
+	}
+
+	public List<GymSortDto> defineGymDto(String lat, String lon){
+		double userLat = Double.parseDouble(lat);
+		double userLon = Double.parseDouble(lon);
+		List<Gym> gymList = gymRepository.findAll();
+		List<GymSortDto> gymDtoList = new ArrayList<>();
+
+		try{
+			for (Gym gym : gymList) {
+				double gymLat = gym.getLat();
+				double gymLon = gym.getLon();
+				double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
+				double gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());
+				double distance = gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
+				String gymImgEncode =  utility.imgToByteString(gym.getOwnerNo());
+				if(distance <= 1.0){
+					GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
+							gym.getAddr(), distance,
+							gym.getTotalStar(), gym.getTotalMember(), gymAvgStar, gymStarScore, gymImgEncode);
+					gymDtoList.add(gymDto);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return gymDtoList;
 	}
 }

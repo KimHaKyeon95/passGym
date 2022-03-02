@@ -14,8 +14,9 @@ public class GymSortDto {
     private String addr; //주소
     private double distance;//거리
     private int totalStar; //총별점
-    private int totalMember; //총인원수
+    private int totalMember; //총인원
     private double avgStar;
     private double starScore;
+    private String gymImg; //Base64
 
 }
