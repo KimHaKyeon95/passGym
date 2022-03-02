@@ -26,7 +26,7 @@ function Header() {
   }
 
   function showUser() {
-    if (sessionStorage.length !== 0) {
+    if (sessionStorage.length != 0) {
       setShow(true);
     } else if (sessionStorage.user !== null) {
       setShow(false);

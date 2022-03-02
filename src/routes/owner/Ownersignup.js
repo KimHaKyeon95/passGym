@@ -59,17 +59,16 @@ function Ownersignup() {
   };
 
   const [chkIdResult, setChkIdResult] = useState({
-    result: false,
-  });
-
-  const idDupChk = () => {
-    let idDupChkUrl = "http://localhost:8082/passgym/owner/iddupchk";
-    if (!chkIdResult.result) {
-      setValues({ ...values, id: "" });
-      alert("4~10자리의 영문과 숫자조합을 입력해주세요.");
-    } else {
-      axios
-        .get(idDupChkUrl, {
+    result: false
+  })
+    
+    const idDupChk = () => {
+      let idDupChkUrl = "http://localhost:9999/passgym/owner/iddupchk";
+      if(!(chkIdResult.result)){
+        setValues({...values, id: ""})
+        alert("4~10자리의 영문과 숫자조합을 입력해주세요.");
+      }else{
+        axios.get(idDupChkUrl, {
           params: {
             id: values.id,
           },
