@@ -50,6 +50,7 @@ function Mypage() {
           zipcode={User.zipcode}
           addr={User.addr}
           addrDetail={User.addrDetail}
+          userImg={User.userImg}
         />
       )}
       <Tabs

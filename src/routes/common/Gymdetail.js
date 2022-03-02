@@ -20,12 +20,10 @@ function Gymdetail() {
     axios
       .get(url, { withCredentials: true })
       .then(function (response) {
-        console.log(response);
         setGym(response.data);
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
         alert(error.response.status);
       });
   };
@@ -68,7 +66,7 @@ function Gymdetail() {
                   maxHeight: "400px",
                   paddingRight: "20px",
                 }}
-                src={require("../../images/" + ownerNo + ".jpg")}
+                src={`data:image/jpeg;base64,${Gym.gymImg}`}
               ></Image>
             </Col>
             <Col xs md="3" lg="5">

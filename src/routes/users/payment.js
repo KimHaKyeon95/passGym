@@ -122,8 +122,8 @@ function Payment() {
       ) : (
         <Container style={{ border: "1px solid" }}>
           <Row>
-            <Col md={{ span: 10, offset: 1 }}>
-              <h3>payment</h3>
+            <Col style={{ fontSize:"20px", textAlign:"center", padding:"40px" }}>
+              <h3>결제하기</h3>
             </Col>
           </Row>
           <Row className="justify-content-md-center justify-content-xs-center">
@@ -136,7 +136,7 @@ function Payment() {
                   maxHeight: "400px",
                   paddingRight: "20px",
                 }}
-                src={require(`../../images/${ownerNo}.jpg`)}
+                src={`data:image/jpeg;base64,${Gym.gymImg}`}
               ></Image>
             </Col>
             <Col xs md="3" lg="5">
