@@ -9,7 +9,7 @@ public interface OwnerRepository extends JpaRepository<Owner, String> {
 
     public Optional<Owner> findOwnerByOwnerNo(String ownerNo);
 
-    public  Optional<Owner> findOwnerById(String id);
+    public Optional<Owner> findOwnerById(String id);
 
     
     Owner findByIdAndPwd(String id , String pwd);

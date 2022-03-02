@@ -12,13 +12,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.dto.GymSortDto;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
+import com.passgym.gym.utility.GymUtility;
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 
 @Service
@@ -32,7 +42,10 @@ public class GymService {
 	@Autowired
 	ObjectMapper mapper;
 
-	public Gym findByOwnerNo(String ownerNo) throws FindException {
+	@Autowired
+	GymUtility utility;
+	
+	public Gym findByOwnerNo(String ownerNo) throws FindException{
 		try {
 			Optional<Gym> optGym = gymRepository.findById(ownerNo);
 			if (!optGym.isPresent()) {
@@ -200,5 +213,38 @@ public class GymService {
 		}
 
 		return (dist);
+	}
+
+	public byte[] imgToByte(String ownerNo) throws IOException {
+		InputStream in = getClass().getResourceAsStream("C://passGymImg/" + ownerNo +"/"+ ownerNo + ".jpg");
+		byte[] imgByte = IOUtils.toByteArray(in);
+		return imgByte;
+	}
+
+	public List<GymSortDto> defineGymDto(String lat, String lon){
+		double userLat = Double.parseDouble(lat);
+		double userLon = Double.parseDouble(lon);
+		List<Gym> gymList = gymRepository.findAll();
+		List<GymSortDto> gymDtoList = new ArrayList<>();
+
+		try{
+			for (Gym gym : gymList) {
+				double gymLat = gym.getLat();
+				double gymLon = gym.getLon();
+				double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
+				double gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());
+				double distance = gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
+				String gymImgEncode =  utility.imgToByteString(gym.getOwnerNo());
+				if(distance <= 1.0){
+					GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
+							gym.getAddr(), distance,
+							gym.getTotalStar(), gym.getTotalMember(), gymAvgStar, gymStarScore, gymImgEncode);
+					gymDtoList.add(gymDto);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return gymDtoList;
 	}
 }

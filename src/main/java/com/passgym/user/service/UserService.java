@@ -20,9 +20,9 @@ import com.passgym.user.entity.User;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	/**
 	 * 아이디에 해당하는 사용자가 존재하면 
 	 * "이미 사용중인 아이디입니다" 메시지를 갖는 FindException이 발생한다. 
@@ -30,12 +30,12 @@ public class UserService {
 	 * @throws FindException
 	 */
 	public void iddupchk(String id) throws FindException {
-//		 logger.info(""+userRepository.findById(id).getUserNo());
-		 if(userRepository.findById(id) == null) {
-			 throw new FindException("사용가능한 아이디");
-		 }
+		//		 logger.info(""+userRepository.findById(id).getUserNo());
+		if(userRepository.findById(id) == null) {
+			throw new FindException("사용가능한 아이디");
+		}
 	}
-	
+
 	/**
 	 * 사용자가 회원가입한다.
 	 * @param user
@@ -44,7 +44,7 @@ public class UserService {
 	public void signup(User user) throws AddException {
 		userRepository.save(user);
 	}
-	
+
 	/**
 	 * 아이디와 비밀번호가 일치하는 사용자가 존재하면 고객객체를 반환한다.
 	 * 					   사용자가 존재하지 않으면 FindException이 발생한다.
@@ -67,7 +67,7 @@ public class UserService {
 		}
 	}
 
-	
+
 	/**
 	 * 이름과 휴대전화번호로 등록된 사용자가 존재하면 아이디를 반환한다.
 	 * 							   존재하지 않으면 FindException이 발생한다.
@@ -90,7 +90,7 @@ public class UserService {
 			throw new FindException(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 아이디와 휴대전화번호로 등록된 사용자가 존재하면 비밀번호를 반환한다.
 	 * 							   존재하지 않으면 FindException이 발생한다.
@@ -101,12 +101,14 @@ public class UserService {
 	 */
 	public String searchpwd(String id, String phoneNo) throws FindException {
 		try {
-			List<User> user = userRepository.findByName(id);
-			for(User u: user) {
-				if(u.getPhoneNo().equals(phoneNo)) {
-					return u.getPwd();
-				}
+			User user = userRepository.findById(id);
+
+
+			if(user.getPhoneNo().equals(phoneNo)) {
+				return user.getPwd();
+
 			}
+
 			throw new FindException("비밀번호 찾기 실패");
 		} catch(FindException e) {
 			e.printStackTrace();
@@ -115,8 +117,6 @@ public class UserService {
 	}
 	
 
-	 
-	
 	public User findById(int userNo) throws FindException{
 		User user;
 		try {
@@ -127,7 +127,7 @@ public class UserService {
 		}
 		return user;
 	}
-	
+
 	public void modifyUser(User user) throws ModifyException{
 		try {
 			userRepository.save(user);
@@ -136,7 +136,7 @@ public class UserService {
 			throw new ModifyException(e.getMessage());
 		}
 	}
-	
+
 	public void withdrawalUser(User user) throws RemoveException{
 		try {
 			userRepository.save(user);

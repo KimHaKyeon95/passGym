@@ -1,11 +1,15 @@
 package com.passgym.gym.utility;
 
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -40,9 +44,20 @@ public class GymUtility {
 	                detailFile.transferTo(detailImgDirectory);
 	            }
         	}
+
         }catch(IOException e){
             e.printStackTrace();
         }
 
+    }
+
+    public String imgToByteString(String ownerNo) throws IOException {
+        InputStream imageStream = new FileInputStream("C://passGymImg/" + ownerNo + "/" + ownerNo + ".jpg");
+        byte[] imgByte = IOUtils.toByteArray(imageStream);
+        String gymImgEncode = Base64.getEncoder().withoutPadding().encodeToString(imgByte);
+        if(imageStream != null){
+            imageStream.close();
+        }
+        return gymImgEncode;
     }
 }

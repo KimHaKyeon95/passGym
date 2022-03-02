@@ -4,7 +4,7 @@ import com.passgym.dto.GymSortDto;
 
 import java.util.Comparator;
 
-public class GymCompare implements Comparator<GymSortDto> {
+public class GymDistanceCompare implements Comparator<GymSortDto> {
 
     @Override
     public int compare(GymSortDto gymDto1, GymSortDto gymDto2) {

@@ -3,7 +3,8 @@ package com.passgym.gym;
 
 import com.passgym.dto.GymSortDto;
 import com.passgym.gym.entity.Gym;
-import com.passgym.gym.utility.GymCompare;
+import com.passgym.gym.utility.GymDistanceCompare;
+import com.passgym.gym.utility.GymUtility;
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
@@ -18,7 +19,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,6 +49,10 @@ public class GymRepositoryTests {
 
 	@Autowired
 	GymService service;
+
+
+	@Autowired
+	GymUtility utility;
 
 
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -306,13 +315,34 @@ public class GymRepositoryTests {
 			double distance = service.gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
 			GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
 												gym.getAddr(), distance,
-												gym.getTotalStar(), gym.getTotalMember());
+												gym.getTotalStar(), gym.getTotalMember(), 0, 0, null);
 			gymDtoList.add(gymDto);
 		}
-		gymDtoList.sort(new GymCompare());
+		gymDtoList.sort(new GymDistanceCompare());
 		for(GymSortDto gym : gymDtoList){
 			System.out.println(gym.getOwnerNo() + " : "
 								 + gym.getAddr() + " : " + gym.getDistance());
+		}
+	}
+
+	@Test
+	void imgToBase64StringTest(){
+		try{
+			String gymImgEncode = utility.imgToByteString("1000000001");
+			System.out.println(gymImgEncode);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void imgDeleteTest(){
+		String detailFilePath = "C:/passGymImg/test/test.txt";
+		File testFile = new File("C:/passGymImg/test", "test.text");
+		if (!testFile.exists()) {
+			testFile.mkdirs();
+		} else{
+			testFile.delete();
 		}
 	}
 }

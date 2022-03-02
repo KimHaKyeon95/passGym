@@ -31,7 +31,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.dto.GymSortDto;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
-import com.passgym.gym.utility.GymCompare;
+import com.passgym.gym.utility.GymDistanceCompare;
+import com.passgym.gym.utility.GymStarCampare;
 import com.passgym.gym.utility.GymUtility;
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
@@ -41,10 +42,21 @@ import com.passgym.repository.OwnerRepository;
 import com.passgym.service.GymService;
 import com.passgym.user.entity.User;
  
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("gym/*")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 public class GymController {
 	@Autowired
 	private GymService service;
@@ -328,30 +340,23 @@ public class GymController {
 
 	
  
-	@GetMapping("/sort-gym")
+	@GetMapping("/sort-gym-distance")
 	@ResponseBody
-	public List<GymSortDto> gymInquire(@RequestParam String lat, @RequestParam String lon){
-		double userLat = Double.parseDouble(lat);
-		double userLon = Double.parseDouble(lon);
+	public List<GymSortDto> gymSortingByDistance(@RequestParam String lat, @RequestParam String lon){
 
-		List<Gym> gymList = gymRepository.findAll();
-		List<GymSortDto> gymDtoList = new ArrayList<>();
+		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
+		gymDtoList.sort(new GymDistanceCompare());
 
-		for (Gym gym : gymList) {
-			double gymLat = gym.getLat();
-			double gymLon = gym.getLon();
-			double distance = service.gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
-			if(distance <= 1.0){
-				GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
-						gym.getAddr(), distance,
-						gym.getTotalStar(), gym.getTotalMember());
-				gymDtoList.add(gymDto);
-			}
-		}
-		gymDtoList.sort(new GymCompare());
-//		Arrays.sort(gymDtoList, (e1, e2) -> {
-//			return e1.getDistance() - e2.getDistance();
-//		})
+		return gymDtoList;
+	}
+
+	@GetMapping("/sort-gym-star")
+	@ResponseBody
+	public List<GymSortDto> gymSortingByStar(@RequestParam String lat, @RequestParam String lon){
+
+		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
+		gymDtoList.sort(new GymStarCampare());
+
 		return gymDtoList;
 	}
 
