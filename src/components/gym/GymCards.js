@@ -18,7 +18,10 @@ function Gymcards(props) {
     }).catch((error) => {
       alert(error.status);
     })
+<<<<<<< Updated upstream:src/components/gym/GymCards.js
 
+=======
+>>>>>>> Stashed changes:src/components/gym/GymCardsDistance.js
     setLoading(false);
   };
 
