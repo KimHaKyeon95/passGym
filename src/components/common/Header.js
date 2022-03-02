@@ -9,13 +9,16 @@ function Header() {
   const navigate = useNavigate();
 
   function onLogoutHandler(event) {
-    console.log("로그아웃 버튼 클릭");
     sessionStorage.removeItem("ownerNo");
 
     axios
       .get("http://localhost:9999/passgym/user/logout")
       .then(() => {
         sessionStorage.removeItem("userNo");
+        sessionStorage.removeItem("passNo");
+        sessionStorage.removeItem("passPrice");
+        sessionStorage.removeItem("passMonth");
+        console.log(sessionStorage.getItem("userNo"));
         navigate("/");
         navigate(0);
       })
@@ -26,9 +29,9 @@ function Header() {
   }
 
   function showUser() {
-    if (sessionStorage.length != 0) {
+    if (sessionStorage.getItem("userNo") !== null) {
       setShow(true);
-    } else if (sessionStorage.userNo != null) {
+    } else if (sessionStorage.getItem("userNo") == null) {
       setShow(false);
     }
   }

@@ -93,7 +93,7 @@ function Useredit() {
   const onSubmitHandler = (event) => {
     const url = "http://localhost:9999/passgym/user/";
     axios
-      .put(url, User)
+      .put(url, User, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         navigate("/mypage");
@@ -107,7 +107,7 @@ function Useredit() {
   const withdrawal = (event) => {
     const url = "http://localhost:9999/passgym/user/withdrawal";
     axios
-      .put(url, {})
+      .put(url, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         //navigate("/mypage");
@@ -136,18 +136,21 @@ function Useredit() {
           </Row>
           <Row>
             <Col style={{ textAlign: "center" }}>
-              <Image
-                fluid
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  objectFit: "cover",
-                  overflow: "hidden",
-                  borderRadius: "50%",
-                  padding: "10px 0",
-                }}
-                src={require(`../../images/${User.userNo}.jpg`)}
-              ></Image>
+              {User.userImg == null ? <></> 
+              : <Image
+              fluid
+              style={{
+                width: "150px",
+                height: "150px",
+                objectFit: "cover",
+                overflow: "hidden",
+                borderRadius: "50%",
+                padding: "10px 0",
+              }}
+              src={`data:image/jpeg;base64,${User.userImg}`}
+            ></Image>
+              }
+              
             </Col>
           </Row>
           <Row

@@ -12,6 +12,7 @@ function GymPass({
   startDate,
   endDate,
   status,
+  gymImg
 }) {
   const navigate = useNavigate();
 
@@ -71,7 +72,7 @@ function GymPass({
                 width: "100%",
                 height: "100%",
               }}
-              src={require("../../images/" + ownerNo + ".jpg")}
+              src={`data:image/jpeg;base64,${gymImg}`}
             ></Image>
           </Link>
         </Col>
