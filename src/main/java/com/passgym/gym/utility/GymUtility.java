@@ -24,7 +24,8 @@ public class GymUtility {
 	            for(MultipartFile file : files) {
 	                String originFileName = file.getOriginalFilename();
 	                String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-	                File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main"  + fileExtension);
+//	                File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main."  + fileExtension);
+					File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main.jpg");
 	                if (!imgDirectory.exists()) {
 	                    imgDirectory.mkdirs();
 	                }
@@ -52,7 +53,7 @@ public class GymUtility {
     }
 
     public String imgToByteString(String ownerNo) throws IOException {
-        InputStream imageStream = new FileInputStream("C://passGymImg/" + ownerNo + "/" + ownerNo + ".jpg");
+        InputStream imageStream = new FileInputStream("C://passGymImg/" + ownerNo + "/" + "main.jpg");
         byte[] imgByte = IOUtils.toByteArray(imageStream);
         String gymImgEncode = Base64.getEncoder().withoutPadding().encodeToString(imgByte);
         if(imageStream != null){

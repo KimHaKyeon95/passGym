@@ -7,15 +7,18 @@ import com.passgym.exception.AddException;
 import com.passgym.exception.FindException;
 import com.passgym.exception.ModifyException;
 import com.passgym.exception.RemoveException;
+import com.passgym.gym.utility.GymUtility;
 import com.passgym.gympass.entity.GymPass;
 import com.passgym.user.entity.User;
 import com.passgym.user.service.UserService;
+import com.passgym.user.utility.UserUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +36,12 @@ public class UserController {
 
 	@Autowired
 	ObjectMapper objectMapper;
+
+	@Autowired
+	UserUtility userUtility;
+
+	@Autowired
+	GymUtility gymUtility;
 
 	@GetMapping("iddupchk")
 	@ResponseBody
@@ -175,6 +184,7 @@ public class UserController {
 
 	@GetMapping("/")
 	public Object user(HttpSession session) {
+
 		Map<String, Object> returnMap = new HashMap<>();
 		String msg = "";
 		int status = 0;
@@ -196,7 +206,8 @@ public class UserController {
 				String addr = user.getAddr();
 				String addrDetail = user.getAddrDetail();
 				String zipcode = user.getZipcode();
-				
+				String userImg = userUtility.imgToByteString(id);
+
 				Map<String, Object> map = new HashMap<>();
 				map.put("userNo", userNo);
 				map.put("name", name);
@@ -207,13 +218,12 @@ public class UserController {
 				map.put("addr", addr);
 				map.put("addrDetail", addrDetail);
 				map.put("zipcode", zipcode);
-				
+				if(userImg != null){
+					map.put("userImg", userImg);
+				}
 				String result = objectMapper.writeValueAsString(map);
 				return result;
-			}catch(FindException e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			} catch (JsonProcessingException e) {
+			} catch(Exception e) {
 				e.printStackTrace();
 				msg = e.getMessage();
 			}
@@ -336,6 +346,7 @@ public class UserController {
 					String endDate = formatter.format(gp.getEndDate());
 					double avgStar = Math.round((double)gp.getPass().getGym().getTotalStar() / gp.getPass().getGym().getTotalMember());
 					//long remain = (gp.getEndDate().getTime() - gp.getStartDate().getTime()) / (24*60*60*1000);
+					String gymImg = gymUtility.imgToByteString(ownerNo);
 					int star = 0;
 					if(gp.getStar() != null) {
 						star = gp.getStar().getStar();
@@ -352,6 +363,7 @@ public class UserController {
 					GymPassMap.put("avgStar", avgStar);
 					//GymPassMap.put("remain", remain);
 					GymPassMap.put("star", star);
+					GymPassMap.put("gymImg", gymImg);
 
 					GymPasses.add(GymPassMap);
 				}
@@ -360,6 +372,8 @@ public class UserController {
 			}catch (JsonProcessingException e) {
 				e.printStackTrace();
 				msg = e.getMessage();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		returnMap.put("msg", msg);
