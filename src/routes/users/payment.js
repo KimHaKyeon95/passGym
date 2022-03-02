@@ -55,6 +55,8 @@ function Payment() {
 
   const onSubmit = (event) => {
     const url = "http://localhost:9999/passgym/payment/";
+    console.log(userNo, ownerNo, selectedPassNo);
+
     const data = {
       paymentNo: "" + userNo + ownerNo + selectedPassNo,
       paymentPrice: sessionStorage.getItem("passPrice"),
@@ -71,6 +73,7 @@ function Payment() {
         status: 0,
       },
     };
+    console.log(data.paymentPrice);
 
     if (startDate !== "") {
       axios
@@ -93,7 +96,7 @@ function Payment() {
 
   useEffect(() => {
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo === selectedPassNo) {
+      if (Gym.passes[idx].passNo === parseInt(selectedPassNo)) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }

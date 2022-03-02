@@ -6,7 +6,6 @@ import Login from "./routes/common/Login";
 import Usersignup from "./routes/users/Usersignup";
 import Gymdetail from "./routes/common/Gymdetail";
 import Ownersignup from "./routes/owner/Ownersignup";
-import SearchIdPwd from "./routes/common/SearchIdPwd";
 import Payment from "./routes/users/Payment";
 import Mypage from "./routes/users/Mypage";
 import Useredit from "./routes/users/Useredit";
@@ -49,9 +48,6 @@ function App() {
         <Routes>
           <Route path="/usersignup" element={<Usersignup />} />
         </Routes>
-        {/* <Routes>
-          <Route path="/searchidpwd" element={<SearchIdPwd />} />
-        </Routes> */}
         <Routes>
           <Route path="/ownersignup/gymregist" element={<GymRegist />} />
         </Routes>
