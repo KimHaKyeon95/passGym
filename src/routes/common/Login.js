@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../../css/common/login.css";
 import HorizonLine from "../../components/common/HorizonLine";
-import SearchIdModal from "../common/SearchIdModal";
+import SearchIdModal from "../../components/users/SearchIdModal";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
