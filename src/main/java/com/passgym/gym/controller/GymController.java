@@ -1,35 +1,43 @@
 package com.passgym.gym.controller;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.passgym.dto.GymSortDto;
-import com.passgym.exception.FindException;
-import com.passgym.gym.utility.GymCompare;
-import com.passgym.gym.entity.Gym;
-import com.passgym.repository.GymRepository;
-import com.passgym.service.GymService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.dto.GymSortDto;
+import com.passgym.exception.FindException;
+import com.passgym.gym.entity.Gym;
+import com.passgym.gym.utility.GymCompare;
+import com.passgym.gym.utility.GymUtility;
+import com.passgym.owner.entity.Owner;
+import com.passgym.pass.entity.Pass;
 import com.passgym.payment.entity.Payment;
+import com.passgym.repository.GymRepository;
+import com.passgym.repository.OwnerRepository;
 import com.passgym.service.GymService;
 import com.passgym.user.entity.User;
  
@@ -216,9 +224,24 @@ public class GymController {
 	};
 	
 	@PostMapping(value = "/gymSaveModify", consumes = "multipart/form-data")
-	public String saveModifyGym(@RequestParam("gymInfo") String gymInfo, @RequestParam("passes") String passes) {
+	public String saveModifyGym(
+			@RequestPart(name="refFile", required = false) List<MultipartFile> files ,
+			@RequestPart(name="detailImg0", required = false) List<MultipartFile> detailFiles,
+			@RequestParam("gymInfo") String gymInfo) {
 		try {
-			gymService.gymModifySetting(gymInfo, passes);
+			if(files==null) { //대표이미지가 업로드되지 않은 경우 
+				logger.info("대표이미지가 업로드되지 X");
+			}else {
+				logger.info("대표이미지:" + files.get(0).getOriginalFilename());
+
+			}
+			if(detailFiles == null) {//상세이미지가 업로드 되지 않은 경우				
+				logger.info("상세이미지가 업로드되지 X");
+			}else {
+				logger.info("상세이미지:" +detailFiles.get(0).getOriginalFilename());
+			}
+			String ownerNo = gymService.gymModifySetting(gymInfo );
+			utility.gymImgSave(files, detailFiles, ownerNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
@@ -226,12 +249,16 @@ public class GymController {
 		return "ok";
 	}
 
+	
 
 	
 	@PutMapping("/modify/{ownerNo}")
 	public Object gymModifySelect(@PathVariable(name = "ownerNo") String ownerNo) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
+			
+			
+			
 			Gym gym = gymService.findByOwnerNo(ownerNo);
 			String name = gym.getName();
 			String phoneNo = gym.getPhoneNo();
@@ -292,6 +319,7 @@ public class GymController {
 		}
 
 	}
+	
 	@CrossOrigin
 	@DeleteMapping("/ownerInfo/{ownerNo}")
 	public ResponseEntity<?> deleteById(@PathVariable String ownerNo){

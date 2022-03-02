@@ -1,22 +1,25 @@
 package com.passgym.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.exception.FindException;
 import com.passgym.gym.entity.Gym;
+import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
+import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.*;
 
 @Service
 public class GymService {
@@ -122,51 +125,54 @@ public class GymService {
 
 	
 	
-	public void gymModifySetting(String gymInfo, String passes) throws IOException {
-
-		Map<String, String> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, String>>() {
+	public String gymModifySetting(String gymInfo) throws IOException{//, String passes) throws IOException {
+		
+		
+		Map<String, Object> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, Object>>() {
 		});
-
-		List<Map<String, String>> mapPasses = mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
-		});
+		List<Map<String, Object>> mapPasses = (List)gym.get("passes");
+				//mapper.readValue(passes, new TypeReference<List<Map<String, String>>>() {
+		//});
 		List<Pass> realPasses = new ArrayList<>();
-		for (Map<String, String> pass : mapPasses) {
+		for (Map<String, Object> pass : mapPasses) {
 			PassPK passPK = new PassPK();
-			passPK.setOwnerNo(gym.get("ownerNo"));
-			passPK.setPassNo(Integer.parseInt(pass.get("passNo")));
+			passPK.setOwnerNo((String)gym.get("ownerNo"));
+			passPK.setPassNo((Integer)pass.get("passNo"));
 
 			Pass realPass = new Pass();
 			realPass.setPassPk(passPK);
-			realPass.setPassName(pass.get("passName"));
-			realPass.setPassPrice(Integer.parseInt(pass.get("passPrice")));
+			realPass.setPassName((String)pass.get("passName"));
+			realPass.setPassPrice((Integer)pass.get("passPrice"));
 			realPass.setPassDate(new Date());
 			realPass.setPassStatus(1);
-			realPass.setPassMonth(Integer.parseInt(pass.get("passMonth")));
-			realPass.setPauseCount(Integer.parseInt(pass.get("pauseCount")));
-			realPass.setPauseDate(Integer.parseInt(pass.get("pauseDate")));
-			realPass.setRemarks(pass.get("remarks"));
+			realPass.setPassMonth((Integer)pass.get("passMonth"));
+			realPass.setPauseCount((Integer)pass.get("pauseCount"));
+			realPass.setPauseDate((Integer)pass.get("pauseDate"));
+			realPass.setRemarks((String)pass.get("remarks"));
 
 			realPasses.add(realPass);
 		}
 		Gym realGym = new Gym();
-			realGym.setOwnerNo(gym.get("ownerNo"));
-			realGym.setName(gym.get("name"));
-			realGym.setPhoneNo(gym.get("phoneNo"));
-			realGym.setZipcode(gym.get("zipcode"));
-			realGym.setAddr(gym.get("addr"));
-			realGym.setAddrDetail(gym.get("addrDetail"));
-			realGym.setIntroduce(gym.get("introduce"));
-			realGym.setNotice(gym.get("notice"));
-			realGym.setOperatingTime(gym.get("operatingProgram"));
-			realGym.setExtraService(gym.get("extraService"));
-			realGym.setEtc(gym.get("etc"));
+			realGym.setOwnerNo((String)gym.get("ownerNo"));
+			realGym.setName((String)gym.get("name"));
+			realGym.setPhoneNo((String)gym.get("phoneNo"));
+			realGym.setZipcode((String)gym.get("zipcode"));
+			realGym.setAddr((String)gym.get("addr"));
+			realGym.setAddrDetail((String)gym.get("addrDetail"));
+			realGym.setIntroduce((String)gym.get("introduce"));
+			realGym.setNotice((String)gym.get("notice"));
+			realGym.setOperatingTime((String)gym.get("operatingProgram"));
+			realGym.setExtraService((String)gym.get("extraService"));
+			realGym.setEtc((String)gym.get("etc"));
 	
-			realGym.setPasses(realPasses);
+			//realGym.setPasses(realPasses);
 
-		Optional<Owner> owner = ownerRepository.findById(gym.get("ownerNo"));
+		Optional<Owner> owner = ownerRepository.findById((String)gym.get("ownerNo"));
 			realGym.setOwner(owner.get());
 
 		gymRepository.save(realGym);
+		return (String)gym.get("ownerNo");
+ 
 	}
 	
 	@Transactional
