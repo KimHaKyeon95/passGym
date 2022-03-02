@@ -7,7 +7,7 @@ const PassInfo = () => {
    
   // const [SelectedPass, setSelectedPass] = useState();
   const getPass = () => {
-    const url = "http://localhost:9979/gym/gympass/user" ;
+    const url = "http://localhost:9999/passgym/gym/gympass/user" ;
     axios
       .get(url)
       .then(function (response) {

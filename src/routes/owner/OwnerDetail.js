@@ -12,7 +12,7 @@ const Detail = (props) => {
   });
   //조회 
   useEffect(() => {     //다운받기 =>   에서 재사용
-    fetch('http://localhost:9990/book/' + id)
+    fetch('http://localhost:9999/book/' + id)
       .then((res) => res.json())
       .then((res) => {
         setBook(res);

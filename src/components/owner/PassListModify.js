@@ -3,16 +3,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../routes/css/passList.css"
 const PassListModify = (props) => {
-  const {
-      passes, passPrice,passName, passStatus, passNo, passCount, pauseDate, remarks
-} = props.gymInfo;
-
+  
 
     const onChange = (e) => {
       const index = e.target.parentNode.getAttributeNode("class").value;
       const { name, value } = e.target;   
       props.countList[index][name] = value;
     }
+
+     
 
     const inNumber= (event) => {
       const {value} = event.target;
@@ -22,7 +21,6 @@ const PassListModify = (props) => {
           value = 0;
       }
     }
-    
 
 
     return (
@@ -36,7 +34,9 @@ const PassListModify = (props) => {
                 name="passNo" 
                 className="gym__pass-no" 
                 placeholder="회원권 번호"
-                onChange={onChange} value={i} 
+                onChange={onChange} 
+                // value={i} 
+                value = {item.passNo}
                 />
             </InputGroup>
             {/*  */}
@@ -46,10 +46,10 @@ const PassListModify = (props) => {
               name="passName" 
               className="gym__pass-name" 
               placeholder="회원권 이름" 
-              onChange={onChange} 
-              value={passes.passName}
-              required 
               
+              onChange={onChange} 
+              value={item.passName}
+              required
               />
             </InputGroup>
             {/*  */}
@@ -62,8 +62,9 @@ const PassListModify = (props) => {
               placeholder="(단위는 제외하고 입력하세요.)" 
               onChange={onChange}  
               onInput={inNumber}
-              value={passes.passPrice}
-              required />
+              value={item.passPrice}
+              required
+              />
             </InputGroup>     
             {/*  */}       
             <InputGroup>
@@ -76,7 +77,7 @@ const PassListModify = (props) => {
                   event.target.value = "";
                 }
               }} onChange={onChange} 
-              value={passes.passDate}
+              value={item.passDate}
               required />
             </InputGroup>
             {/*  */}                               
@@ -87,7 +88,7 @@ const PassListModify = (props) => {
               className="gym__pass-month" 
               placeholder="개월수 입력" 
               onChange={onChange} 
-              value={passes.passMonth}
+              value={item.passMonth}
               required />
             </InputGroup> 
             {/*  */}
@@ -98,7 +99,7 @@ const PassListModify = (props) => {
               className="gym__pass-pause-count" 
               placeholder="일시정지 가능 횟수" 
               onChange={onChange} 
-              value={passes.pauseCount}
+              value={item.pauseCount}
               required />
             </InputGroup> 
             {/*  */}
@@ -110,7 +111,7 @@ const PassListModify = (props) => {
               className="gym__pass-pause-date" 
               placeholder="일시정지 가능 일수" 
               onChange={onChange} 
-              value={passes.pauseDate}
+              value={item.pauseDate}
               required /> 
             </InputGroup> 
             {/*  */}

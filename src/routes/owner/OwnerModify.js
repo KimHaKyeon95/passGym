@@ -11,7 +11,7 @@ function OwnerModify(props){
     
 
     const [gymInfo, setGymInfo] = useState({
-        ownerNo: "",
+       ownerNo: sessionStorage.getItem("ownerNo"),
         phoneNo: "",
         name: "",
         zipcode: "",
@@ -25,16 +25,26 @@ function OwnerModify(props){
         startMinute: "00",
         endHour: "00",
         endMinute: "00",
-        passes:"",
+         
     })
     //조회 
     const getGymInfo = () => {
-    const url = "http://localhost:9979/gym/modify/" + ownerNo;
+    const url = "http://localhost:9999/passgym/gym/modify/" + ownerNo;
     axios
       .put(url)
       .then(function (res) {
-        console.log(res);
+        
         setGymInfo(res.data);
+        //set countList
+        console.log(res.data.passes);//5
+        // setCountList(res.data.passes);
+        let countArr = [...countList]
+        // let idx = countArr.length;
+       
+        res.data.passes.forEach(function(pass, index){
+          countArr[index] = pass;
+        });
+        setCountList(countArr);
       })
       .catch(function (error) {
         alert(error.response.status);
@@ -52,41 +62,91 @@ function OwnerModify(props){
     const formData = new FormData();
     
 
-    // const onChange = (event) => {
-    //     const {name, value} = event.target;
-    //     let nextGymValue = {
-    //         ...gymInfo,
-    //         [name] : value
-    //     }
-    //     setGymInfo(nextGymValue);
-    //     event.preventDefault();
-    // }
+    const onChange = (event) => {
+        const {name, value} = event.target;
+        let nextGymValue = {
+            ...gymInfo,
+            [name] : value
+        }
+        setGymInfo(nextGymValue);
+        event.preventDefault();
+    }
 
-    // const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
-       
-        
-    //     formData.append("gymInfo", JSON.stringify(gymInfo));
-    //     formData.append("passes", JSON.stringify(countList)); 
-    //    let submitUrl = "http://localhost:9979/gym/gymSaveModify";
-    //    axios.post(submitUrl, formData, {
-    //        headers: {
-    //            "Content-Type": "multipart/form-data"
-    //        }
-    //    }).then((response) => {
-    //         event.preventDefault();
-    //    }).catch((error) => {
-    //         alert(error.response.status);
-    //    });
-    //     event.preventDefault();
-    // }
+    const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
+        let uploadRefFile = fileState.refFile;
+        console.log("메인 이미지", uploadRefFile);
+        console.log("상세이미지", fileState.detailImg0);    
+
+        formData.append("refFile", fileState.refFile); //메인 이미지
+        formData.append("detailImg0", fileState.detailImg0); //상세이미지 
+        formData.append("gymInfo", JSON.stringify(gymInfo));
+        console.log(JSON.stringify(gymInfo));
+      //formData.append("passes", JSON.stringify(countList)); 
+      //console.log(JSON.stringify(countList));
+       let submitUrl = "http://localhost:9999/passgym/gym/gymSaveModify";
+       axios.post(submitUrl, formData, {
+           headers: {
+               "Content-Type": "multipart/form-data"
+           }
+       }).then((response) => {
+            event.preventDefault();
+       }).catch((error) => {
+            alert(error.response.status);
+       });
+        event.preventDefault();
+    }
     
  
-  const changeValue = (e) => {
-    setGymInfo({
-      ...gymInfo,
-      [e.target.name]: e.target.value,
+    const [fileState, setFileState] = useState({
+        refFile: "",
+        previewUrl: ""
     });
-  };
+
+    const changeValue = (e) => {
+        setGymInfo({
+        ...gymInfo,
+        [e.target.name]: e.target.value,
+        });
+    };
+
+ 
+    const onRefFileChange = (event) => {
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.onloadend = () => {
+            setFileState({
+                refFile: file,
+                previewUrl: reader.result
+            })
+        }
+        reader.readAsDataURL(file);
+    }
+
+    const onDetailFileChange = (event) => {
+        let fileData = event.target.files;
+        let file = null;
+        let name = "";
+        let newValues = {...fileState};
+        for(let i = 0; i < fileData.length; i++){
+            file = fileData[i];
+            name = "detailImg" + i;
+            newValues = {
+                ...newValues,
+                [name] : file
+            }
+            setFileState(newValues);
+        }
+    }
+  
+    const RenderRepImg = () => {
+        let profilePreview = null;
+        if(fileState.refFile !== ""){
+            profilePreview = <img className="profile__preview" src={fileState.previewUrl}></img>
+        }
+        return(
+            <div className="profile__preview">{profilePreview}</div>
+        );
+    }
  
     const TimeStartHour = () => {
         let hourHtml = "";
@@ -181,12 +241,13 @@ function OwnerModify(props){
         idx--;
         countArr.pop(idx);
         setCountList(countArr);
+        
     }
 
 
     //회원 탈퇴 
     const deleteInfo = () => {
-    fetch('http://localhost:9979/gym/ownerInfo' + ownerNo, {
+    fetch('http://localhost:9999/passgym/gym/ownerInfo' + ownerNo, {
       method: 'DELETE',
     })
       .then((res) => res.text())
@@ -205,6 +266,17 @@ function OwnerModify(props){
               헬스장 정보</h1>
             <div className="gym__regist">
             <Form className="gym__regist-form">
+
+            <h5>대표사진 등록</h5>
+            <Form.Group className="gym__regist-represent-img" >
+                <Form.Control type="file" className="gym__regist-represent-img-upload" onChange={onRefFileChange}/>
+            </Form.Group>
+                {fileState.refFile == "" ? <div></div> : <RenderRepImg />}
+            <h5>세부사진 등록</h5>
+            <Form.Group className="gym__regist-detail-img">
+                <Form.Control type="file" className="gym__regist-detail-img" onChange={onDetailFileChange} multiple/>
+            </Form.Group> 
+
             {/*  */}
             <br/>
             <Form.Label>헬스장 대표번호</Form.Label>
@@ -236,7 +308,7 @@ function OwnerModify(props){
                 className="gym__name"
                 as="textarea" row={2}
                 placeholder="업체 이름" 
-                 value={gymInfo.name}
+                value={gymInfo.name}
                 required />
             {/*  */}
             <br/>
@@ -264,8 +336,8 @@ function OwnerModify(props){
             <br/>
             <Form.Label>회원권 입력</Form.Label>            
              <PassListModify 
-                key= {gymInfo.passes}
-                gymInfo = {gymInfo}  
+                // key= {gymInfo.passes}
+                // gymInfo = {gymInfo}  
                 countList={countList}
                 />
                 <Button className="pass__plus" 
@@ -273,6 +345,7 @@ function OwnerModify(props){
                 <Button className="pass__minus"
                         onClick={passComponentMinus}>-</Button>
             {/*  */}
+
             <Form.Group className="gym__operating-time">
                 <Form.Label>운영시간</Form.Label>
                 <Row>
@@ -282,7 +355,7 @@ function OwnerModify(props){
                 </Row>
             </Form.Group>
             {/*  */}
-            <Form.Label>운영시간</Form.Label>
+            <Form.Label>운영 프로그램</Form.Label>
             <Form.Control 
                 name="program"
                 onChange={changeValue}
@@ -302,7 +375,7 @@ function OwnerModify(props){
                 />   
             {/*  */}
             <Button  variant="success"  class="form-row float-right" className="gym__submit-btn" 
-            //  onClick={onSubmit}
+             onClick={onSubmit}
                 type="submit"  
                 // style={{position: 'absolute', right: 720}}
                 > 저장
