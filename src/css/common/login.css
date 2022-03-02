@@ -6,31 +6,23 @@
 
 .login__form {
   width: 460px;
-  /* max-width: 100%; */
 }
 
 .radioBtn {
   width: 100%;
   display: flex;
   justify-content: center;
-  /* background-color: antiquewhite; */
   border-color: black;
   color: darkslategray;
 }
 
-.login__id,
-.login__pwd {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
 .login__submitBtn {
   display: flex;
+  justify-content: center;
   width: 100%;
   margin-bottom: 10px;
   padding: 15px 0 15px;
   font-weight: 700;
-  /* text-align: center; */
 }
 
 .login__findBtn {

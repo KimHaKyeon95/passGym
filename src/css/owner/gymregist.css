@@ -1,0 +1,73 @@
+.title {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.gym__regist {
+  display: flex;
+  justify-content: center;
+}
+
+.gym__regist-form {
+  width: 460px;
+}
+
+.gym__regist-represent-img,
+.gym__regist-represent-img-btn,
+.gym__regist-detail-img,
+.gym__regist-img-btn {
+  margin-bottom: 10px;
+}
+
+.gym__regist-phone-no,
+.gym__addr,
+.gym__addr-detail,
+.gym__name,
+.gym__info,
+.gym__notice,
+.gym__operating-time,
+.gym__operating-program,
+.gym__equip-list,
+.gym__etc {
+  margin-bottom: 10px;
+  margin-top: 5px;
+  width: 480px;
+}
+
+.profile__preview {
+  display: flex;
+  justify-content: center;
+  height: 230px;
+  margin-bottom: 10px;
+}
+
+.gym__equip-list {
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.pass__btn {
+  display: flex;
+  justify-content: center;
+}
+
+.pass__plus,
+.pass__minus {
+  margin: 5px 10px;
+  width: 60px;
+}
+
+input[class*="pass"] {
+  margin: 5px 0px;
+  display: flex;
+  justify-content: center;
+}
+div[class*="pass"] {
+  margin-bottom: 10px;
+}
+
+.gym__pass {
+  border: 1px solid;
+  border-radius: 5px;
+}
+

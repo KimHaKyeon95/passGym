@@ -3,11 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
-import "../css/login.css";
-// import { KAKAO_AUTH_URL } from "./Oauth";
-import HorizonLine from "./HorizonLine";
-// import kakao from "../../images/kakao.png";
-// import naver from "../../images/naver.png";
+import "../../css/common/login.css";
+import HorizonLine from "../../components/common/HorizonLine";
+import SearchIdModal from "../../components/users/SearchIdModal";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
@@ -18,38 +16,23 @@ function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [isRemember, setIsRemember] = useState(false);
-
-  const [submit, setSubmit] = useState(false);
-  // const [error, setErrors] = useState({});
   const navigate = useNavigate();
+  const [searchIdModalShow, setSearchIdModalShow] = useState(false);
 
-  function onRadioChkHandler(event) {
+  const onRadioChkHandler = (event) => {
     setRadioValue(event.currentTarget.value);
-  }
-
-  function onIdHandler(event) {
-    setId(event.target.value);
-  }
-
-  function onPwdHandler(event) {
-    setPwd(event.target.value);
-  }
-
-  //테스트
-  let response = {
-    id: "id1@naver.com",
-    pwd: "p1",
   };
 
-  useEffect(() => {
-    if (localStorage.id !== undefined) {
-      setId(localStorage.id);
-      setIsRemember(true);
-    }
-  });
-  function onCheckHandler(event) {
-    const nextIsRememberValue = event.target.checked;
+  const onIdHandler = (event) => {
+    setId(event.target.value);
+  };
 
+  const onPwdHandler = (event) => {
+    setPwd(event.target.value);
+  };
+
+  const onCheckHandler = (event) => {
+    const nextIsRememberValue = event.target.checked;
     setIsRemember(nextIsRememberValue);
 
     if (nextIsRememberValue) {
@@ -57,54 +40,81 @@ function Login() {
       window.localStorage.setItem("id", id);
     } else {
       console.log("isRemeberValue false");
+      window.localStorage.removeItem("id", id);
     }
-  }
+  };
 
-  function onSubmitHandler(event) {
+  const onSubmitHandler = (event) => {
     console.log("login button clicked");
+    console.log(radioValue);
     const submitInfo = { id, pwd };
-    console.log(submitInfo);
-    let userSubmitUrl = "http://localhost:3000/userlogin/login";
-    let ownerSubmitUrl = "http://localhost:3000/ownerlogin/login";
-    if (radioValue == 1) {
-      if (response.id === submitInfo.id) {
-        console.log("사용자 로그인");
-        sessionStorage.setItem("id", submitInfo.id);
-        navigate("/");
-        // axios
-        //   .post(userSubmitUrl, submitInfo)
-        //   .then(() => {
-        //     sessionStorage.setItem("id", submitInfo.id);
-        //     navigate("/");
-        //   })
-        //   .catch((error) => {
-        //     if (error.response) {
-        //       alert(error.response.status);
-        //     }
-        //   });
-      } else {
-        alert("로그인 실패");
-      }
-    } else if (radioValue == 2) {
-      // console.log("사업자 로그인");
-      //   axios
-      //     .post(ownerSubmitUrl, submitInfo)
-      //     .then()
-      //     .catch((error) => {
-      //       if (error.response) {
-      //         alert(error.response.status);
-      //       }
-      //     });
+
+    // console.log(submitInfo);
+    let userSubmitUrl = "http://localhost:9999/passgym/user/login";
+    let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
+
+    if (radioValue === "1") {
+      axios
+        .post(userSubmitUrl, submitInfo, { withCredentials: true })
+        .then((response) => {
+          if (response.data.status === 1) {
+            sessionStorage.setItem("userNo", response.data.user);
+            navigate("/");
+            navigate(0); //새로고침
+            alert("로그인 성공하였습니다.");
+          } else {
+            alert("로그인 실패하였습니다.");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
+    } else if (radioValue === "2") {
+      axios
+        .post(ownerSubmitUrl, submitInfo)
+        .then((response) => {
+          if (response.data === "id fail") {
+            alert("아이디가 존재하지 않습니다.");
+            setId("");
+          } else if (response.data === "pwd fail") {
+            alert("비밀번호가 틀렸습니다.");
+            setPwd("");
+          } else {
+            sessionStorage.setItem("ownerNo", response.data);
+            window.location.href = "../owner/home";
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.status);
+          }
+        });
     } else {
       alert("로그인에 실패하였습니다.");
     }
     event.preventDefault();
-  }
+  };
+
+  const onEnterHandler = (event) => {
+    if (event.key === "Enter") {
+      onSubmitHandler();
+    }
+  };
+
+  //아이디 저장 체크한 경우
+  useEffect(() => {
+    if (localStorage.id) {
+      setId(localStorage.id);
+      setIsRemember(true);
+    }
+  }, []);
 
   return (
     <div>
       <div className="login">
-        <Form className="login__form">
+        <Form className="login__form" onKeyPress={onEnterHandler}>
           <>
             <ButtonGroup className="radioBtn">
               {radios.map((radio, idx) => (
@@ -126,18 +136,28 @@ function Login() {
           </>
           <div className="login__input">
             <Form.Group className="login__id" controlId="login__id">
-              <Form.Control
-                name="id"
-                onChange={onIdHandler}
-                value={id}
-                type="email"
-                placeholder="아이디(이메일)"
-                required
-              />
+              {radioValue === 1 ? (
+                <Form.Control
+                  name="id"
+                  onChange={onIdHandler}
+                  value={id}
+                  type="email"
+                  placeholder="아이디(이메일)"
+                  required
+                />
+              ) : (
+                <Form.Control
+                  name="id"
+                  onChange={onIdHandler}
+                  value={id}
+                  placeholder="아이디"
+                  required
+                />
+              )}
               {/* <div className="msg">{idChkMsg.msg}</div> */}
               {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>
-            <Form.Group className="login__pwd" controlId="login__pwd">
+            <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control
                 name="pwd"
                 onChange={onPwdHandler}
@@ -163,11 +183,23 @@ function Login() {
             >
               로그인
             </Button>
-            <Link to="../searchIdPwd">
-              <Button className="login__findBtn" variant="link">
-                이메일/비밀번호 찾기
+            <div>
+              {/* <Link to="../searchidpwd"> */}
+              <Button
+                className="login__findBtn"
+                variant="link"
+                onClick={() => setSearchIdModalShow(true)}
+              >
+                아이디(이메일) 찾기
               </Button>
-            </Link>
+              <SearchIdModal
+                show={searchIdModalShow}
+                onHide={() => {
+                  setSearchIdModalShow(false);
+                }}
+              />
+              {/* </Link> */}
+            </div>
             {/* <HorizonLine text="SNS 로그인"></HorizonLine>
             <Button
               // href={KAKAO_AUTH_URL}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import DetailItem from "../../components/owner/DetailItem";
 
 const OwnerBoard = () => {
 

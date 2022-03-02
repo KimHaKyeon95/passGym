@@ -9,10 +9,10 @@ import {
   Form,
   Spinner,
 } from "react-bootstrap";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Payment() {
-  const userNo = "1"; //임시번호
+  const userNo = sessionStorage.getItem("userNo"); //임시번호
   const { ownerNo } = useParams();
   const [loading, setLoading] = useState(true);
   const [Gym, setGym] = useState({});
@@ -28,11 +28,11 @@ function Payment() {
     const url = "http://localhost:9999/passgym/gym/" + ownerNo;
     axios
       .get(url)
-      .then(function (response) {
+      .then((response) => {
         setGym(response.data);
         setLoading(false);
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.response.status);
       });
   };
@@ -41,7 +41,7 @@ function Payment() {
     setSelectedPassNo(() => event.target.value);
     sessionStorage.setItem("passNo", selectedPassNo);
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == selectedPassNo) {
+      if (Gym.passes[idx].passNo === selectedPassNo) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }
@@ -55,6 +55,8 @@ function Payment() {
 
   const onSubmit = (event) => {
     const url = "http://localhost:9999/passgym/payment/";
+    console.log(userNo, ownerNo, selectedPassNo);
+
     const data = {
       paymentNo: "" + userNo + ownerNo + selectedPassNo,
       paymentPrice: sessionStorage.getItem("passPrice"),
@@ -71,12 +73,18 @@ function Payment() {
         status: 0,
       },
     };
+    console.log(data.paymentPrice);
 
     if (startDate !== "") {
       axios
-        .post(url, data)
-        .then(() => {
-          navigate("/mypage");
+        .post(url, data, { withCredentials: true })
+        .then((response) => {
+          if (response.data.status === 1) {
+            navigate("/mypage");
+            alert(response.data.msg);
+          } else {
+            alert(response.data.msg);
+          }
         })
         .catch((error) => {
           alert(error.response.status);
@@ -86,11 +94,9 @@ function Payment() {
     event.preventDefault();
   };
 
-  const getEndDate = () => {};
-
   useEffect(() => {
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == selectedPassNo) {
+      if (Gym.passes[idx].passNo === parseInt(selectedPassNo)) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }
@@ -115,7 +121,7 @@ function Payment() {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Container style={{ border: " 1px solid" }}>
+        <Container style={{ border: "1px solid" }}>
           <Row>
             <Col md={{ span: 10, offset: 1 }}>
               <h3>payment</h3>

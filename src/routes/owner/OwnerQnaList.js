@@ -11,17 +11,17 @@ import {
 import { Link } from "react-router-dom";
 
 function UserQnaList() {
-  const userNo = 1;
-  const [UserQna, setUserQna] = useState([]);
+  const ownerNo = "1111111111";
+  const [OwnerQna, setOwnerQna] = useState([]);
   const [loading, setloading] = useState(false);
 
   const getUserQna = () => {
-    const url = "http://localhost:9998/passgym/userqna/" + userNo;
+    const url = "http://localhost:9998/passgym/ownerqna/" + ownerNo;
     axios
       .get(url)
       .then(function (response) {
         console.log(response);
-        setUserQna(response.data.userQnaList);
+        setOwnerQna(response.data.ownerQnaList);
         setloading(false);
       })
       .catch(function (error) {
@@ -48,19 +48,19 @@ function UserQnaList() {
               maxWidth: "90vw",
             }}
           >
-            {UserQna.map((UserQna) => (
-              <Accordion.Item eventKey={UserQna.qnaNo} key={UserQna.qnaNo}>
+            {OwnerQna.map((OwnerQna) => (
+              <Accordion.Item eventKey={OwnerQna.qnaNo} key={OwnerQna.qnaNo}>
                 <Row>
                   <Accordion.Header>
-                    <Col>{UserQna.title}</Col>
-                    <Col>{UserQna.qnaDate.substring(0, 10)}</Col>
+                    <Col>{OwnerQna.title}</Col>
+                    <Col>{OwnerQna.qnaDate.substring(0, 10)}</Col>
                     <Col>
-                      {UserQna.replyStatus === 0 ? "답변대기중" : "답변완료"}
+                      {OwnerQna.replyStatus === 0 ? "답변대기중" : "답변완료"}
                     </Col>
                   </Accordion.Header>
                 </Row>
                 <Accordion.Body>
-                  {UserQna.reply == null ? "답변대기중" : UserQna.reply}
+                  {OwnerQna.reply == null ? "답변대기중" : OwnerQna.reply}
                 </Accordion.Body>
               </Accordion.Item>
             ))}
@@ -71,7 +71,7 @@ function UserQnaList() {
                 textAlign: "center",
               }}
             >
-              <Link to="/userqna">
+              <Link to="/ownerqna">
                 <Button>문의하기</Button>
               </Link>
             </Col>

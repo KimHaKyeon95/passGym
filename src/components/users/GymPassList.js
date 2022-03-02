@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import GymPass from "./GymPass";
 function GymPassList() {
   const [GymPasses, setGymPasses] = useState({});
@@ -10,9 +9,8 @@ function GymPassList() {
   const getGymPasses = () => {
     const url = "http://localhost:9999/passgym/user/gympasses";
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then(function (response) {
-        console.log(response.data);
         setGymPasses(response.data);
         setLoading(false);
       })
@@ -35,33 +33,29 @@ function GymPassList() {
           style={{ marginBottom: "50px", border: "1px solid", padding: "40px" }}
         >
           {GymPasses.map((gympass) => (
-            <Link
-              to={`/gym/${gympass.ownerNo}`}
-              style={{ textDecoration: "none", color: "black" }}
+            <Row
+              key={gympass.paymentNo}
+              xs={2}
+              md={3}
+              lg={4}
+              className="g-4"
+              style={{ marginBottom: "40px" }}
             >
-              <Row
-                xs={2}
-                md={3}
-                lg={4}
-                className="g-4"
-                style={{ marginBottom: "40px" }}
-              >
-                <Col>
-                  <GymPass
-                    key={gympass.paymentNo}
-                    paymentNo={gympass.paymentNo}
-                    ownerNo={gympass.ownerNo}
-                    name={gympass.gymname}
-                    passName={gympass.passName}
-                    avgStar={gympass.avgStar}
-                    startDate={gympass.startDate}
-                    endDate={gympass.endDate}
-                    remain={gympass.remain}
-                    status={gympass.status}
-                  />
-                </Col>
-              </Row>
-            </Link>
+              <Col>
+                <GymPass
+                  key={gympass.paymentNo}
+                  paymentNo={gympass.paymentNo}
+                  ownerNo={gympass.ownerNo}
+                  name={gympass.gymName}
+                  passName={gympass.passName}
+                  star={gympass.star}
+                  avgStar={gympass.avgStar}
+                  startDate={gympass.startDate}
+                  endDate={gympass.endDate}
+                  status={gympass.status}
+                />
+              </Col>
+            </Row>
           ))}
         </Container>
       )}
