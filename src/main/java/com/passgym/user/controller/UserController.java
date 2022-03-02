@@ -1,6 +1,5 @@
 package com.passgym.user.controller;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.exception.AddException;
@@ -44,8 +43,8 @@ public class UserController {
 	GymUtility gymUtility;
 
 	@GetMapping("iddupchk")
-	@ResponseBody
-	public Map <String, Object> iddupchk(String id) throws FindException{
+//	@ResponseBody
+	public Map <String, Object> iddupchk(@RequestParam String id) throws FindException{
 		String resultMsg = "";
 		int status = 0;
 		try {
@@ -63,7 +62,7 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public Object signup(@RequestBody Map <String, Object> requestMap){
+	public Object signup(@RequestBody Map<String, Object> requestMap){
 		String resultMsg = "";
 		int status = 0;
 		try {
