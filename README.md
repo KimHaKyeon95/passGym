@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---------------------------------------------------------
+# passGym
+passgymFront
+
+
+
+---------------------------------------------------------
+## Layout Design
+- 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
+- 사용자 화면
+ ![image]()
+- 판매자 화면
+  ![image]()
