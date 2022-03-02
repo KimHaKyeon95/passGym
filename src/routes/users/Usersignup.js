@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import PostcodeModal from "../../components/owner/PostcodeModal";
 import "../../css/user/usersignup.css";
 import { Navigate } from "react-router";
