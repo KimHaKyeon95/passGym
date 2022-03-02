@@ -26,7 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("user/*")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shiningunderstanding.github.io"}, allowedHeaders = "*", allowCredentials = "true")
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
