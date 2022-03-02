@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import GymCards from "../../components/gym/GymCards";
 
@@ -36,7 +37,6 @@ function Home() {
   }else{
     return <></>;
   }
- 
 }
 
 export default Home;

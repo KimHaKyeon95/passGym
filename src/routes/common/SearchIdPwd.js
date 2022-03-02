@@ -7,9 +7,9 @@ import SearchPwd from "./SearchPwd";
 function SearchIdPwd() {
   const [key, setKey] = React.useState("searchId");
 
-  function onTabHandler(k) {
+  const onTabHandler = (k) => {
     setKey(k);
-  }
+  };
 
   return (
     <Tabs
@@ -22,9 +22,9 @@ function SearchIdPwd() {
       <Tab eventKey="searchId" title="아이디 찾기">
         <SearchId />
       </Tab>
-      <Tab eventKey="searchPwd" title="비밀번호 찾기">
+      {/* <Tab eventKey="searchPwd" title="비밀번호 찾기">
         <SearchPwd />
-      </Tab>
+      </Tab> */}
     </Tabs>
   );
 }

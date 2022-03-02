@@ -73,37 +73,39 @@ function GymRegist() {
     event.preventDefault();
   };
 
-    const onSubmit = (event) =>{ 
-        let uploadRefFile = fileState.refFile;
-        formData.append("files", uploadRefFile);
-        formData.append("gymInfo", JSON.stringify(gymInfo));
-        formData.append("passes", JSON.stringify(passInfoList)); 
-        let fileStateClone = {...detailFileState};
-        let detailFilesLength = Object.keys(fileStateClone).length;
-        for(let i = 0; i < detailFilesLength; i++){
-            let name = "detailImg" + i;
-            let uploadDetailFile = detailFileState[name];
-            formData.append("detailFiles", uploadDetailFile);
-        }
-       let submitUrl = "http://localhost:9999/passgym/gym/gymregist";
-       axios.post(submitUrl, formData, {
-           headers: {
-               "Content-Type": "multipart/form-data"
-           }
-       }).then((response) => {
-           if(response.data === "error"){
-               alert("가입 실패(서버문제 발생)");
-               event.preventDefault();
-           }else{
-            sessionStorage.clear();
-            window.location.href="../login"
-           }          
-       }).catch((error) => {
-            alert(error.response.status);
-       });
-        event.preventDefault();
+  const onSubmit = (event) => {
+    let uploadRefFile = fileState.refFile;
+    formData.append("files", uploadRefFile);
+    formData.append("gymInfo", JSON.stringify(gymInfo));
+    formData.append("passes", JSON.stringify(passInfoList));
+    let fileStateClone = { ...detailFileState };
+    let detailFilesLength = Object.keys(fileStateClone).length;
+    for (let i = 0; i < detailFilesLength; i++) {
+      let name = "detailImg" + i;
+      let uploadDetailFile = detailFileState[name];
+      formData.append("detailFiles", uploadDetailFile);
     }
-
+    let submitUrl = "http://localhost:9999/passgym/gym/gymregist";
+    axios
+      .post(submitUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.data === "error") {
+          alert("가입 실패(서버문제 발생)");
+          event.preventDefault();
+        } else {
+          sessionStorage.clear();
+          window.location.href = "../login";
+        }
+      })
+      .catch((error) => {
+        alert(error.response.status);
+      });
+    event.preventDefault();
+  };
 
   const passComponentPlus = () => {
     let countArr = [...passInfoList];
@@ -246,7 +248,16 @@ function GymRegist() {
       <h1 className="title">헬스장 정보 등록</h1>
       <div className="gym__regist">
         <Form className="gym__regist-form">
-          <Form.Label>대표사진 등록</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            대표사진 등록
+          </Form.Label>
           <Form.Group className="gym__regist-represent-img">
             <Form.Control
               type="file"
@@ -255,7 +266,16 @@ function GymRegist() {
             />
           </Form.Group>
           {fileState.refFile === "" ? <div></div> : <RenderRepImg />}
-          <Form.Label>세부사진 등록</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            세부사진 등록
+          </Form.Label>
           <Form.Group className="gym__regist-detail-img">
             <Form.Control
               type="file"
@@ -264,7 +284,16 @@ function GymRegist() {
               multiple
             />
           </Form.Group>
-          <Form.Label>전화번호</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            전화번호
+          </Form.Label>
           <Form.Control
             name="phoneNo"
             onChange={onChange}
@@ -272,7 +301,16 @@ function GymRegist() {
             autoComplete="off"
             placeholder="'-'제외하고 입력"
           />
-          <Form.Label>주소</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            주소
+          </Form.Label>
           <Form.Control
             name="addr"
             onChange={onChange}
@@ -289,7 +327,16 @@ function GymRegist() {
             required
             readOnly
           />
-          <Form.Label>업체이름</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            업체이름
+          </Form.Label>
           <Form.Control
             name="name"
             onChange={onChange}
@@ -297,7 +344,16 @@ function GymRegist() {
             autoComplete="off"
             required
           />
-          <Form.Label>소개글</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            소개글
+          </Form.Label>
           <Form.Control
             name="introduce"
             onChange={onChange}
@@ -307,7 +363,16 @@ function GymRegist() {
             row={2}
             required
           />
-          <Form.Label>공지사항</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            공지사항
+          </Form.Label>
           <Form.Control
             name="notice"
             onChange={onChange}
@@ -316,7 +381,16 @@ function GymRegist() {
             as="textarea"
             row={2}
           />
-          <Form.Label>회원권 입력</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            회원권 입력
+          </Form.Label>
           <PassList passInfoList={passInfoList} />
           <Button className="pass__plus" onClick={passComponentPlus}>
             +
@@ -325,7 +399,16 @@ function GymRegist() {
             -
           </Button>
           <Form.Group className="gym__operating-time">
-            <Form.Label>운영시간</Form.Label>
+            <Form.Label
+              style={{
+                fontSize: "15px",
+                fontWeight: "bold",
+                marginLeft: "5px",
+                marginBottom: "3px",
+              }}
+            >
+              운영시간
+            </Form.Label>
             <Row>
               <Col>
                 <TimeStartHour />
@@ -344,7 +427,16 @@ function GymRegist() {
               </Col>
             </Row>
           </Form.Group>
-          <Form.Label>운영 프로그램</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            운영 프로그램
+          </Form.Label>
           <Form.Control
             name="program"
             onChange={onChange}
@@ -352,7 +444,16 @@ function GymRegist() {
             as="textarea"
             row={2}
           />
-          <Form.Label>비고</Form.Label>
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}
+          >
+            비고
+          </Form.Label>
           <Form.Control name="etc" onChange={onChange} className="gym__etc" />
           <Button className="gym__submit-btn" onClick={onSubmit} type="submit">
             등록

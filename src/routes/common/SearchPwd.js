@@ -1,15 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
-import "../../css/user/searchidpwd.css";
 
 function SearchPwd() {
   const [id, setId] = React.useState("");
   const [phoneNo, setPhoneNo] = React.useState("");
 
-  function onIdHandler(event) {
+  const onIdHandler = (event) => {
     setId(event.target.value);
-  }
+  };
 
   function onPhoneNoHandler(event) {
     const regex = /^[0-9]{0,11}$/;
