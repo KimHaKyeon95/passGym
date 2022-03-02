@@ -23,6 +23,7 @@ function SearchIdModal(props) {
   function onCloseHandler() {
     setName("");
     setPhoneNo("");
+    setResultMsg("");
   }
 
   useEffect(() => {}, []);
@@ -37,6 +38,7 @@ function SearchIdModal(props) {
         console.log(response.data);
         if (response.data.status == 1) {
           setResultMsg(`아이디는 "${response.data.msg}" 입니다.`);
+          console.log(response.data);
         } else {
           setResultMsg(`아이디를 찾을 수 없습니다.`);
         }
@@ -58,8 +60,10 @@ function SearchIdModal(props) {
           아이디(이메일) 찾기
         </Modal.Title>
         <Button
-          onClick={props.onHide}
-          onChange={onCloseHandler}
+          onClick={() => {
+            props.onHide();
+            onCloseHandler();
+          }}
           variant="outline-dark"
         >
           닫기
@@ -101,7 +105,7 @@ function SearchIdModal(props) {
           검색
         </Button>
         <div className="resultdiv">
-          <p className="resultcontext" value={resultMsg}></p>
+          <p className="resultcontext">{resultMsg}</p>
         </div>
       </Modal.Footer>
     </Modal>
