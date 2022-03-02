@@ -28,11 +28,11 @@ function Payment() {
     const url = "http://localhost:9999/passgym/gym/" + ownerNo;
     axios
       .get(url)
-      .then(function (response) {
+      .then((response) => {
         setGym(response.data);
         setLoading(false);
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.response.status);
       });
   };
@@ -41,7 +41,7 @@ function Payment() {
     setSelectedPassNo(() => event.target.value);
     sessionStorage.setItem("passNo", selectedPassNo);
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == selectedPassNo) {
+      if (Gym.passes[idx].passNo === selectedPassNo) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }
@@ -91,11 +91,9 @@ function Payment() {
     event.preventDefault();
   };
 
-  const getEndDate = () => {};
-
   useEffect(() => {
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == selectedPassNo) {
+      if (Gym.passes[idx].passNo === selectedPassNo) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }

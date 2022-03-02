@@ -17,6 +17,7 @@ import PassInfo from "./routes/owner/PassInfo";
 import OwnerModify from "./routes/owner/OwnerModify";
 import OwnerQnaList from "./routes/owner/OwnerQnaList";
 import OwnerQna from "./routes/owner/OwnerQna";
+
 import "./css/common/index.css";
 
 function App() {
@@ -48,9 +49,9 @@ function App() {
         <Routes>
           <Route path="/usersignup" element={<Usersignup />} />
         </Routes>
-        <Routes>
+        {/* <Routes>
           <Route path="/searchidpwd" element={<SearchIdPwd />} />
-        </Routes>
+        </Routes> */}
         <Routes>
           <Route path="/ownersignup/gymregist" element={<GymRegist />} />
         </Routes>

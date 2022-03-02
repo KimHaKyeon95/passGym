@@ -24,8 +24,8 @@ function Header() {
       })
       .catch((error) => {
         console.log(error.response.status);
-        event.preventDefault();
       });
+    event.preventDefault();
   }
 
   function showUser() {

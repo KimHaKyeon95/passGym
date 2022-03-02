@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../../css/common/login.css";
 import HorizonLine from "../../components/common/HorizonLine";
+import SearchIdModal from "../common/SearchIdModal";
 
 function Login() {
   const [radioValue, setRadioValue] = useState("1");
@@ -15,33 +16,22 @@ function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [isRemember, setIsRemember] = useState(false);
-
-  // const [submit, setSubmit] = useState(false);
-  // const [error, setErrors] = useState({});
   const navigate = useNavigate();
+  const [searchIdModalShow, setSearchIdModalShow] = useState(false);
 
-  function onRadioChkHandler(event) {
+  const onRadioChkHandler = (event) => {
     setRadioValue(event.currentTarget.value);
-  }
+  };
 
-  function onIdHandler(event) {
+  const onIdHandler = (event) => {
     setId(event.target.value);
-  }
+  };
 
-  function onPwdHandler(event) {
+  const onPwdHandler = (event) => {
     setPwd(event.target.value);
-  }
+  };
 
-  //아이디 저장 체크한 경우
-  //아이디 수정입력안됨 오류 ----------------------
-  useEffect(() => {
-    if (localStorage.id) {
-      setId(localStorage.id);
-      setIsRemember(true);
-    }
-  });
-
-  function onCheckHandler(event) {
+  const onCheckHandler = (event) => {
     const nextIsRememberValue = event.target.checked;
     setIsRemember(nextIsRememberValue);
 
@@ -52,9 +42,9 @@ function Login() {
       console.log("isRemeberValue false");
       window.localStorage.removeItem("id", id);
     }
-  }
+  };
 
-  function onSubmitHandler(event) {
+  const onSubmitHandler = (event) => {
     console.log("login button clicked");
     console.log(radioValue);
     const submitInfo = { id, pwd };
@@ -63,13 +53,11 @@ function Login() {
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
 
-
-    if (radioValue == 1) {
+    if (radioValue === "1") {
       axios
         .post(userSubmitUrl, submitInfo, { withCredentials: true })
         .then((response) => {
-          if (response.data.status == 1) {
-            // console.log(response.data);
+          if (response.data.status === 1) {
             sessionStorage.setItem("userNo", response.data.user);
             navigate("/");
             navigate(0); //새로고침
@@ -83,7 +71,7 @@ function Login() {
             alert(error.response.status);
           }
         });
-    } else if (radioValue == 2) {
+    } else if (radioValue === "2") {
       axios
         .post(ownerSubmitUrl, submitInfo)
         .then((response) => {
@@ -107,13 +95,21 @@ function Login() {
       alert("로그인에 실패하였습니다.");
     }
     event.preventDefault();
-  }
+  };
 
-  function onEnterHandler(event) {
+  const onEnterHandler = (event) => {
     if (event.key === "Enter") {
       onSubmitHandler();
     }
-  }
+  };
+
+  //아이디 저장 체크한 경우
+  useEffect(() => {
+    if (localStorage.id) {
+      setId(localStorage.id);
+      setIsRemember(true);
+    }
+  }, []);
 
   return (
     <div>
@@ -140,7 +136,7 @@ function Login() {
           </>
           <div className="login__input">
             <Form.Group className="login__id" controlId="login__id">
-              {radioValue == 1 ? (
+              {radioValue === 1 ? (
                 <Form.Control
                   name="id"
                   onChange={onIdHandler}
@@ -187,11 +183,23 @@ function Login() {
             >
               로그인
             </Button>
-            <Link to="../searchidpwd">
-              <Button className="login__findBtn" variant="link">
-                이메일/비밀번호 찾기
+            <div>
+              {/* <Link to="../searchidpwd"> */}
+              <Button
+                className="login__findBtn"
+                variant="link"
+                onClick={() => setSearchIdModalShow(true)}
+              >
+                아이디(이메일) 찾기
               </Button>
-            </Link>
+              <SearchIdModal
+                show={searchIdModalShow}
+                onHide={() => {
+                  setSearchIdModalShow(false);
+                }}
+              />
+              {/* </Link> */}
+            </div>
             {/* <HorizonLine text="SNS 로그인"></HorizonLine>
             <Button
               // href={KAKAO_AUTH_URL}

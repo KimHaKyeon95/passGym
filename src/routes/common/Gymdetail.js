@@ -37,7 +37,7 @@ function Gymdetail() {
     sessionStorage.setItem("ownerNo", Gym.ownerNo);
     sessionStorage.setItem("passNo", SelectedPass);
     for (var idx in Gym.passes) {
-      if (Gym.passes[idx].passNo == SelectedPass) {
+      if (Gym.passes[idx].passNo === SelectedPass) {
         sessionStorage.setItem("passPrice", Gym.passes[idx].passPrice);
         sessionStorage.setItem("passMonth", Gym.passes[idx].passMonth);
       }

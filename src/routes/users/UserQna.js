@@ -7,14 +7,14 @@ function UserQna() {
   const [UserQna, setUserQna] = useState({ userNo: 1, title: "", content: "" });
   const navigate = useNavigate();
 
-  const changValue = (e) => {
+  const changValue = (event) => {
     setUserQna({
       ...UserQna,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
-  const submitQna = (e) => {
+  const submitQna = (event) => {
     const url = "http://localhost:9998/passgym/userqna/";
     axios
       .post(url, UserQna)
@@ -28,7 +28,7 @@ function UserQna() {
       .catch((error) => {
         alert(error.response.status);
       });
-    e.preventDefault();
+    event.preventDefault();
   };
 
   return (
