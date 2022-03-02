@@ -21,8 +21,8 @@ import java.util.List;
 )
 public class User {
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-//			generator = "USER_NO_SEQ_GENARATOR")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+			generator = "USER_NO_SEQ_GENARATOR")
 	private int userNo;
 
 	private String id; //사용자아이디

@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,8 +44,8 @@ public class UserController {
 	ObjectMapper objectMapper;
 
 	@GetMapping("iddupchk")
-	@ResponseBody
-	public Map <String, Object> iddupchk(String id) throws FindException{
+//	@ResponseBody
+	public Map <String, Object> iddupchk(@RequestParam String id) throws FindException{
 		String resultMsg = "";
 		int status = 0;
 		try {
@@ -64,7 +63,7 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public Object signup(@RequestBody Map <String, Object> requestMap){
+	public Object signup(@RequestBody Map<String, Object> requestMap){
 		String resultMsg = "";
 		int status = 0;
 		try {
@@ -83,7 +82,6 @@ public class UserController {
 			user.setZipcode(zipcode);
 			user.setAddr(addr);
 			user.setAddrDetail(addrDetail);
-			User user = new User();
 			user.setUserStatus(1);
 			service.signup(user);
 			status = 1;
