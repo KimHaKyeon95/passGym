@@ -3,7 +3,6 @@ import axios from "axios";
 import PassItem from "../../components/owner/PassItem";
 const PassInfo = () => {
   const [pass, setPass] = useState([]);
-
   const getPass = () => {
     const url = "http://localhost:9999/passgym/gym/gympass/user";
     axios
@@ -16,7 +15,7 @@ const PassInfo = () => {
         alert(error.response.status);
       });
   };
-  sessionStorage.setItem("ownerNo", pass.ownerNo);
+  // sessionStorage.setItem("ownerNo", pass.ownerNo);
 
   useEffect(() => {
     getPass();
