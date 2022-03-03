@@ -1,4 +1,4 @@
-package com.passgym.star.service;
+package com.passgym.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -28,8 +28,8 @@ import com.passgym.exception.FindException;
 import com.passgym.exception.ModifyException;
 import com.passgym.exception.RemoveException;
 import com.passgym.gympass.entity.GymPass;
+import com.passgym.service.UserService;
 import com.passgym.user.entity.User;
-import com.passgym.user.service.UserService;
 
 @RestController
 @RequestMapping("user/*")
@@ -44,7 +44,6 @@ public class UserController {
 	ObjectMapper objectMapper;
 
 	@GetMapping("iddupchk")
-//	@ResponseBody
 	public Map <String, Object> iddupchk(@RequestParam String id) throws FindException{
 		String resultMsg = "";
 		int status = 0;
@@ -74,7 +73,7 @@ public class UserController {
 			String zipcode = (String)requestMap.get("zipcode");
 			String addr = (String)requestMap.get("addr");
 			String addrDetail = (String)requestMap.get("addrDetail");
-			User user = new User(); //id, pwd, name, phoneNo, zipcode, addr, addrDetail
+			User user = new User();
 			user.setId(id);
 			user.setPwd(pwd);
 			user.setName(name);
@@ -88,7 +87,7 @@ public class UserController {
 			resultMsg = "가입 성공";
 		} catch (AddException e) {
 			e.printStackTrace();
-			resultMsg = e.getMessage(); //"가입 실패";
+			resultMsg = e.getMessage();
 		}
 		Map <String, Object> returnMap = new HashMap<>();
 		returnMap.put("msg", resultMsg);
@@ -98,15 +97,12 @@ public class UserController {
 
 	@PostMapping("login")
 	public Map <String, Object> login(@RequestBody Map <String, Object> requestMap, HttpSession session) {
-		//String id, String pwd, HttpSession session) throws FindException{
-
 		session.removeAttribute("user"); //초기화
 		String resultMsg = "";
 		int status = 0;
 		String id = (String)requestMap.get("id");
 		String pwd = (String)requestMap.get("pwd");
 		Map <String, Object> returnMap = new HashMap<>();
-
 		try {
 			User user = service.login(id, pwd);
 			for(GymPass gp: user.getGymPasses()) {
@@ -120,10 +116,8 @@ public class UserController {
 			e.printStackTrace();
 			resultMsg = "로그인 실패";
 		}
-
 		returnMap.put("msg", resultMsg);
 		returnMap.put("status", status);
-
 		return returnMap;
 	}
 
