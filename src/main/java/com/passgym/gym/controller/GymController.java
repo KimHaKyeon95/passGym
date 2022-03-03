@@ -1,31 +1,5 @@
 package com.passgym.gym.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.dto.GymSortDto;
@@ -41,22 +15,22 @@ import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
 import com.passgym.service.GymService;
 import com.passgym.user.entity.User;
- 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.*;
 
 
 @RestController
 @RequestMapping("gym/*")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shiningunderstanding.github.io"}, allowedHeaders = "*", allowCredentials = "true")
 public class GymController {
 	@Autowired
 	private GymService service;
@@ -81,6 +55,7 @@ public class GymController {
 	@GetMapping("/{ownerNo}")
 	public Object gymDetail(@PathVariable(name = "ownerNo") String ownerNo) {
 		try {
+			String gymImgEncode =  utility.imgToByteString(ownerNo);
 			Gym gym = service.findByOwnerNo(ownerNo);
 			String name = gym.getName();
 			String phoneNo = gym.getPhoneNo();
@@ -104,7 +79,7 @@ public class GymController {
 			map.put("operatingProgram", operatingProgram);
 			map.put("extraService", extraService);
 			map.put("etc", etc);
-
+			map.put("gymImg", gymImgEncode);
 			List<Map> passes = new ArrayList<>();
 			for (Pass p : gym.getPasses()) {
 				Map<String, Object> pass = new HashMap<>();
@@ -122,13 +97,13 @@ public class GymController {
 
 			String result = objectMapper.writeValueAsString(map);
 			return result;
-		} catch (FindException e) {
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 			Map<String, Object> returnMap = new HashMap<>();
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		} catch (FindException | IOException e) {
 			Map<String, Object> returnMap = new HashMap<>();
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
@@ -252,7 +227,7 @@ public class GymController {
 			}else {
 				logger.info("상세이미지:" +detailFiles.get(0).getOriginalFilename());
 			}
-			String ownerNo = gymService.gymModifySetting(gymInfo );
+			String ownerNo = gymService.gymModifySetting(gymInfo);
 			utility.gymImgSave(files, detailFiles, ownerNo);
 		} catch (Exception e) {
 			e.printStackTrace();

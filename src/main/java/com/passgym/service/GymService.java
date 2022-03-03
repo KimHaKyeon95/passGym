@@ -1,15 +1,5 @@
 package com.passgym.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.dto.GymSortDto;
@@ -21,13 +11,11 @@ import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
 import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
-
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 
@@ -215,12 +203,6 @@ public class GymService {
 		return (dist);
 	}
 
-	public byte[] imgToByte(String ownerNo) throws IOException {
-		InputStream in = getClass().getResourceAsStream("C://passGymImg/" + ownerNo +"/"+ ownerNo + ".jpg");
-		byte[] imgByte = IOUtils.toByteArray(in);
-		return imgByte;
-	}
-
 	public List<GymSortDto> defineGymDto(String lat, String lon){
 		double userLat = Double.parseDouble(lat);
 		double userLon = Double.parseDouble(lon);
@@ -232,7 +214,11 @@ public class GymService {
 				double gymLat = gym.getLat();
 				double gymLon = gym.getLon();
 				double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
-				double gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());
+				//TotalMember = 0 일 경우 감안
+				double gymAvgStar = 0.0;
+				if(gym.getTotalMember() != 0){
+					gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());;
+				}
 				double distance = gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
 				String gymImgEncode =  utility.imgToByteString(gym.getOwnerNo());
 				if(distance <= 1.0){

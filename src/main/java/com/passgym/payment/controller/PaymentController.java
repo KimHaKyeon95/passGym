@@ -25,7 +25,7 @@ import com.passgym.service.PaymentService;
 import com.passgym.user.entity.User;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shiningunderstanding.github.io"}, allowedHeaders = "*", allowCredentials = "true")
 public class PaymentController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
