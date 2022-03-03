@@ -6,7 +6,11 @@ const PassInfo = () => {
   const getPass = () => {
     const url = "http://localhost:9999/passgym/gym/gympass/user";
     axios
-      .get(url, { withCredentials: true })
+      .get(url, {
+        params: {
+          ownerNo: sessionStorage.getItem("ownerNo"),
+        },
+      })
       .then((response) => {
         console.log(response);
         setPass(response.data);

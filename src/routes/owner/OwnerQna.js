@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 function OwnerQna() {
   const [OwnerQna, setOwnerQna] = useState({
-    ownerNo: "1111111111",
+    ownerNo: sessionStorage.getItem("ownerNo"),
     title: "",
     content: "",
   });

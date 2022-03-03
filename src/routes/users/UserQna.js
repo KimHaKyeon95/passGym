@@ -4,7 +4,11 @@ import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
 function UserQna() {
-  const [UserQna, setUserQna] = useState({ userNo: 1, title: "", content: "" });
+  const [UserQna, setUserQna] = useState({
+    userNo: sessionStorage.getItem("userNo"),
+    title: "",
+    content: "",
+  });
   const navigate = useNavigate();
 
   const changValue = (event) => {

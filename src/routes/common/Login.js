@@ -77,7 +77,7 @@ function Login() {
           } else if (response.data === "pwd fail") {
             alert("비밀번호가 틀렸습니다.");
             setPwd("");
-          } else if(response.data.msg === "need gym regist"){
+          } else if (response.data.msg === "need gym regist") {
             alert("헬스장 등록이 완료되지 않았습니다.");
             sessionStorage.setItem("ownerNo", response.data.ownerNo);
             sessionStorage.setItem("zipcode", response.data.zipcode);
@@ -87,7 +87,7 @@ function Login() {
             sessionStorage.setItem("lon", response.data.lon);
             sessionStorage.setItem("ownerStatus", 1);
             window.location.href = "../ownersignup/gymregist";
-          }else{
+          } else {
             sessionStorage.setItem("ownerNo", response.data);
             window.location.href = "../owner/home";
           }
@@ -186,21 +186,25 @@ function Login() {
             >
               로그인
             </Button>
-            {radioValue === "2" ? <></> : <div>
-              <Button
-                className="login__findBtn"
-                variant="link"
-                onClick={() => setSearchIdModalShow(true)}
-              >
-                아이디(이메일) 찾기
-              </Button>
-              <SearchIdModal
-                show={searchIdModalShow}
-                onHide={() => {
-                  setSearchIdModalShow(false);
-                }}
-              />
-            </div>}
+            {radioValue === "2" ? (
+              <></>
+            ) : (
+              <div>
+                <Button
+                  className="login__findBtn"
+                  variant="link"
+                  onClick={() => setSearchIdModalShow(true)}
+                >
+                  아이디(이메일) 찾기
+                </Button>
+                <SearchIdModal
+                  show={searchIdModalShow}
+                  onHide={() => {
+                    setSearchIdModalShow(false);
+                  }}
+                />
+              </div>
+            )}
 
             <HorizonLine text="회원가입"></HorizonLine>
             <Link to="../usersignup">
