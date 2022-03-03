@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.passgym.exception.AddException;
+import com.passgym.service.StarService;
 import com.passgym.star.entity.Star;
-import com.passgym.star.service.StarService;
 
 @RestController
 @RequestMapping("star/*")

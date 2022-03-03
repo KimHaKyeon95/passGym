@@ -1,4 +1,4 @@
-package com.passgym.user.service;
+package com.passgym.service;
 
 
 
@@ -30,7 +30,6 @@ public class UserService {
 	 * @throws FindException
 	 */
 	public void iddupchk(String id) throws FindException {
-		//		 logger.info(""+userRepository.findById(id).getUserNo());
 		if(userRepository.findById(id) == null) {
 			throw new FindException("사용가능한 아이디");
 		}
