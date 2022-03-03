@@ -19,13 +19,11 @@ function Gymdetail() {
     const url = "http://localhost:9999/passgym/gym/" + ownerNo;
     axios
       .get(url, { withCredentials: true })
-      .then((response) => {
-        console.log(response);
+      .then(function (response) {
         setGym(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(function (error) {
         alert(error.response.status);
       });
   };
@@ -68,7 +66,7 @@ function Gymdetail() {
                   maxHeight: "400px",
                   paddingRight: "20px",
                 }}
-                src={require("../../images/" + ownerNo + ".jpg")}
+                src={`data:image/jpeg;base64,${Gym.gymImg}`}
               ></Image>
             </Col>
             <Col xs md="3" lg="5">

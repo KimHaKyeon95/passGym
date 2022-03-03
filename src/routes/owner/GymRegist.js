@@ -1,6 +1,6 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "../../css/owner/gymregist.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import PassList from "../../components/owner/PassList";
 
@@ -25,11 +25,22 @@ function GymRegist() {
     startMinute: "00",
     endHour: "00",
     endMinute: "00",
-    program: "",
+    operatingProgram: "",
     etc: "",
     lat: sessionStorage.getItem("lat"),
     lon: sessionStorage.getItem("lon"),
   });
+
+  // useEffect(()=>{
+  //   getGym();
+  // }, [])
+  // const getGym= () => {
+  //   if(sessionStorage.getItem("ownerStatus") == null){
+  //     let ownerNo = sessionStorage.getItem("ownerNo");
+  //     let submitUrl = 
+  //     axios.get()
+  //   }
+  // }
 
   const [passInfoList, setPassInfoList] = useState([]);
 
@@ -224,7 +235,7 @@ function GymRegist() {
     );
   };
 
-  if (!sessionStorage.getItem("ownerNo") && !sessionStorage.getItem("addr")) {
+  if (!sessionStorage.getItem("ownerNo") && !sessionStorage.getItem("ownerStatus")) {
     return (
       <Container>
         <Row className="justify-content-md-center">
@@ -263,6 +274,7 @@ function GymRegist() {
               type="file"
               className="gym__regist-represent-img-upload"
               onChange={onRefFileChange}
+              required
             />
           </Form.Group>
           {fileState.refFile === "" ? <div></div> : <RenderRepImg />}
@@ -438,7 +450,7 @@ function GymRegist() {
             운영 프로그램
           </Form.Label>
           <Form.Control
-            name="program"
+            name="operatingProgram"
             onChange={onChange}
             className="gym__operating-program"
             as="textarea"

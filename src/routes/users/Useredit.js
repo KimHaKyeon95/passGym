@@ -15,6 +15,10 @@ import { useNavigate } from "react-router";
 function Useredit() {
   const [loading, setLoading] = useState(true);
   const [User, setUser] = useState({});
+  const [imgState, setImgState] = useState({
+    profileImg: "",
+    previewUrl: "",
+  });
 
   const [chkResults, setResults] = useState({
     idDupChkResult: 0,
@@ -90,13 +94,77 @@ function Useredit() {
     }
   };
 
+  let formData = new FormData();
+  const onProfileImgChange = (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    reader.onloadend = () => {
+      setImgState({
+        profileImg: file,
+        previewUrl: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const RenderProfileImg = () => {
+    let profilePreview = null;
+    if (imgState.previewUrl !== "") {
+      profilePreview = (
+        <img
+          fluid 
+          style={{
+            width: "150px",
+            height: "150px",
+            objectFit: "cover",
+            overflow: "hidden",
+            borderRadius: "50%",
+            padding: "10px 0",
+          }}
+          className="profile__preview"
+          src={imgState.previewUrl}
+          alt="profile__preview"
+        ></img>
+      );
+    }
+    return <div style={{ height: "145px"}}className="profile__preview">{profilePreview}</div>;
+  };
+
+  const RenderExistImg = () => {
+    if(imgState.previewUrl !== ""){
+      return(
+        <RenderProfileImg />
+      )
+    }else if(User.userImg != null){
+      return(
+        <Image  fluid
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  objectFit: "cover",
+                  overflow: "hidden",
+                  borderRadius: "50%",
+                  padding: "10px 0",
+                }}
+                src={`data:image/jpeg;base64,${User.userImg}`}
+              ></Image>
+      )
+    }
+  }
+
   const onSubmitHandler = (event) => {
     const url = "http://localhost:9999/passgym/user/";
+    let uploadImg = imgState.profileImg;
+    formData.append("profileImg", uploadImg);
+    formData.append("user", JSON.stringify(User));
     axios
-      .put(url, User)
+      .put(url, formData, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
-        navigate("/mypage");
+        if (response.data.status === 1) {
+          navigate("/mypage");
+        } else {
+          alert(response.data.msg);
+        }
       })
       .catch((error) => {
         alert(error.response.status);
@@ -107,10 +175,10 @@ function Useredit() {
   const withdrawal = (event) => {
     const url = "http://localhost:9999/passgym/user/withdrawal";
     axios
-      .put(url, {})
+      .put(url, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        //navigate("/mypage");
+        navigate("/mypage");
       })
       .catch((error) => {
         alert(error.response.status);
@@ -121,6 +189,7 @@ function Useredit() {
   useEffect(() => {
     getUser();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -131,23 +200,13 @@ function Useredit() {
         <Container style={{ border: "1px solid" }}>
           <Row style={{ padding: "10px 0" }}>
             <Col>
-              <h3 style={{ textAlign: "center" }}>사용자정보 수정</h3>
+              <h3 style={{ textAlign: "center" , fontSize: "30px", marginBottom: "25px"}}>사용자정보 수정</h3>
             </Col>
           </Row>
           <Row>
             <Col style={{ textAlign: "center" }}>
-              <Image
-                fluid
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  objectFit: "cover",
-                  overflow: "hidden",
-                  borderRadius: "50%",
-                  padding: "10px 0",
-                }}
-                src={require(`../../images/${User.userNo}.jpg`)}
-              ></Image>
+              {User.userImg == null ? <>사진없음</> : <RenderExistImg/>
+              }
             </Col>
           </Row>
           <Row
@@ -156,7 +215,7 @@ function Useredit() {
           >
             <Col md="5">
               <Form.Group controlId="formFileMultiple">
-                <Form.Control type="file" multiple />
+                <Form.Control type="file" onChange={onProfileImgChange}/>
               </Form.Group>
             </Col>
           </Row>

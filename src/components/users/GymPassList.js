@@ -53,6 +53,7 @@ function GymPassList() {
                   startDate={gympass.startDate}
                   endDate={gympass.endDate}
                   status={gympass.status}
+                  gymImg={gympass.gymImg}
                 />
               </Col>
             </Row>

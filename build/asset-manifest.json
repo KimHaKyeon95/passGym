@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/passgymFront/static/css/main.27763bd8.css",
+    "main.js": "/passgymFront/static/js/main.3330ffd9.js",
+    "static/media/gym5.jpg": "/passgymFront/static/media/gym5.f98b758cfac40b1c0ec3.jpg",
+    "static/media/gym1.jpg": "/passgymFront/static/media/gym1.f5495b26931586821ae7.jpg",
+    "static/media/gym4.jpg": "/passgymFront/static/media/gym4.8f8ccafbd89e86d49548.jpg",
+    "static/media/gym2.jpg": "/passgymFront/static/media/gym2.e5784adcf67088ae8bb6.jpg",
+    "static/media/gym3.jpg": "/passgymFront/static/media/gym3.b247c63c5354cd85bfbf.jpg",
+    "static/media/footer-up.png": "/passgymFront/static/media/footer-up.72c0103471af8c50b909.png",
+    "static/media/dumbbell.png": "/passgymFront/static/media/dumbbell.051066ff1494748284a4.png",
+    "index.html": "/passgymFront/index.html",
+    "main.27763bd8.css.map": "/passgymFront/static/css/main.27763bd8.css.map",
+    "main.3330ffd9.js.map": "/passgymFront/static/js/main.3330ffd9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27763bd8.css",
+    "static/js/main.3330ffd9.js"
+  ]
+}
