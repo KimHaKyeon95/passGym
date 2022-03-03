@@ -24,7 +24,7 @@ public class GymUtility {
 	            for(MultipartFile file : files) {
 	                String originFileName = file.getOriginalFilename();
 	                String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-	                File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main"  + fileExtension);
+	                File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main."  + fileExtension);
 	                if (!imgDirectory.exists()) {
 	                    imgDirectory.mkdirs();
 	                }

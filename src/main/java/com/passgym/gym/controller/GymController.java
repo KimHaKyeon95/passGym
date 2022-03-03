@@ -1,5 +1,6 @@
 package com.passgym.gym.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ import com.passgym.repository.GymRepository;
 import com.passgym.repository.OwnerRepository;
 import com.passgym.service.GymService;
 import com.passgym.user.entity.User;
- 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("gym/*")
@@ -152,19 +152,26 @@ public class GymController {
 
 	@CrossOrigin
 	@GetMapping("/gympass/user")
-	// @ResponseBody
 	public Object UserInfoList(HttpSession session) {
 
 		String ownerId = "ownerid9";
 		String ownerPwd = "ownerp9";
 		Owner o = ownerRepository.findByIdAndPwd(ownerId, ownerPwd);
-		Gym g = o.getGym();
-		session.setAttribute("loginInfo", g); // 세션에 gym정보가 저장되어있다는 가정
-
-		Gym gym = (Gym) session.getAttribute("loginInfo");
+		Gym gym = o.getGym();
+		session.setAttribute("loginInfo", gym); // 세션에 gym정보가 저장되어있다는 가정
+		//Gym gym = (Gym) session.getAttribute("loginInfo");
+		
+		 
+//		Owner sessionOwner = (Owner)session.getAttribute("ownerNo"); 
+		//String OwnerNo = sessionOwner.getOwnerNo();
+		//OwnerNo: 1000000001
+		
+		//Gym gym = (Gym) session.getAttribute("loginInfo");
 		if (gym == null) {
 			// 로그인 안된 경우 할 일
 		}
+//		Gym g = gym.getGym();
+
 		List<Pass> list = service.gymUserSelect(gym);
 		// logger.info("list.size=" + list.size());
 		// logger.info("0=" + list.get(0));
@@ -234,25 +241,24 @@ public class GymController {
 		return null;
 
 	};
-	
+
 	@PostMapping(value = "/gymSaveModify", consumes = "multipart/form-data")
-	public String saveModifyGym(
-			@RequestPart(name="refFile", required = false) List<MultipartFile> files ,
-			@RequestPart(name="detailImg0", required = false) List<MultipartFile> detailFiles,
+	public String saveModifyGym(@RequestPart(name = "refFile", required = false) List<MultipartFile> files,
+			@RequestPart(name = "detailImg0", required = false) List<MultipartFile> detailFiles,
 			@RequestParam("gymInfo") String gymInfo) {
 		try {
-			if(files==null) { //대표이미지가 업로드되지 않은 경우 
+			if (files == null) { // 대표이미지가 업로드되지 않은 경우
 				logger.info("대표이미지가 업로드되지 X");
-			}else {
+			} else {
 				logger.info("대표이미지:" + files.get(0).getOriginalFilename());
 
 			}
-			if(detailFiles == null) {//상세이미지가 업로드 되지 않은 경우				
+			if (detailFiles == null) {// 상세이미지가 업로드 되지 않은 경우
 				logger.info("상세이미지가 업로드되지 X");
-			}else {
-				logger.info("상세이미지:" +detailFiles.get(0).getOriginalFilename());
+			} else {
+				logger.info("상세이미지:" + detailFiles.get(0).getOriginalFilename());
 			}
-			String ownerNo = gymService.gymModifySetting(gymInfo );
+			String ownerNo = gymService.gymModifySetting(gymInfo);
 			utility.gymImgSave(files, detailFiles, ownerNo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -261,16 +267,11 @@ public class GymController {
 		return "ok";
 	}
 
-	
-
-	
 	@PutMapping("/modify/{ownerNo}")
 	public Object gymModifySelect(@PathVariable(name = "ownerNo") String ownerNo) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			
-			
-			
+
 			Gym gym = gymService.findByOwnerNo(ownerNo);
 			String name = gym.getName();
 			String phoneNo = gym.getPhoneNo();
@@ -290,7 +291,7 @@ public class GymController {
 			map.put("operatingTime", operatingTime);
 			map.put("extraService", extraService);
 			map.put("etc", etc);
-
+			map.put("gymImg", utility.imgToByteString(ownerNo));
 			List<Map> passes = new ArrayList<>();
 			for (Pass p : gym.getPasses()) {
 				Map<String, Object> pass = new HashMap<>();
@@ -299,16 +300,18 @@ public class GymController {
 				int passPrice = p.getPassPrice();
 				Date passDate = p.getPassDate();
 				int passStatus = p.getPassStatus();
-				int passCount = p.getPauseCount();
+				int pauseCount = p.getPauseCount();
 				int pauseDate = p.getPauseDate();
+				int passMonth = p.getPassMonth();
 				String remarks = p.getRemarks();
 				pass.put("passNo", passNo);
 				pass.put("passName", passName);
 				pass.put("passPrice", passPrice);
 				pass.put("passDate", passDate);
 				pass.put("passStatus", passStatus);
-				pass.put("passCount", passCount);
+				pass.put("pauseCount", pauseCount);
 				pass.put("pauseDate", pauseDate);
+				pass.put("passMonth", passMonth);
 				pass.put("remarks", remarks);
 				passes.add(pass);
 			}
@@ -328,21 +331,24 @@ public class GymController {
 			returnMap.put("msg", e.getMessage());
 			returnMap.put("status", 0);
 			return returnMap;
+		} catch (IOException e) {
+			e.printStackTrace();
+			Map<String, Object> returnMap = new HashMap<>();
+			returnMap.put("msg", e.getMessage());
+			returnMap.put("status", 0);
+			return returnMap;
 		}
 
 	}
-	
-	@CrossOrigin
+
 	@DeleteMapping("/ownerInfo/{ownerNo}")
-	public ResponseEntity<?> deleteById(@PathVariable String ownerNo){
-		return new ResponseEntity<>(gymService.Delete(ownerNo), HttpStatus.OK); //200번 응답  
+	public ResponseEntity<?> deleteById(@PathVariable String ownerNo) {
+		return new ResponseEntity<>(gymService.Delete(ownerNo), HttpStatus.OK); // 200번 응답
 	}
 
-	
- 
 	@GetMapping("/sort-gym-distance")
 	@ResponseBody
-	public List<GymSortDto> gymSortingByDistance(@RequestParam String lat, @RequestParam String lon){
+	public List<GymSortDto> gymSortingByDistance(@RequestParam String lat, @RequestParam String lon) {
 
 		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
 		gymDtoList.sort(new GymDistanceCompare());
@@ -352,7 +358,7 @@ public class GymController {
 
 	@GetMapping("/sort-gym-star")
 	@ResponseBody
-	public List<GymSortDto> gymSortingByStar(@RequestParam String lat, @RequestParam String lon){
+	public List<GymSortDto> gymSortingByStar(@RequestParam String lat, @RequestParam String lon) {
 
 		List<GymSortDto> gymDtoList = service.defineGymDto(lat, lon);
 		gymDtoList.sort(new GymStarCampare());
