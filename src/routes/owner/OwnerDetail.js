@@ -10,9 +10,9 @@ const Detail = (props) => {
     title: '',
     author: '',
   });
-
-  useEffect(() => {     //다운받기 => updateForm 에서 재사용
-    fetch('http://localhost:9990/book/' + id)
+  //조회 
+  useEffect(() => {     //다운받기 =>   에서 재사용
+    fetch('http://localhost:9999/book/' + id)
       .then((res) => res.json())
       .then((res) => {
         setBook(res);
