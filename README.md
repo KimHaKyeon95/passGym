@@ -125,9 +125,8 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ## Development implementation
 
 ### Front-End
-React.js를 사용. 화면인 Route단위와 Route를 이루는 Component단위를 나누어 작업함. Component는 전부 함수형 Component로 구현하였다. useState를 사용하여 중요한 값을 관리하고 
-useEffect를 사용하여 함수들을 제어함.
+React.js를 사용하였습니다. 화면인 Route단위와 Route를 이루는 Component단위를 나누어 작업하였습니다. Component는 전부 함수형 Component로 구현하였다. useState를 사용하여 중요한 값을 관리하고 useEffect를 사용하여 함수들을 제어하였습니다.
 
 ### Back-End
-Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도에 맞게 각 Entity의 연관관계를 맺고 이를 이용해서 SQL문을 따로 만들지 않고 데이터를 다룸.
+Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도에 맞게 각 Entity의 연관관계를 맺고 이를 이용해서 SQL문을 따로 만들지 않고 데이터를 다뤘습니다. Junit을 사용하여 테스트 코드를 작성하였고 이를 통해서 범용성이 높은 테스트 코드를 작성하기 위해 노력하였습니다.
 
