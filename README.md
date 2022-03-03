@@ -26,6 +26,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
    - JPA
    - Oracle Data Base
    - React JS
+   - jQuery
    - HTML/CSS
    - github(프로젝트 버전 관리)
 

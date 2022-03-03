@@ -30,7 +30,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("gym/*")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://shiningunderstanding.github.io"}, allowedHeaders = "*", allowCredentials = "true")
 public class GymController {
 	@Autowired
 	private GymService service;
