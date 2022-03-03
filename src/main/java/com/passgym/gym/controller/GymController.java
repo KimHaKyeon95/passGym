@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -142,16 +143,12 @@ public class GymController {
 		return "ok";
 	}
 
-	@CrossOrigin
 	@GetMapping("/gympass/user")
-	public Object UserInfoList(HttpSession session) {
+	public Object UserInfoList(@RequestParam(name="ownerNo") String ownerNo) {
  
-
-		String ownerId = "ownerid9";
-		String ownerPwd = "ownerp9";
-		Owner o = ownerRepository.findByIdAndPwd(ownerId, ownerPwd);
-		Gym gym = o.getGym();
-		session.setAttribute("loginInfo", gym); // 세션에 gym정보가 저장되어있다는 가정
+		Optional<Owner> o = ownerRepository.findOwnerByOwnerNo(ownerNo);
+		Gym gym = o.get().getGym();
+//		session.setAttribute("loginInfo", gym); // 세션에 gym정보가 저장되어있다는 가정
 		//Gym gym = (Gym) session.getAttribute("loginInfo");
 		
 		//getmapping 으로 받아옴  @requestParm
