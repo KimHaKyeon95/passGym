@@ -45,13 +45,10 @@ function Login() {
   };
 
   const onSubmitHandler = (event) => {
-    console.log("login button clicked");
-    console.log(radioValue);
     const submitInfo = { id, pwd };
 
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
-
     if (radioValue === "1") {
       axios
         .post(userSubmitUrl, submitInfo, { withCredentials: true })
@@ -59,7 +56,7 @@ function Login() {
           if (response.data.status === 1) {
             sessionStorage.setItem("userNo", response.data.user);
             navigate("/");
-            navigate(0); //새로고침
+            navigate(0);
             alert("로그인 성공하였습니다.");
           } else {
             alert("로그인 실패하였습니다.");
@@ -112,7 +109,6 @@ function Login() {
     }
   };
 
-  //아이디 저장 체크한 경우
   useEffect(() => {
     if (localStorage.id) {
       setId(localStorage.id);
@@ -205,7 +201,7 @@ function Login() {
                 }}
               />
             </div>}
-            
+
             <HorizonLine text="회원가입"></HorizonLine>
             <Link to="../usersignup">
               <Button className="login__usersignupBtn" variant="outline-dark">
