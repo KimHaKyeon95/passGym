@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/passgym
+    ports:
+      - 3000:3000
+    image: app:passgymfront_img
+    container_name: passgymfront_container
+    command: npx serve -s build
