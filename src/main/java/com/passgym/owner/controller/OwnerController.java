@@ -1,6 +1,7 @@
 package com.passgym.owner.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.passgym.gym.entity.Gym;
 import com.passgym.owner.entity.Owner;
 import com.passgym.repository.OwnerRepository;
 import com.passgym.service.OwnerService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,17 +30,29 @@ public class OwnerController {
     ObjectMapper mapper;
 
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> loginInfo){
-        System.out.println(loginInfo.get("pwd"));
+    @ResponseBody
+    public Object login(@RequestBody Map<String, String> loginInfo){
         Optional<Owner> ownerOptional = ownerRepository.findOwnerById(loginInfo.get("id"));
         if(!ownerOptional.isPresent()){
             return "id fail";
         }else{
-            System.out.println(ownerOptional.get().getPwd());
             if(!loginInfo.get("pwd").equals(ownerOptional.get().getPwd())){
                 return "pwd fail";
             }else{
-                return ownerOptional.get().getOwnerNo();
+                if(ownerOptional.get().getOwnerStatus() == 1){
+                    Map<String, String>  returnMap = new HashMap<>();
+                    Gym gym = ownerOptional.get().getGym();
+                    returnMap.put("ownerNo", gym.getOwnerNo());
+                    returnMap.put("zipcode", gym.getZipcode());
+                    returnMap.put("addr", gym.getAddr());
+                    returnMap.put("addrDetail", gym.getAddrDetail());
+                    returnMap.put("lat", Double.toString(gym.getLat()));
+                    returnMap.put("lon", Double.toString(gym.getLon()));
+                    returnMap.put("msg", "need gym regist");
+                    return returnMap;
+                }else {
+                    return ownerOptional.get().getOwnerNo();
+                }
             }
         }
     }
@@ -55,21 +69,30 @@ public class OwnerController {
 
     @PostMapping("/signup")
     public ResponseEntity ownerSignup(@RequestBody Map<String, String> owner) throws IOException {
+        System.out.println(owner.get("zipcode"));
         Owner ownerSave = new Owner();
-//        String signupJson = mapper.writeValueAsString(owner);
-//        Map<String, String> transferedJson = new HashMap<>();
-//        Map transferOwner = mapper.readValue(signupJson, transferedJson.getClass());
-//        Optional<Owner> ownerOptional = ownerRepository.findById((String)transferOwner.get("ownerNo"));
+        Gym gym = new Gym();
         Optional<Owner> ownerOptional = ownerRepository.findById(owner.get("ownerNo"));
         if(ownerOptional.isPresent()){
             return new ResponseEntity<>("OwnerNo is exists", HttpStatus.OK);
         }else{
-//            ownerSave.setId((String)transferOwner.get("id"));
-//            ownerSave.setPwd((String)transferOwner.get("pwd"));
-//            ownerSave.setOwnerNo((String)transferOwner.get("ownerNo"));
+
             ownerSave.setId(owner.get("id"));
             ownerSave.setPwd(owner.get("pwd"));
             ownerSave.setOwnerNo(owner.get("ownerNo"));
+            gym.setOwner(ownerSave);
+            gym.setOwnerNo(ownerSave.getOwnerNo());
+            gym.setName("tempName");
+            gym.setPhoneNo("00000000000");
+            gym.setZipcode(owner.get("zipcode"));
+            gym.setAddr(owner.get("addr"));
+            gym.setAddrDetail(owner.get("addrDetail"));
+            gym.setLat(Double.parseDouble(owner.get("lat")));
+            gym.setLon(Double.parseDouble(owner.get("lon")));
+
+            ownerSave.setGym(gym);
+            ownerSave.setOwnerStatus(1);
+
             ownerRepository.save(ownerSave);
             return new ResponseEntity<>(HttpStatus.OK);
         }

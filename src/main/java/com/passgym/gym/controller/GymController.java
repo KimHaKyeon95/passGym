@@ -8,7 +8,6 @@ import com.passgym.gym.entity.Gym;
 import com.passgym.gym.utility.GymDistanceCompare;
 import com.passgym.gym.utility.GymStarCampare;
 import com.passgym.gym.utility.GymUtility;
-import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import com.passgym.payment.entity.Payment;
 import com.passgym.repository.GymRepository;
@@ -18,6 +17,7 @@ import com.passgym.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -111,6 +111,7 @@ public class GymController {
 		}
 	}
 
+	@Modifying
 	@PostMapping(value = "/gymregist", consumes = "multipart/form-data")
 	public String saveGym(@RequestParam("files") List<MultipartFile> files,
 			@RequestParam("detailFiles") List<MultipartFile> detailFiles, @RequestParam("gymInfo") String gymInfo,
@@ -129,12 +130,11 @@ public class GymController {
 	@GetMapping("/gympass/user")
 	// @ResponseBody
 	public Object UserInfoList(HttpSession session) {
-
-		String ownerId = "ownerid9";
-		String ownerPwd = "ownerp9";
-		Owner o = ownerRepository.findByIdAndPwd(ownerId, ownerPwd);
-		Gym g = o.getGym();
-		session.setAttribute("loginInfo", g); // 세션에 gym정보가 저장되어있다는 가정
+		System.out.println(session.getAttribute("ownerNo"));
+//		Owner sessionOwner = (Owner) session.getAttribute("owner");
+//		Owner o = ownerRepository.findByIdAndPwd(sessionOwner.getId(), sessionOwner.getPwd());
+//		Gym g = o.getGym();
+//		session.setAttribute("loginInfo", g); // 세션에 gym정보가 저장되어있다는 가정
 
 		Gym gym = (Gym) session.getAttribute("loginInfo");
 		if (gym == null) {
@@ -243,9 +243,7 @@ public class GymController {
 	public Object gymModifySelect(@PathVariable(name = "ownerNo") String ownerNo) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			
-			
-			
+
 			Gym gym = gymService.findByOwnerNo(ownerNo);
 			String name = gym.getName();
 			String phoneNo = gym.getPhoneNo();
@@ -334,5 +332,4 @@ public class GymController {
 
 		return gymDtoList;
 	}
-
 }

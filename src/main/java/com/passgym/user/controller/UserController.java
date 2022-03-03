@@ -1,6 +1,8 @@
 package com.passgym.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.passgym.exception.AddException;
 import com.passgym.exception.FindException;
@@ -9,12 +11,13 @@ import com.passgym.exception.RemoveException;
 import com.passgym.gym.utility.GymUtility;
 import com.passgym.gympass.entity.GymPass;
 import com.passgym.user.entity.User;
-import com.passgym.user.service.UserService;
+import com.passgym.service.UserService;
 import com.passgym.user.utility.UserUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -232,8 +235,54 @@ public class UserController {
 		return returnMap;
 	}
 
+//	@PutMapping("/")
+//	public Object editUser(@RequestBody Map<String,Object> requestMap, HttpSession session) {
+//		//세션에서 가져올것
+//
+//		Map<String, Object> returnMap = new HashMap<>();
+//		String msg = "";
+//		int status = 0;
+//		//세션에서 가져올것
+//		User sessionUser = (User)session.getAttribute("user");
+//		if(sessionUser == null) {
+//			logger.info("로그인 안됨");
+//			msg = "로그인 안됨";
+//		}else {
+//			try {
+//				User user;
+//				user = sessionUser;
+//				//String id = user.getId();
+//				String name = (String)requestMap.get("name");
+//				String pwd = (String)requestMap.get("pwd");
+//				String phoneNo = (String)requestMap.get("phoneNo");
+//				String zipcode = (String)requestMap.get("zipcode");
+//				String addr = (String)requestMap.get("addr");
+//				String addrDetail = (String)requestMap.get("addrDetail");
+//
+//				user.setName(name);
+//				user.setPwd(pwd);
+//				user.setPhoneNo(phoneNo);
+//				user.setZipcode(zipcode);
+//				user.setAddr(addr);
+//				user.setAddrDetail(addrDetail);
+//
+//				service.modifyUser(user);
+//				session.setAttribute("user", user);
+//				msg = "수정에 성공했습니다.";
+//				status = 1;
+//			} catch (ModifyException e) {
+//				e.printStackTrace();
+//				msg = e.getMessage();
+//			}
+//		}
+//		returnMap.put("msg", msg);
+//		returnMap.put("status", status);
+//		return returnMap;
+//	}
 	@PutMapping("/")
-	public Object editUser(@RequestBody Map<String,Object> requestMap, HttpSession session) {
+	public Object editUser(@RequestPart(name="profileImg", required = false) List<MultipartFile> profileImg,
+						   @RequestPart(name="user", required = false) String newUserInfo,
+						   HttpSession session) {
 		//세션에서 가져올것
 
 		Map<String, Object> returnMap = new HashMap<>();
@@ -246,6 +295,10 @@ public class UserController {
 			msg = "로그인 안됨";
 		}else {
 			try {
+				Map<String, String> requestMap = objectMapper.readValue(newUserInfo,
+						new TypeReference<Map<String, String>>() {
+				});
+
 				User user;
 				user = sessionUser;
 				//String id = user.getId();
@@ -255,19 +308,26 @@ public class UserController {
 				String zipcode = (String)requestMap.get("zipcode");
 				String addr = (String)requestMap.get("addr");
 				String addrDetail = (String)requestMap.get("addrDetail");
-				
+
 				user.setName(name);
 				user.setPwd(pwd);
 				user.setPhoneNo(phoneNo);
 				user.setZipcode(zipcode);
 				user.setAddr(addr);
 				user.setAddrDetail(addrDetail);
-				
+
 				service.modifyUser(user);
+				userUtility.profileImgSave(profileImg, user.getId());
 				session.setAttribute("user", user);
 				msg = "수정에 성공했습니다.";
 				status = 1;
 			} catch (ModifyException e) {
+				e.printStackTrace();
+				msg = e.getMessage();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+				msg = e.getMessage();
+			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 				msg = e.getMessage();
 			}

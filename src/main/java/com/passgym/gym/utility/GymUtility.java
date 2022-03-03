@@ -10,9 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @Component
 public class GymUtility {
@@ -22,9 +20,6 @@ public class GymUtility {
         try{
         	if(files != null) { //헬스장정보 수정할때 대표이미지를 변경하지 않는다면 files가 널일수 있다 
 	            for(MultipartFile file : files) {
-	                String originFileName = file.getOriginalFilename();
-	                String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1);
-//	                File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main."  + fileExtension);
 					File imgDirectory = new File("C:/passGymImg/" + ownerNo , "main.jpg");
 	                if (!imgDirectory.exists()) {
 	                    imgDirectory.mkdirs();
@@ -35,10 +30,7 @@ public class GymUtility {
         	if(detailFiles != null) {
 				int nameNum = 1;
 	            for(MultipartFile detailFile : detailFiles){
-	                String detailImgName =  (new Date().getTime()) + "" + (new Random().ints(1000, 9999).findAny().getAsInt());
-	                String originDetailFileName = detailFile.getOriginalFilename();
-	                String detailFileExtension = originDetailFileName.substring(originDetailFileName.lastIndexOf(".") + 1);
-	                File detailImgDirectory = new File("C:/passGymImg/" + ownerNo, "d" + nameNum + "." + detailFileExtension);
+	                File detailImgDirectory = new File("C:/passGymImg/" + ownerNo, "d" + nameNum + ".jpg" );
 	                if (!detailImgDirectory.exists()) {
 	                    detailImgDirectory.mkdirs();
 	                }

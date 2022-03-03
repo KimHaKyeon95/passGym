@@ -1,13 +1,5 @@
-package com.passgym.user.service;
+package com.passgym.service;
 
-
-
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.passgym.exception.AddException;
 import com.passgym.exception.FindException;
@@ -15,6 +7,12 @@ import com.passgym.exception.ModifyException;
 import com.passgym.exception.RemoveException;
 import com.passgym.repository.UserRepository;
 import com.passgym.user.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
