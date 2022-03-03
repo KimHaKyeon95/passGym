@@ -109,24 +109,33 @@ function Useredit() {
 
   const RenderProfileImg = () => {
     let profilePreview = null;
-    if (imgState.profileImg !== "") {
+    if (imgState.previewUrl !== "") {
       profilePreview = (
         <img
+          fluid 
+          style={{
+            width: "150px",
+            height: "150px",
+            objectFit: "cover",
+            overflow: "hidden",
+            borderRadius: "50%",
+            padding: "10px 0",
+          }}
           className="profile__preview"
           src={imgState.previewUrl}
           alt="profile__preview"
         ></img>
       );
     }
-    return <div className="profile__preview">{profilePreview}</div>;
+    return <div style={{ height: "145px"}}className="profile__preview">{profilePreview}</div>;
   };
 
   const RenderExistImg = () => {
-    if(imgState.previewUrl != ""){
+    if(imgState.previewUrl !== ""){
       return(
         <RenderProfileImg />
       )
-    }else{
+    }else if(User.userImg != null){
       return(
         <Image  fluid
                 style={{
@@ -187,12 +196,12 @@ function Useredit() {
         <Container style={{ border: "1px solid" }}>
           <Row style={{ padding: "10px 0" }}>
             <Col>
-              <h3 style={{ textAlign: "center" }}>사용자정보 수정</h3>
+              <h3 style={{ textAlign: "center" , fontSize: "30px", marginBottom: "25px"}}>사용자정보 수정</h3>
             </Col>
           </Row>
           <Row>
             <Col style={{ textAlign: "center" }}>
-              {User.userImg == null ? <></> : <RenderExistImg/>
+              {User.userImg == null ? <>사진없음</> : <RenderExistImg/>
               }
             </Col>
           </Row>

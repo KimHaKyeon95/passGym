@@ -49,7 +49,6 @@ function Login() {
     console.log(radioValue);
     const submitInfo = { id, pwd };
 
-    // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
 
@@ -81,8 +80,17 @@ function Login() {
           } else if (response.data === "pwd fail") {
             alert("비밀번호가 틀렸습니다.");
             setPwd("");
-          } else {
-            sessionStorage.setItem("ownerNo", response.data);
+          } else if(response.data.msg === "need gym regist"){
+            alert("헬스장 등록이 완료되지 않았습니다.");
+            sessionStorage.setItem("ownerNo", response.data.ownerNo);
+            sessionStorage.setItem("zipcode", response.data.zipcode);
+            sessionStorage.setItem("addr", response.data.addr);
+            sessionStorage.setItem("addrDetail", response.data.addrDetail);
+            sessionStorage.setItem("lat", response.data.lat);
+            sessionStorage.setItem("lon", response.data.lon);
+            sessionStorage.setItem("ownerStatus", 1);
+            window.location.href = "../ownersignup/gymregist";
+          }else{
             window.location.href = "../owner/home";
           }
         })
@@ -154,8 +162,6 @@ function Login() {
                   required
                 />
               )}
-              {/* <div className="msg">{idChkMsg.msg}</div> */}
-              {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>
             <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control
@@ -183,8 +189,7 @@ function Login() {
             >
               로그인
             </Button>
-            <div>
-              {/* <Link to="../searchidpwd"> */}
+            {radioValue === "2" ? <></> : <div>
               <Button
                 className="login__findBtn"
                 variant="link"
@@ -198,19 +203,8 @@ function Login() {
                   setSearchIdModalShow(false);
                 }}
               />
-              {/* </Link> */}
-            </div>
-            {/* <HorizonLine text="SNS 로그인"></HorizonLine>
-            <Button
-              // href={KAKAO_AUTH_URL}
-              className="snsBtn"
-              variant="link"
-            >
-              <img src={kakao} />
-            </Button>
-            <Button className="snsBtn" variant="link">
-              <img src={naver} />
-            </Button> */}
+            </div>}
+            
             <HorizonLine text="회원가입"></HorizonLine>
             <Link to="../usersignup">
               <Button className="login__usersignupBtn" variant="outline-dark">
