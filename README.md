@@ -76,8 +76,9 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485460-5e5edf0f-5d97-40e6-8bbf-b976deca8245.png"/>
   - 1:1 문의
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485463-77ed12e1-c1e8-4aef-b247-ddfba9a9d583.png"/>
-  - 
+  - 헬스장 상세페이지
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506419-4774a7e1-4f4a-4c4a-8176-b621ccc3d3ca.png"/>
+  - 결제페이지
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
 
 - 판매자 화면
