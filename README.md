@@ -121,5 +121,13 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 - Class Diagram
 <img width="80%" src="https://user-images.githubusercontent.com/95994880/156576038-23004ea1-e925-4ea9-ace0-0a99995efa2f.jpg"/>
 --------------------------------------------------------
+
 ## Development implementation
+
+### Front-End
+React.js를 사용. 화면인 Route단위와 Route를 이루는 Component단위를 나누어 작업함. Component는 전부 함수형 Component로 구현하였다. useState를 사용하여 중요한 값을 관리하고 
+useEffect를 사용하여 함수들을 제어함.
+
+### Back-End
+Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도에 맞게 각 Entity의 연관관계를 맺고 이를 이용해서 SQL문을 따로 만들지 않고 데이터를 다룸.
 
