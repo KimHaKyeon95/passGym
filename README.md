@@ -56,8 +56,12 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
 - 사용자 화면
-<img width="40%" src=https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png/>
+  - 홈
+  - 사용자 회원가입
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png"/>
+  - 사용자 로그인
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png"/>
+  - 사용자 아이디(이메일) 찾기
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156484863-5c031ea4-b8d7-4907-8d2a-c1edd0f895d7.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485452-2e65406c-9419-4afd-8c9f-c4a23692980a.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485456-71caddb5-95ce-4d47-8cd6-151169caca7f.png"/>
