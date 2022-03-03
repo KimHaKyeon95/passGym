@@ -220,11 +220,12 @@ public class GymService {
 			for (Gym gym : gymList) {
 				double gymLat = gym.getLat();
 				double gymLon = gym.getLon();
-				double gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
 				//TotalMember = 0 일 경우 감안
+				double gymStarScore = 0.0;
 				double gymAvgStar = 0.0;
 				if(gym.getTotalMember() != 0){
-					gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());;
+					gymAvgStar = (double)(gym.getTotalStar()/ gym.getTotalMember());
+					gymStarScore = Math.pow(gym.getTotalStar(),7) / Math.pow(gym.getTotalMember(), 6);
 				}
 				double distance = gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
 				String gymImgEncode =  utility.imgToByteString(gym.getOwnerNo());
