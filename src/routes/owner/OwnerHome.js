@@ -3,6 +3,7 @@ import { Card, CardGroup, Carousel } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const Home = () => {
+ 
   return (
     <div>
       <Container>
