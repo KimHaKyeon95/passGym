@@ -29,7 +29,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
    - jQuery
    - HTML/CSS
    - github(프로젝트 버전 관리)
-   - 
+   - Docker
 
 - 프로젝트에 사용한 디자인 패턴
   - MVC 패턴 사용
@@ -52,10 +52,13 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 - 프로젝트 계획 과정
   총 프로젝트 기간 30일  프로젝트 기획 4일 요구사항 정의 3일 데이터베이스 설계 7일 기술명세서 작성 7일
   
-  ---------------------------------------------------------
+---------------------------------------------------------
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
 - 사용자 화면
+|First Image|Second Image|
+|:-:|:-:|
+|![메인](https://images.pexels.com/photos/585759/pexels-photo-585759.jpeg?h=750&w=1260)|![사용자 회원가입](https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png?h=750&w=1260)|
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156484863-5c031ea4-b8d7-4907-8d2a-c1edd0f895d7.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485452-2e65406c-9419-4afd-8c9f-c4a23692980a.png"/>
