@@ -1,5 +1,28 @@
 package com.passgym.user.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -13,6 +36,7 @@ import com.passgym.gympass.entity.GymPass;
 import com.passgym.service.UserService;
 import com.passgym.user.entity.User;
 import com.passgym.user.utility.UserUtility;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +50,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 @RestController
@@ -46,6 +71,20 @@ public class UserController {
 	@Autowired
 	GymUtility gymUtility;
 
+	
+	@Autowired
+	ServletContext servletContext;
+	
+	@GetMapping("test")
+	public String test() throws IOException{
+		String str = "";
+		String path = "passGymImg";
+		File dir = new File(path);
+		//dir.
+		boolean exist = new File("folder1").exists();
+		return exist + ":" + path + "test 성공 : "  +str;
+	}
+	
 	@GetMapping("iddupchk")
 	public Map <String, Object> iddupchk(@RequestParam String id) throws FindException{
 		String resultMsg = "";

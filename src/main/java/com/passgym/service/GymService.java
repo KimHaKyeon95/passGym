@@ -222,7 +222,7 @@ public class GymService {
 				}
 				double distance = gymDistance(userLat, userLon, gymLat, gymLon, "kilometer");
 				String gymImgEncode =  utility.imgToByteString(gym.getOwnerNo());
-				if(distance <= 1.0){
+				if(distance <= 400.0){
 					GymSortDto gymDto = new GymSortDto(gym.getOwnerNo(), gym.getName(),
 							gym.getAddr(), distance,
 							gym.getTotalStar(), gym.getTotalMember(), gymAvgStar, gymStarScore, gymImgEncode);

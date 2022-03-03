@@ -19,6 +19,7 @@ com\passgym\pass\entity\Pass.class
 com\passgym\owner\controller\OwnerController.class
 com\passgym\payment\entity\Payment.class
 com\passgym\gym\utility\GymUtility.class
+com\passgym\user\utility\UserUtility.class
 com\passgym\exception\RemoveException.class
 com\passgym\user\controller\UserController.class
 com\passgym\repository\OwnerRepository.class

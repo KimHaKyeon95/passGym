@@ -3,6 +3,7 @@ C:\java\passgymBack\passgymback\src\main\java\com\passgym\owner\controller\Owner
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\owner\entity\Owner.java
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\star\service\StarService.java
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\repository\GymPassRepository.java
+C:\java\passgymBack\passgymback\src\main\java\com\passgym\user\utility\UserUtility.java
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\dto\GymSortDto.java
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\repository\PaymentRepository.java
 C:\java\passgymBack\passgymback\src\main\java\com\passgym\repository\StarRepository.java
