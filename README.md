@@ -83,10 +83,11 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 - 판매자 화면
   - 메인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485444-c9c6920f-fcb0-4547-b184-65f50c8225c4.png"/>
-  - 헬스장 정보 등록/수정
+  - 판매자 로그인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
-  - 1:1 문의
+  - 헬스장 정보 등록/수정
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485447-e45b8e48-d4c0-4e2b-9a13-1c0e26ff3cce.png"/>
+  - 1:1 문의
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
   
 ---------------------------------------------------------
@@ -108,7 +109,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
   - https://docs.google.com/spreadsheets/d/1KWoKs7q8w8CywX_KmKA10uDT3iW2dMSPw1QK_EhPTA8/edit#gid=0
 
 - UseCase Diagram
-<img width="80%" src=https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG/>
+<img width="80%" src="https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG"/>
 
 --------------------------------------------------------
 ## Create eclipse project with github
@@ -117,7 +118,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ## Value Object Class
 
 - Class Diagram
-- 
+<img width="80%" src="https://user-images.githubusercontent.com/95994880/156576038-23004ea1-e925-4ea9-ace0-0a99995efa2f.jpg"/>
 --------------------------------------------------------
 ## Development implementation
 
