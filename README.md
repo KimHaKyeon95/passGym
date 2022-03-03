@@ -55,6 +55,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ---------------------------------------------------------
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
+- 
 - 사용자 화면
   - 홈
   - 사용자 회원가입
@@ -72,6 +73,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
   - 
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506419-4774a7e1-4f4a-4c4a-8176-b621ccc3d3ca.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
+
 - 판매자 화면
   - 메인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485444-c9c6920f-fcb0-4547-b184-65f50c8225c4.png"/>
@@ -102,13 +104,14 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 - UseCase Diagram
 <img width="80%" src=https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG/>
 
-- Class Diagram
 --------------------------------------------------------
 ## Create eclipse project with github
 
 --------------------------------------------------------
 ## Value Object Class
 
+- Class Diagram
+- 
 --------------------------------------------------------
 ## Development implementation
 
