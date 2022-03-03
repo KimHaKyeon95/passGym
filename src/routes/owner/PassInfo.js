@@ -6,7 +6,7 @@ const PassInfo = () => {
   const getPass = () => {
     const url = "http://localhost:9999/passgym/gym/gympass/user";
     axios
-      .get(url)
+      .get(url, { withCredentials: true })
       .then((response) => {
         console.log(response);
         setPass(response.data);
@@ -15,7 +15,7 @@ const PassInfo = () => {
         alert(error.response.status);
       });
   };
-  sessionStorage.setItem("ownerNo", pass.ownerNo);
+  // sessionStorage.setItem("ownerNo", pass.ownerNo);
 
   useEffect(() => {
     getPass();

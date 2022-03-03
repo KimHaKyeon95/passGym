@@ -4,11 +4,14 @@ import { useEffect,useState } from "react";
 import axios from "axios";
 import PassList from "../../components/owner/PassList";
 import PassListModify from "../../components/owner/PassListModify";
-
+import { useNavigate } from "react-router";
 function OwnerModify(props){
-    sessionStorage.setItem("ownerNo", "1000000001");
+    // sessionStorage.setItem("ownerNo", "1000000001");
     const ownerNo = sessionStorage.getItem("ownerNo");
-    
+    const [fileState, setFileState] = useState({
+        refFile: "",
+        previewUrl: ""
+    })
 
     const [gymInfo, setGymInfo] = useState({
        ownerNo: sessionStorage.getItem("ownerNo"),
@@ -25,37 +28,53 @@ function OwnerModify(props){
         startMinute: "00",
         endHour: "00",
         endMinute: "00",
-         
-    })
-    //조회 
-    const getGymInfo = () => {
-    const url = "http://localhost:9999/passgym/gym/modify/" + ownerNo;
-    axios
-      .put(url)
-      .then(function (res) {
+        gymImg: ""
         
-        setGymInfo(res.data);
-        //set countList
-        console.log(res.data.passes);//5
-        // setCountList(res.data.passes);
-        let countArr = [...countList]
-        // let idx = countArr.length;
-       
-        res.data.passes.forEach(function(pass, index){
-          countArr[index] = pass;
+    })
+    const [passes, setPasses] = useState([]);
+
+  
+   //조회 
+    const getGymInfo = () => {
+        const url = "http://localhost:9999/passgym/gym/modify/" + ownerNo;
+        axios
+        .put(url)
+        .then(function (res) {
+            setGymInfo(res.data);
+            let countArr = [...passes]
+            res.data.passes.forEach(function(pass, index){
+                countArr[index] = pass;
+            });
+            setPasses(countArr);
+        })
+        .catch(function (error) {
+            alert(error.response.status);
         });
-        setCountList(countArr);
-      })
-      .catch(function (error) {
-        alert(error.response.status);
-      });
+       // setPasses([{passNo:10, passName:"n10"}, {passNo:11, passName:"n11"}])
     };
 
     useEffect(() => {
         getGymInfo();
     }, []);
 
+    // const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
+    //     console.log(JSON.stringify(passes));
+    //     event.preventDefault();
+    // }
+    const changeValue = (e) => {
+        setGymInfo({
+        ...gymInfo,
+        [e.target.name]: e.target.value,
+        });
+    };
 
+    const changePass = (e) =>{
+        let nextPasses = [...passes];
+        const index = e.target.parentNode.parentNode.getAttributeNode("class").value;
+        const { name, value } = e.target;  
+        nextPasses[index][name] = value;
+        setPasses(nextPasses);
+    }
 
     const [countList, setCountList] = useState([]);
 
@@ -71,7 +90,7 @@ function OwnerModify(props){
         setGymInfo(nextGymValue);
         event.preventDefault();
     }
-
+    const navigate = useNavigate();
     const onSubmit = (event) =>{ //일반적인 방법으로는 console에서 formData를 확인할 수 없음
         let uploadRefFile = fileState.refFile;
         console.log("메인 이미지", uploadRefFile);
@@ -90,6 +109,9 @@ function OwnerModify(props){
            }
        }).then((response) => {
             event.preventDefault();
+            console.log("Test:===", response.data);
+            
+            navigate("/owner/home");  
        }).catch((error) => {
             alert(error.response.status);
        });
@@ -97,18 +119,8 @@ function OwnerModify(props){
     }
     
  
-    const [fileState, setFileState] = useState({
-        refFile: "",
-        previewUrl: ""
-    });
 
-    const changeValue = (e) => {
-        setGymInfo({
-        ...gymInfo,
-        [e.target.name]: e.target.value,
-        });
-    };
-
+    
  
     const onRefFileChange = (event) => {
         let reader = new FileReader();
@@ -221,10 +233,10 @@ function OwnerModify(props){
    
     //회원권 증가
     const passComponentPlus = () => {
-        let countArr = [...countList]
+        let countArr = [...passes]
         let idx = countArr.length;
         let data = {
-                    passNo: idx, 
+                    passNo: 0, 
                     passName: "",
                     passPrice: 0, 
                     passDate: "", 
@@ -233,14 +245,14 @@ function OwnerModify(props){
                     pauseDate: 0
                     }; 
         countArr[idx] = data;
-        setCountList(countArr);
+        setPasses(countArr);
     }
     const passComponentMinus = () => {
-        let countArr = [...countList]
+        let countArr = [...passes]
         let idx = countArr.length;
         idx--;
         countArr.pop(idx);
-        setCountList(countArr);
+        setPasses(countArr);
         
     }
 
@@ -261,25 +273,62 @@ function OwnerModify(props){
   };
  
     return(
-        <div>
-            <h1 className="title" style={ {fontSize: 26}}>
-              헬스장 정보</h1>
-            <div className="gym__regist">
-            <Form className="gym__regist-form">
-
-            <h5>대표사진 등록</h5>
-            <Form.Group className="gym__regist-represent-img" >
-                <Form.Control type="file" className="gym__regist-represent-img-upload" onChange={onRefFileChange}/>
+       <div>
+        <Form.Label className="title">헬스장 정보  </Form.Label>
+      <div className="gym__regist">
+        <Form className="gym__regist-form">
+          <Form.Label
+            style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}
+          >
+            대표사진 등록
+          </Form.Label >
+ 	            {fileState.previewUrl == "" ? 
+                <img src={`data:image/jpeg;base64,${gymInfo.gymImg}`}/> :
+                <img src={fileState.previewUrl}  
+                variant="top"
+                width="286px"
+                height="180px"
+            style={{ objectFit: "cover", overflow: "hidden" }}/>  } 
+          <Form.Group className="gym__regist-represent-img" >
+                <Form.Control type="file" 
+                className="gym__regist-represent-img-upload" 
+                onChange={onRefFileChange}
+                />
             </Form.Group>
-                {fileState.refFile == "" ? <div></div> : <RenderRepImg />}
-            <h5>세부사진 등록</h5>
+
+
+             <Form.Label
+             style={{
+                fontSize: "15px",
+                marginLeft: "5px",
+                fontWeight: "bold",
+                marginBottom: "3px",
+            }}>대표 번호</Form.Label>
             <Form.Group className="gym__regist-detail-img">
-                <Form.Control type="file" className="gym__regist-detail-img" onChange={onDetailFileChange} multiple/>
+                <Form.Control type="file" 
+                className="gym__regist-detail-img"
+                 onChange={onDetailFileChange} 
+                 multiple
+                 
+                 />
             </Form.Group> 
 
             {/*  */}
             <br/>
-            <Form.Label>헬스장 대표번호</Form.Label>
+            <Form.Label
+             style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}
+                >헬스장 대표번호
+            </Form.Label>
             <Form.Control 
                 name="phoneNo" 
                 onChange={changeValue} 
@@ -288,7 +337,12 @@ function OwnerModify(props){
                 value={gymInfo.phoneNo}
                 />   
             {/*  */}
-            <Form.Label>주소</Form.Label>    
+            <Form.Label
+             style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}>주소</Form.Label>    
             <Form.Control name="addr" 
               onChange={changeValue} 
               className="gym__addr" 
@@ -301,18 +355,30 @@ function OwnerModify(props){
                 value={sessionStorage.getItem("addrDetail")}
                 required readOnly/>        
             <br/>
-            <Form.Label>사업장명</Form.Label>
+            <Form.Label
+             style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}>사업장명</Form.Label>
             <Form.Control 
                 name="name" 
                 onChange={changeValue} 
                 className="gym__name"
                 as="textarea" row={2}
                 placeholder="업체 이름" 
-                value={gymInfo.name}
+                 value={gymInfo.name}
                 required />
             {/*  */}
             <br/>
-            <Form.Label> 소개글</Form.Label>
+            <Form.Label 
+             style={{
+              fontSize: "15px",
+               fontWeight: "bold",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}> 소개글</Form.Label>
             <Form.Control 
                 name="introduce" 
                 onChange={changeValue} 
@@ -323,7 +389,13 @@ function OwnerModify(props){
                 required />
             {/*  */}
             <br/>
-            <Form.Label>공지사항</Form.Label>
+            <Form.Label 
+             style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}>공지사항</Form.Label>
             <Form.Control 
                 name="notice" 
                 onChange={changeValue} 
@@ -332,13 +404,29 @@ function OwnerModify(props){
                 placeholder="공지 사항"
                 value={gymInfo.notice}
                 />
+                <Form.Label
+                style={{
+                    fontSize: "15px",
+                    fontWeight: "bold",
+                    marginLeft: "5px",
+                    marginBottom: "3px",
+                    }}
+                ></Form.Label>
             {/*  */}
+            
             <br/>
-            <Form.Label>회원권 입력</Form.Label>            
+            <Form.Label 
+             style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+              marginBottom: "3px",
+            }}>회원권 입력</Form.Label>            
+            
              <PassListModify 
                 // key= {gymInfo.passes}
                 // gymInfo = {gymInfo}  
-                countList={countList}
+                passes={passes}
+                changePass={changePass}
                 />
                 <Button className="pass__plus" 
                         onClick={passComponentPlus}>+</Button>
@@ -347,7 +435,13 @@ function OwnerModify(props){
             {/*  */}
 
             <Form.Group className="gym__operating-time">
-                <Form.Label>운영시간</Form.Label>
+                <Form.Label 
+                style={{
+                fontSize: "15px",
+                marginLeft: "5px",
+                 fontWeight: "bold",
+                marginBottom: "3px",
+            }}>운영시간</Form.Label>
                 <Row>
                     <Col><TimeStartHour /></Col>:<Col><TimeStartMinute/></Col>
                     ~
@@ -355,7 +449,12 @@ function OwnerModify(props){
                 </Row>
             </Form.Group>
             {/*  */}
-            <Form.Label>운영 프로그램</Form.Label>
+            <Form.Label  style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}>운영 프로그램</Form.Label>
             <Form.Control 
                 name="program"
                 onChange={changeValue}
@@ -365,7 +464,12 @@ function OwnerModify(props){
                 value={gymInfo.program}
                 />
             {/*  */}
-            <Form.Label>기타 사항</Form.Label>
+            <Form.Label  style={{
+              fontSize: "15px",
+              marginLeft: "5px",
+               fontWeight: "bold",
+              marginBottom: "3px",
+            }}>기타 사항</Form.Label>
             <Form.Control 
                 name="etc" 
                 onChange={changeValue}
