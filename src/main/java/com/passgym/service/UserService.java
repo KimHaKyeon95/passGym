@@ -1,7 +1,5 @@
 package com.passgym.service;
 
-
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +13,7 @@ import com.passgym.exception.ModifyException;
 import com.passgym.exception.RemoveException;
 import com.passgym.repository.UserRepository;
 import com.passgym.user.entity.User;
+
 
 @Service
 public class UserService {

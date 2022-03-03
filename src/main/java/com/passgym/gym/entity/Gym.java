@@ -1,18 +1,5 @@
 package com.passgym.gym.entity;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.passgym.owner.entity.Owner;
 import com.passgym.pass.entity.Pass;
 import lombok.AllArgsConstructor;
@@ -22,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -54,21 +42,21 @@ public class Gym {
 	private int totalMember; //총인원수
 	private double lat; //위도 latitude 
 	private double lon; //경도 longitude
-//	private double distance;//거리
 
 	@MapsId
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_no", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_no"
+//			,
+//			insertable = false, updatable = false
+	)
     private Owner owner;
 	
-//	private List<PaymentMethod> paymentMethods;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="owner_no")
 	private List<Pass> passes;
 	
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(ownerNo);

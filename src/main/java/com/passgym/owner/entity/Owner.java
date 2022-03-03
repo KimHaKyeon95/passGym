@@ -23,8 +23,8 @@ public class Owner {
 	private String pwd;
 	private int ownerStatus;
 	
-	@OneToOne(mappedBy = "owner")
+	@OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
 	@JoinColumn(name="owner")
-	private Gym gym; //단방향 설정이 필요한가?
+	private Gym gym;
 
 }

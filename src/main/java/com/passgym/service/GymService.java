@@ -102,6 +102,7 @@ public class GymService {
 		realGym.setPasses(realPasses);
 
 		Optional<Owner> owner = ownerRepository.findById(gym.get("ownerNo"));
+		owner.get().setOwnerStatus(0);
 		realGym.setOwner(owner.get());
 
 		gymRepository.save(realGym);
