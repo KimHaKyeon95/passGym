@@ -8,10 +8,8 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 #### 2. [Layout Design 화면설계](#layout-design)
 #### 3. [Data Base design(from requirements specification) 데이터 베이스 설계](#data-base-design)
 #### 4. [Functional Specification 기능명세서](#functional-specification)
-#### 5. [Create eclipse project with github 이클립스 프로젝트 생성 및 깃헙 연동](#create-eclipse-project-with-github)
-#### 6. [VO(Value Object) Class](#value-object-class)
-#### 7. [Development implementation (frontend, backend, unit test) 개발 구현](#development-implementation)
-#### 8. [Integration test(통합테스트)](integration-test)
+#### 5. [VO(Value Object) Class](#value-object-class)
+#### 6. [Development implementation (frontend, backend, unit test) 개발 구현](#development-implementation)
 
 ---------------------------------------------------------
 ## What is PassGym       
@@ -117,9 +115,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 <img width="80%" src="https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG"/>
 
 --------------------------------------------------------
-## Create eclipse project with github
 
---------------------------------------------------------
 ## Value Object Class
 
 - Class Diagram
@@ -127,5 +123,3 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 --------------------------------------------------------
 ## Development implementation
 
---------------------------------------------------------
-## Integration test
