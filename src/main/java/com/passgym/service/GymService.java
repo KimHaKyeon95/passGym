@@ -84,7 +84,7 @@ public class GymService {
 		realGym.setAddrDetail(gym.get("addrDetail"));
 		realGym.setIntroduce(gym.get("introduce"));
 		realGym.setNotice(gym.get("notice"));
-		realGym.setOperatingTime(gym.get("operatingProgram"));
+		realGym.setOperatingProgram(gym.get("operatingProgram"));
 
 		String startHour = gym.get("startHour");
 		String startMinute = gym.get("startMinute");
