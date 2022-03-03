@@ -95,8 +95,11 @@ function Useredit() {
     axios
       .put(url, User, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
-        navigate("/mypage");
+        if (response.data.status === 1) {
+          navigate("/mypage");
+        } else {
+          alert(response.data.msg);
+        }
       })
       .catch((error) => {
         alert(error.response.status);
