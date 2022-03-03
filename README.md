@@ -64,6 +64,10 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 
 - 사용자 화면
   - 홈
+  - 거리순 헬스장 정렬
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156579409-3e00a994-8672-4a8d-a317-97a2d42debe1.PNG"/>
+  - 별점순 헬스장 정렬
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156579375-63ada371-2a4e-40c9-99b6-4e1053131975.PNG"/>
   - 사용자 회원가입
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png"/>
   - 사용자 로그인
