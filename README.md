@@ -84,9 +84,9 @@ passgymFront
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485452-2e65406c-9419-4afd-8c9f-c4a23692980a.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485456-71caddb5-95ce-4d47-8cd6-151169caca7f.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485460-5e5edf0f-5d97-40e6-8bbf-b976deca8245.png"/>
-
-
-
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485463-77ed12e1-c1e8-4aef-b247-ddfba9a9d583.png"/>
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156506419-4774a7e1-4f4a-4c4a-8176-b621ccc3d3ca.png"/>
+<img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
 
 
 - 판매자 화면
@@ -94,6 +94,5 @@ passgymFront
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485447-e45b8e48-d4c0-4e2b-9a13-1c0e26ff3cce.png"/>
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
--------------------------------------------------------------
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485463-77ed12e1-c1e8-4aef-b247-ddfba9a9d583.png"/>
+
 
