@@ -101,7 +101,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ![디비 설계]()
 
 - DB ERD
-![DB-ERD](https://user-images.githubusercontent.com/95994880/156576927-ff673f6e-89e1-4d29-9c4f-74b561ee596a.PNG)
+![DB-ERD](https://user-images.githubusercontent.com/95994880/156577437-4b38bbca-e20d-4a49-9587-9e79dadacbc3.PNG)
 
 --------------------------------------------------------
 ## Functional Specification
