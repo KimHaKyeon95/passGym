@@ -45,14 +45,9 @@ function Login() {
   };
 
   const onSubmitHandler = (event) => {
-    console.log("login button clicked");
-    console.log(radioValue);
     const submitInfo = { id, pwd };
-
-    // console.log(submitInfo);
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
-
     if (radioValue === "1") {
       axios
         .post(userSubmitUrl, submitInfo, { withCredentials: true })
@@ -60,7 +55,7 @@ function Login() {
           if (response.data.status === 1) {
             sessionStorage.setItem("userNo", response.data.user);
             navigate("/");
-            navigate(0); //새로고침
+            navigate(0);
             alert("로그인 성공하였습니다.");
           } else {
             alert("로그인 실패하였습니다.");
@@ -103,7 +98,6 @@ function Login() {
     }
   };
 
-  //아이디 저장 체크한 경우
   useEffect(() => {
     if (localStorage.id) {
       setId(localStorage.id);
@@ -154,8 +148,6 @@ function Login() {
                   required
                 />
               )}
-              {/* <div className="msg">{idChkMsg.msg}</div> */}
-              {/* <div className="msg">{idChkResult.resultMsg}</div> */}
             </Form.Group>
             <Form.Group className="mb-3 login__pwd" controlId="login__pwd">
               <Form.Control
@@ -184,7 +176,6 @@ function Login() {
               로그인
             </Button>
             <div>
-              {/* <Link to="../searchidpwd"> */}
               <Button
                 className="login__findBtn"
                 variant="link"
@@ -198,19 +189,7 @@ function Login() {
                   setSearchIdModalShow(false);
                 }}
               />
-              {/* </Link> */}
             </div>
-            {/* <HorizonLine text="SNS 로그인"></HorizonLine>
-            <Button
-              // href={KAKAO_AUTH_URL}
-              className="snsBtn"
-              variant="link"
-            >
-              <img src={kakao} />
-            </Button>
-            <Button className="snsBtn" variant="link">
-              <img src={naver} />
-            </Button> */}
             <HorizonLine text="회원가입"></HorizonLine>
             <Link to="../usersignup">
               <Button className="login__usersignupBtn" variant="outline-dark">
