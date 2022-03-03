@@ -122,13 +122,11 @@ public class GymService {
 
 	@Transactional(readOnly = true)
 	public List<Pass> gymUserSelect(Gym gym) {
+		System.out.println("test=======" + gym);
 		return gym.getPasses();
 	}
 
-	
-	
 	public String gymModifySetting(String gymInfo) throws IOException{//, String passes) throws IOException {
-		
 		
 		Map<String, Object> gym = mapper.readValue(gymInfo, new TypeReference<Map<String, Object>>() {
 		});
@@ -166,8 +164,16 @@ public class GymService {
 			realGym.setOperatingTime((String)gym.get("operatingProgram"));
 			realGym.setExtraService((String)gym.get("extraService"));
 			realGym.setEtc((String)gym.get("etc"));
-	
-			//realGym.setPasses(realPasses);
+			
+			String startHour = (String)gym.get("startHour");
+			String startMinute = (String)gym.get("startMinute");
+			String endHour = (String)gym.get("endHour");
+			String endMinute = (String)gym.get("endMinute");
+
+			String operatingTime = startHour + ":" + startMinute + " ~ " + endHour + ":" + endMinute;
+			realGym.setOperatingTime(operatingTime);
+
+			realGym.setPasses(realPasses);
 
 		Optional<Owner> owner = ownerRepository.findById((String)gym.get("ownerNo"));
 			realGym.setOwner(owner.get());
