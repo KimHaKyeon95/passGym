@@ -1,0 +1,16 @@
+com\passgym\QnaApplication.class
+com\passgym\exception\RemoveException.class
+com\passgym\config\DatabaseConfiguration.class
+com\passgym\exception\ModifyException.class
+com\passgym\ownerqna\service\OwnerQnaService.class
+com\passgym\repository\OwnerQnaRepository.class
+com\passgym\userqna\entity\UserQna.class
+com\passgym\ownerqna\entity\OwnerQna.class
+com\passgym\repository\UserQnaRepository.class
+com\passgym\ownerqna\controller\OwnerQnaController.class
+com\passgym\exception\AddException.class
+com\passgym\userqna\controller\UserQnaController.class
+com\passgym\exception\FindException.class
+com\passgym\exception\StatusException.class
+com\passgym\ServletInitializer.class
+com\passgym\userqna\service\UserQnaService.class
