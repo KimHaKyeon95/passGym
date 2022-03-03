@@ -160,7 +160,11 @@ function Useredit() {
     axios
       .put(url, formData, { withCredentials: true })
       .then((response) => {
-        navigate("/mypage");
+        if (response.data.status === 1) {
+          navigate("/mypage");
+        } else {
+          alert(response.data.msg);
+        }
       })
       .catch((error) => {
         alert(error.response.status);
