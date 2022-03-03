@@ -1,18 +1,19 @@
 package com.passgym.owner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.passgym.gym.entity.Gym;
-import com.passgym.repository.GymRepository;
 import com.passgym.owner.entity.Owner;
-import com.passgym.repository.OwnerRepository;
 import com.passgym.pass.entity.Pass;
 import com.passgym.pass.entity.PassPK;
+import com.passgym.repository.GymRepository;
+import com.passgym.repository.OwnerRepository;
 import com.passgym.repository.PassRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,9 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
  
 
@@ -46,32 +45,56 @@ public class OwnerRepositoryTest {
     }
 
     @Test
+//    @Transactional
     public void OwnerSaveTest(){
 
         Owner owner = new Owner();
-        owner.setOwnerNo("123");
-        owner.setId("testId");
+        owner.setOwnerNo("1234567897");
+        owner.setId("testId3");
         owner.setPwd("testPwd");
         owner.setOwnerStatus(1);
-//        Gym gym = new Gym();
-//        gym.setOwnerNo(owner.getOwnerNo());
-//        owner.setGym(gym);
+        Gym gym = new Gym();
+        //gym.setOwnerNo(owner.getOwnerNo());
+        gym.setName("testName");
+        gym.setZipcode("15017");
+        gym.setAddr("testAddr");
+        gym.setAddrDetail("testAddrDetail");
+        gym.setPhoneNo("01012345678");
+        gym.setTotalMember(150);
+        gym.setTotalStar(70);
+        gym.setOwner(owner);
+        owner.setGym(gym);
         ownerRepository.save(owner);
     }
 
     @Test
     public void findGymByOwnerTest(){
-        Optional<Owner> owner = ownerRepository.findOwnerByOwnerNo("123");
+        Optional<Owner> owner = ownerRepository.findOwnerByOwnerNo("1234567897");
         Gym ownerGym = owner.get().getGym();
-        Optional<Gym> gym = gymRepository.findById("123");
+        Optional<Gym> gym = gymRepository.findById("1234567897");
         assertEquals(gym.get().getName(), ownerGym.getName());
     }
 
     @Test
+    @Transactional
     public void GymSaveTest(){
-        Optional<Owner> owner = ownerRepository.findOwnerByOwnerNo("123");
+        String ownerNo = "test";
+//        Optional<Owner> owner = ownerRepository.findOwnerByOwnerNo("10000000001");
         Gym gym = new Gym();
-        gym.setOwnerNo(owner.get().getOwnerNo());
+//        gym.setOwnerNo(owner.get().getOwnerNo());
+
+        Owner owner = new Owner();
+        owner.setGym(gym);
+        gym.setOwner(owner);
+
+        owner.setOwnerNo(ownerNo);
+        owner.setId("test");
+        owner.setPwd("test");
+        owner.setOwnerStatus(1);
+
+
+
+        gym.setOwnerNo(ownerNo);
         gym.setName("testGymName");
         gym.setPhoneNo("01012345678");
         gym.setZipcode("15017");

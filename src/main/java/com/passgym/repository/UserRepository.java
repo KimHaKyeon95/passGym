@@ -10,8 +10,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
 	User findById(String id);
 	
-
-	
 	List <User> findByName(String name);
 	
 	List <User> findByNameAndPhoneNo(String name, String phoneNo);
