@@ -46,6 +46,7 @@ function Login() {
 
   const onSubmitHandler = (event) => {
     const submitInfo = { id, pwd };
+
     let userSubmitUrl = "http://localhost:9999/passgym/user/login";
     let ownerSubmitUrl = "http://localhost:9999/passgym/owner/login";
     if (radioValue === "1") {
@@ -76,8 +77,17 @@ function Login() {
           } else if (response.data === "pwd fail") {
             alert("비밀번호가 틀렸습니다.");
             setPwd("");
-          } else {
-            sessionStorage.setItem("ownerNo", response.data);
+          } else if(response.data.msg === "need gym regist"){
+            alert("헬스장 등록이 완료되지 않았습니다.");
+            sessionStorage.setItem("ownerNo", response.data.ownerNo);
+            sessionStorage.setItem("zipcode", response.data.zipcode);
+            sessionStorage.setItem("addr", response.data.addr);
+            sessionStorage.setItem("addrDetail", response.data.addrDetail);
+            sessionStorage.setItem("lat", response.data.lat);
+            sessionStorage.setItem("lon", response.data.lon);
+            sessionStorage.setItem("ownerStatus", 1);
+            window.location.href = "../ownersignup/gymregist";
+          }else{
             window.location.href = "../owner/home";
           }
         })
@@ -175,7 +185,7 @@ function Login() {
             >
               로그인
             </Button>
-            <div>
+            {radioValue === "2" ? <></> : <div>
               <Button
                 className="login__findBtn"
                 variant="link"
@@ -189,7 +199,8 @@ function Login() {
                   setSearchIdModalShow(false);
                 }}
               />
-            </div>
+            </div>}
+
             <HorizonLine text="회원가입"></HorizonLine>
             <Link to="../usersignup">
               <Button className="login__usersignupBtn" variant="outline-dark">

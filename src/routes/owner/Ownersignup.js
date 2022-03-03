@@ -172,6 +172,7 @@ function Ownersignup() {
             sessionStorage.setItem("addrDetail", submitInfo.addrDetail);
             sessionStorage.setItem("lat", submitInfo.lat);
             sessionStorage.setItem("lon", submitInfo.lon);
+            sessionStorage.setItem("ownerStatus", 1);
             window.location.href = "../ownersignup/gymregist";
           }
         })
