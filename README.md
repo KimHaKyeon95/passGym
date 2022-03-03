@@ -79,6 +79,6 @@ passgymFront
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
 - 사용자 화면
- ![image]()
+ ![image](https://user-images.githubusercontent.com/95994880/156484863-5c031ea4-b8d7-4907-8d2a-c1edd0f895d7.png)
 - 판매자 화면
-  ![image]()
+  <img width="80%" src="https://user-images.githubusercontent.com/95994880/156484863-5c031ea4-b8d7-4907-8d2a-c1edd0f895d7.png"/>
