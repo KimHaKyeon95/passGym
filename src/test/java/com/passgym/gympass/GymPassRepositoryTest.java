@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.passgym.gym.entity.Gym;
 import com.passgym.gympass.entity.GymPass;
 import com.passgym.pass.entity.Pass;
+import com.passgym.pass.entity.PassPK;
 import com.passgym.payment.entity.Payment;
 import com.passgym.repository.GymPassRepository;
 import com.passgym.star.entity.Star;
@@ -106,4 +107,87 @@ class GymPassRepositoryTest {
 			
 		}
 	}
+	
+	@Test
+	//@Transactional
+	void testInsert() {
+	GymPass gp = new GymPass();
+	Pass pass = new Pass();
+	String ownerNo = "1000000001"; //Gym_name이 '1헬스'
+	int passNo = 1; //pass_name이 '1헬스_이용권1'
+	PassPK passPK = new PassPK();
+	passPK.setOwnerNo(ownerNo);
+	passPK.setPassNo(passNo);
+	pass.setPassPk(passPK);
+
+	
+	int userNo = 2; //user_id가 'useridb' 
+	User user = new User();
+	user.setUserNo(userNo);
+
+	Payment payment = new Payment();
+	String paymentNo = "결제번호1";
+	payment.setPaymentNo(paymentNo);
+	payment.setPaymentPrice(1000);
+	payment.setPaymentType(1);
+	payment.setBankName("은행1");
+	payment.setGymPass(gp); //<----
+	
+	gp.setPaymentNo(paymentNo);
+	gp.setPass(pass);
+	gp.setUser(user);
+	gp.setPayment(payment); //<----
+	repository.save(gp);
+	//--------------------
+
+	gp = new GymPass();
+	pass = new Pass();
+	ownerNo = "1000000001"; //Gym_name이 '1헬스'
+	passNo = 1; //pass_name이 '1헬스_이용권1'
+	passPK = new PassPK(ownerNo, passNo);
+	pass.setPassPk(passPK);
+	paymentNo = "결제번호2";
+	userNo = 3; //user_id가 'useridc' 
+	user = new User();
+	user.setUserNo(userNo);
+
+	payment = new Payment();
+	payment.setPaymentNo(paymentNo);
+	payment.setPaymentPrice(2000);
+	payment.setPaymentType(2);
+	payment.setBankName("은행2");
+	payment.setGymPass(gp);
+	gp.setPaymentNo(paymentNo);
+	gp.setPass(pass);
+	gp.setUser(user);
+	gp.setPayment(payment);
+	repository.save(gp);
+	
+	//--------------------	
+
+	gp = new GymPass();
+	pass = new Pass();
+	ownerNo = "1000000001"; //Gym_name이 '1헬스'
+	passNo = 2; //pass_name이 '1헬스_이용권2'
+	passPK = new PassPK(ownerNo, passNo);
+	pass.setPassPk(passPK);
+	paymentNo = "결제번호3";
+	userNo = 3; //user_id가 'useridc' 
+	user = new User();
+	user.setUserNo(userNo);
+
+	payment = new Payment();
+	payment.setPaymentNo(paymentNo);
+	payment.setPaymentPrice(3000);
+	payment.setPaymentType(3);
+	payment.setBankName("은행3");
+	payment.setGymPass(gp);
+	
+	gp.setPaymentNo(paymentNo);
+	gp.setPass(pass);
+	gp.setUser(user);
+	gp.setPayment(payment);
+	repository.save(gp);
+	
+}
 }
