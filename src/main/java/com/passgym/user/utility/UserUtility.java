@@ -18,7 +18,7 @@ public class UserUtility {
         try{
             if(profileImg != null){
                 for(MultipartFile img : profileImg){
-                    File imgDirectory = new File("C:/passGymUserImg/" + id , "profile.jpg");
+                    File imgDirectory = new File("/passGymUserImg/" + id , "profile.jpg");
                     if(!imgDirectory.exists()){
                         imgDirectory.mkdirs();
                     }
@@ -35,7 +35,7 @@ public class UserUtility {
     public String imgToByteString(String id) {
 
         try{
-            InputStream imageStream = new FileInputStream("C://passGymUserImg/" + id + "/" + "profile.jpg");
+            InputStream imageStream = new FileInputStream("/passGymUserImg/" + id + "/" + "profile.jpg");
             byte[] imgByte = IOUtils.toByteArray(imageStream);
             String gymImgEncode = Base64.getEncoder().withoutPadding().encodeToString(imgByte);
             if(imageStream != null){
