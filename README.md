@@ -7,11 +7,11 @@ passgymBack
 PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주는 플랫폼 프로젝트입니다.
 
 #### 1. [Project planning(Project topic selection, functional design, water fall) 프로젝트 기획](#project-planning)
-#### 2. [Layout Design 화면설계](#layout-design)
+#### 2. [Development implementation (frontend, backend, unit test) 개발 구현](#development-implementation)
 #### 3. [Data Base design(from requirements specification) 데이터 베이스 설계](#data-base-design)
 #### 4. [Functional Specification 기능명세서](#functional-specification)
 #### 5. [VO(Value Object) Class](#value-object-class)
-#### 6. [Development implementation (frontend, backend, unit test) 개발 구현](#development-implementation)
+#### 6. [Layout Design 화면설계](#layout-design)
 
 ---------------------------------------------------------
 ## What is PassGym    
