@@ -129,15 +129,31 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
 
 - 판매자 화면
-- 
-- 메인
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485444-c9c6920f-fcb0-4547-b184-65f50c8225c4.png"/>
-
+-
 - 판매자 로그인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
 
-- 헬스장 정보 등록/수정
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485447-e45b8e48-d4c0-4e2b-9a13-1c0e26ff3cce.png"/>
+ - 판매자 메인 페이지
+   
+ <img width="40%" src="https://user-images.githubusercontent.com/92718453/156766872-fafda82f-46df-4807-b93e-255c331ccda9.png"/>
+ 
+ - 판매자 회원조회 페이지  
+ 
+<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762183-7c620b18-93af-4b65-b009-20175834ec3d.png"/>
+
+ - 이용권별 회원조회 
+<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762730-52432362-9481-4e4d-8cee-503cbd9597a7.png"/>
+
+- 헬스장 정보 등록/수정 페이지
+- 기본 정보 조회
+
+<img width="40%"  src="https://user-images.githubusercontent.com/92718453/156765537-5935b3b8-9031-4157-977e-f0f2fc96aad3.png"/>
+
+- 기본 정보 조회 후 수정
+<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765586-51f2c0bd-8295-4dd5-a39e-8904029b5567.png"/>
+
+- 이용권 정보 추가
+<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765608-d7bf2f9a-21f0-4609-b31b-9d082de4be64.png"/>
 
 - 1:1 문의
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
