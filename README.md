@@ -16,7 +16,7 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 ---------------------------------------------------------
 ## What is PassGym    
 
-- **프로젝트 소개**
+- **프로젝트 소개**  
   PassGym 프로젝트는 사용자와 피트니스, 헬스장을 연결해주는 플랫폼 프로젝트입니다.  
   사용자는 자신의 위치와 가까운 헬스장, 별점순으로 정렬된 헬스장 등을 한눈에 파악할 수 있습니다. 사용자는 각 헬스장의 상세페이지에 접속하여 해당 헬스장의 상세정보를 확인하고 회원권을 결제하고 맘에 드는 헬스장을 본인의 찜목록에 추가할 수 있습니다. 이렇게 찜하고 결제한 목록은 마이페이지에서 확인이 가능합니다.  
   
@@ -41,14 +41,54 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
   - geoLocation API (사용자의 현재 좌표를 반환하기 위해 사용)
   - 카카오맵 API (주소를 통해 좌표를 구하기 위해 사용)
   - 사업자번호 인증 API (국세청 API 사용)
-  - 
+  
+--------------------------------------------------------
+
+## Development implementation
+
+프로젝트는 **RESTful API**로 설계됐습니다.
+
+### Front-End
+프레임워크는 React.js를 사용하였습니다. 화면인 Route단위와 Route를 이루는 Component단위를 나누어 작업하였습니다. Component는 전부 함수형 Component로 구현하였습니다. useState를 사용하여 중요한 값을 관리하고 useEffect를 사용하여 함수들을 제어하였습니다. CSS는 디자인을 위한 시간을 단축하기 위해 BootStrap을 사용하여 구현하였습니다.
+
+### Back-End
+Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도에 맞게 각 Entity의 연관관계를 맺고 이를 이용해서 SQL문을 따로 만들지 않고 데이터를 다뤘습니다. Junit을 사용하여 테스트 코드를 작성하였고 이를 통해서 범용성이 높은 테스트 코드를 작성하기 위해 노력하였습니다.
+
 ---------------------------------------------------------
+
 ## Project planning   
 
 - **프로젝트 진행과정: 전체기간 30일**
   - 1 ~ 14일: 프론트엔드 작업
   - 15 ~ 16일: Entity간의 연관관계 매핑
   - 17 ~ 30일: 백엔드작업, Docker 컨테이너에서 프로젝트가 작동할 수 있도록 작업
+---------------------------------------------------------
+## Data Base design
+
+- **데이터베이스 설계 과정** 
+  Has a 관계에 중점을 두고 설계를 진행하였습니다. Owner와 User는 서로 다른 정보를 필요로 하지만 서로 완벽하게 독립적인 관계는 아니기 때문에 각 테이블간의 연결성을 우선적으로 고려하였습니다.
+  
+- **initial DB design**
+![디비 설계]()
+
+- **DB ERD**
+![DB-ERD](https://user-images.githubusercontent.com/95994880/156577437-4b38bbca-e20d-4a49-9587-9e79dadacbc3.PNG)
+
+--------------------------------------------------------
+## Functional Specification
+
+- **기술명세서 작성**
+  - https://docs.google.com/spreadsheets/d/1KWoKs7q8w8CywX_KmKA10uDT3iW2dMSPw1QK_EhPTA8/edit#gid=0
+
+- **UseCase Diagram**
+<img width="80%" src="https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG"/>
+
+--------------------------------------------------------
+
+## Value Object Class
+
+- **Class Diagram**
+<img width="80%" src="https://user-images.githubusercontent.com/95994880/156576038-23004ea1-e925-4ea9-ace0-0a99995efa2f.jpg"/>
 ---------------------------------------------------------
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
@@ -100,42 +140,6 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
 - 1:1 문의
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
   
----------------------------------------------------------
-## Data Base design
 
-- **데이터베이스 설계 과정** 
-  Has a 관계에 중점을 두고 설계를 진행하였습니다. Owner와 User는 서로 다른 정보를 필요로 하지만 서로 완벽하게 독립적인 관계는 아니기 때문에 각 테이블간의 연결성을 우선적으로 고려하였습니다.
-  
-- **initial DB design**
-![디비 설계]()
 
-- **DB ERD**
-![DB-ERD](https://user-images.githubusercontent.com/95994880/156577437-4b38bbca-e20d-4a49-9587-9e79dadacbc3.PNG)
-
---------------------------------------------------------
-## Functional Specification
-
-- **기술명세서 작성**
-  - https://docs.google.com/spreadsheets/d/1KWoKs7q8w8CywX_KmKA10uDT3iW2dMSPw1QK_EhPTA8/edit#gid=0
-
-- **UseCase Diagram**
-<img width="80%" src="https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG"/>
-
---------------------------------------------------------
-
-## Value Object Class
-
-- **Class Diagram**
-<img width="80%" src="https://user-images.githubusercontent.com/95994880/156576038-23004ea1-e925-4ea9-ace0-0a99995efa2f.jpg"/>
---------------------------------------------------------
-
-## Development implementation
-
-프로젝트는 **RESTful API**로 설계됐습니다.
-
-### Front-End
-프레임워크는 React.js를 사용하였습니다. 화면인 Route단위와 Route를 이루는 Component단위를 나누어 작업하였습니다. Component는 전부 함수형 Component로 구현하였습니다. useState를 사용하여 중요한 값을 관리하고 useEffect를 사용하여 함수들을 제어하였습니다. CSS는 디자인을 위한 시간을 단축하기 위해 BootStrap을 사용하여 구현하였습니다.
-
-### Back-End
-Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도에 맞게 각 Entity의 연관관계를 맺고 이를 이용해서 SQL문을 따로 만들지 않고 데이터를 다뤘습니다. Junit을 사용하여 테스트 코드를 작성하였고 이를 통해서 범용성이 높은 테스트 코드를 작성하기 위해 노력하였습니다.
 
