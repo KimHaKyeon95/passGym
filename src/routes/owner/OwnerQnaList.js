@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 
 function UserQnaList() {
-  const ownerNo = "1111111111";
+  const [ownerNo, setOwnerNo] = useState(sessionStorage.getItem("ownerNo"));
   const [OwnerQna, setOwnerQna] = useState([]);
   const [loading, setloading] = useState(false);
 
