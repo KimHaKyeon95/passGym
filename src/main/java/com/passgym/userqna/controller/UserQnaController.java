@@ -37,12 +37,12 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	ObjectMapper objectMapper;
 	
 	@GetMapping("/{userNo}")
-	public Object userqna(@PathVariable(name="userNo") int userNo) {
+	public Object userqna(@PathVariable(name="userNo") String userNo) {
 		Map<String,Object> returnMap = new HashMap<>();
 		String msg = "";
 		int status = 0;
 		try {
-			List<UserQna> uq = service.findUserQna(userNo);
+			List<UserQna> uq = service.findUserQna(Integer.parseInt(userNo));
 			returnMap.put("userQnaList", uq);
 		} catch (FindException e) {
 			e.printStackTrace();
@@ -61,7 +61,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 			UserQna uq = new UserQna();
 			String title = (String)requestMap.get("title");
 			String content = (String)requestMap.get("content");
-			int userNo = (Integer)requestMap.get("userNo");
+			int userNo = Integer.parseInt((String)requestMap.get("userNo"));
 			uq.setTitle(title);
 			uq.setContent(content);
 			uq.setUserNo(userNo);
