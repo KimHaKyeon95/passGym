@@ -68,10 +68,7 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 ## Data Base design
 
 - **데이터베이스 설계 과정** 
-  Has a 관계에 중점을 두고 설계를 진행하였습니다. Owner와 User는 서로 다른 정보를 필요로 하지만 서로 완벽하게 독립적인 관계는 아니기 때문에 각 테이블간의 연결성을 우선적으로 고려하였습니다.
-  
-- **initial DB design**
-![디비 설계]()
+  Has a 관계에 중점을 두고 설계를 진행하였습니다. Owner와 User는 서로 다른 정보를 필요로 하지만 서로 완벽하게 독립적인 관계는 아니기 때문에 각 테이블간의 연결성을 우선적으로 고려하였습니다. MyBatis를 사용하기 위해 프로젝트에 추가를 했지만 JPA를 실습하는 의미를 크게 두기 위해 최대한 쿼리를 쓰지않도록 연관관계를 매핑하는 것이 중요했습니다.
 
 - **DB ERD**
 ![DB-ERD](https://user-images.githubusercontent.com/95994880/156577437-4b38bbca-e20d-4a49-9587-9e79dadacbc3.PNG)
