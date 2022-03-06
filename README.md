@@ -129,7 +129,7 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
 
 - 판매자 화면
--
+
 - 판매자 로그인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
 
