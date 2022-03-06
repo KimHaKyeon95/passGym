@@ -22,17 +22,14 @@ PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주
   
   헬스장 운영자 측은 사업자 회원가입이라는 다른 경로로 회원가입을 하며 회원가입시에 헬스장에 관한 정보를 등록하도록합니다. 헬스장에 관한 정보는 이용권의 종류와 상세설명, 헬스장 사용 정보 등이 있습니다. 회원가입 후 사업자로 로그인을 하게 되면 판매자 전용페이지로 접속이 됩니다. 회원권 조회를 통해 각 회원권을 이용하는 회원들의 목록을 확인할 수 있습니다.
   
-  
-
-
-  
 - **기술스택**
-   - Java, Spring Boot
-   - JPA
+   - Java
+   - Spring Boot, JPA
    - Oracle Data Base
    - JavaScript
-   - React.js
    - HTML/CSS
+   - BootStrap
+   - React.js
    - GitHub(프로젝트 버전 관리)
    - Docker
    
@@ -107,11 +104,12 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 
 - **Class Diagram**
 <img width="80%" src="https://user-images.githubusercontent.com/95994880/156576038-23004ea1-e925-4ea9-ace0-0a99995efa2f.jpg"/>
+
 ---------------------------------------------------------
 ## Layout Design
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
 
-사용자 화면
+### 사용자 화면
   - **홈**
    
   - 거리순 헬스장 정렬
@@ -144,7 +142,7 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
  - 결제페이지
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
 
-- 판매자 화면
+### 판매자 화면
 
 - 판매자 로그인
 <img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
