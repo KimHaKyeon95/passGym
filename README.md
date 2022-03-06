@@ -118,23 +118,25 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
    
   <p align="center">1. 거리순/별점순 헬스장 정렬</p>
 <p align="center"><img width="45%" src="https://user-images.githubusercontent.com/81364044/156921291-ffb53e93-cc78-4d12-b58c-a76b12039767.png"/><img width="45%" src="https://user-images.githubusercontent.com/81364044/156921346-5813e404-a9ce-4297-9046-920259fc7956.png"/></p>  
-
+  <p><br/></p>
   <p align="center">2. 사용자 회원가입, 로그인, 아이디(이메일 찾기)</p>
-<p align="center"><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921413-9fc93e51-12f3-4995-aff1-21d4abd00a71.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921429-7843cfc8-b881-4952-8bf2-525c2c60f138.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921460-831e751f-4e8f-45ef-9cb5-7b80dadb26ae.png"/></p>
+<p align="center"><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921413-9fc93e51-12f3-4995-aff1-21d4abd00a71.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921429-7843cfc8-b881-4952-8bf2-525c2c60f138.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921460-831e751f-4e8f-45ef-9cb5-7b80dadb26ae.png"/></p>  
+<p><br/></p>
 
    <p align="center">3. 마이페이지, 정보수정, 1대1문의</p>
- <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921538-70ec155e-1ef8-49c1-b53c-277538e0d2d2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921560-3d5aeae1-38ea-4b8f-a000-6c4ef66435ff.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921580-1b521d70-058f-4b5d-931a-22e150b4e487.png"/></p>
+ <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921538-70ec155e-1ef8-49c1-b53c-277538e0d2d2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921560-3d5aeae1-38ea-4b8f-a000-6c4ef66435ff.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921580-1b521d70-058f-4b5d-931a-22e150b4e487.png"/></p>  
+ <p><br/></p>
 
    <p align="center">4. 헬스장 상세페이지, 결제페이지</p>
- <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921626-9dcf941d-ce0d-4916-8271-f94d3d5289e2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921676-8ab85633-dcf1-46aa-a27e-1b5469218971.png"/></p>
+ <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921626-9dcf941d-ce0d-4916-8271-f94d3d5289e2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921676-8ab85633-dcf1-46aa-a27e-1b5469218971.png"/></p>  
+ <p><br/></p>
 
 ### 판매자 화면
 
-- 판매자 로그인
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
+<p align="center">1. 판매자 로그인, 회원가입</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921884-56b17b0f-f587-4021-836d-f93a3739c3d6.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921939-5c85ec5f-89ab-4b9b-a55d-2b20edcb7bab.png"/></p>
 
  - 판매자 메인 페이지
-   
  <img width="40%" src="https://user-images.githubusercontent.com/92718453/156766872-fafda82f-46df-4807-b93e-255c331ccda9.png"/>
  
  - 판매자 회원조회 페이지  
