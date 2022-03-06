@@ -115,65 +115,39 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 - 판매자와 사용자가 사용하는 화면이 다르므로 이용자에 맞는 화면을 설계
 
 ### 사용자 화면
-  - **홈**
    
-  - 거리순 헬스장 정렬
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156579409-3e00a994-8672-4a8d-a317-97a2d42debe1.PNG"/>
+  <p align="center">1. 거리순/별점순 헬스장 정렬</p>
+<p align="center"><img width="45%" src="https://user-images.githubusercontent.com/81364044/156921291-ffb53e93-cc78-4d12-b58c-a76b12039767.png"/><img width="45%" src="https://user-images.githubusercontent.com/81364044/156921346-5813e404-a9ce-4297-9046-920259fc7956.png"/></p>  
+  <p><br/></p>
+  <p align="center">2. 사용자 회원가입, 로그인, 아이디(이메일 찾기)</p>
+<p align="center"><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921413-9fc93e51-12f3-4995-aff1-21d4abd00a71.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921429-7843cfc8-b881-4952-8bf2-525c2c60f138.png"/><img width="33%" src="https://user-images.githubusercontent.com/81364044/156921460-831e751f-4e8f-45ef-9cb5-7b80dadb26ae.png"/></p>  
+<p><br/></p>
 
-  - 별점순 헬스장 정렬
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156579375-63ada371-2a4e-40c9-99b6-4e1053131975.PNG"/>
+   <p align="center">3. 마이페이지, 정보수정, 1대1문의</p>
+ <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921538-70ec155e-1ef8-49c1-b53c-277538e0d2d2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921560-3d5aeae1-38ea-4b8f-a000-6c4ef66435ff.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921580-1b521d70-058f-4b5d-931a-22e150b4e487.png"/></p>  
+ <p><br/></p>
 
-  - 사용자 회원가입
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485454-c4ea527e-35a2-4407-981b-037b1eb351b9.png"/>
-
-  - 사용자 로그인
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156484863-5c031ea4-b8d7-4907-8d2a-c1edd0f895d7.png"/>
-
-  - 사용자 아이디(이메일) 찾기
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485452-2e65406c-9419-4afd-8c9f-c4a23692980a.png"/>
-
-  - 마이페이지
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485456-71caddb5-95ce-4d47-8cd6-151169caca7f.png"/>
-
-  - 정보 수정
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485460-5e5edf0f-5d97-40e6-8bbf-b976deca8245.png"/>
-
-  - 1:1 문의
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485463-77ed12e1-c1e8-4aef-b247-ddfba9a9d583.png"/>
-
-  - 헬스장 상세페이지
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156506419-4774a7e1-4f4a-4c4a-8176-b621ccc3d3ca.png"/>
-
- - 결제페이지
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156506659-e0c46209-ad35-4d6b-b136-7b8c048cec74.png"/>
+   <p align="center">4. 헬스장 상세페이지, 결제페이지</p>
+ <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921626-9dcf941d-ce0d-4916-8271-f94d3d5289e2.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921676-8ab85633-dcf1-46aa-a27e-1b5469218971.png"/></p>  
+ <p><br/></p>
 
 ### 판매자 화면
 
-- 판매자 로그인
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485341-840656d8-0d7d-4d52-859c-575315bedf05.png"/>
+<p align="center">1. 판매자 로그인, 회원가입</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921884-56b17b0f-f587-4021-836d-f93a3739c3d6.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921939-5c85ec5f-89ab-4b9b-a55d-2b20edcb7bab.png"/></p>
 
- - 판매자 메인 페이지
-   
- <img width="40%" src="https://user-images.githubusercontent.com/92718453/156766872-fafda82f-46df-4807-b93e-255c331ccda9.png"/>
- 
- - 판매자 회원조회 페이지  
- 
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762183-7c620b18-93af-4b65-b009-20175834ec3d.png"/>
+<p align="center">2. 헬스장 등록</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922046-af391bd2-dbf0-4b0a-8e33-7f841c1e5f27.png"/></p>
 
- - 이용권별 회원조회 
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762730-52432362-9481-4e4d-8cee-503cbd9597a7.png"/>
+<p align="center">3. 판매자 메인 페이지</p>
+ <p align="center"><img width="50%" src="https://user-images.githubusercontent.com/81364044/156922106-6c96784e-d44e-45e8-b1fe-ade6e7a173e6.png"/></p>
 
-- 헬스장 정보 등록/수정 페이지
-- 기본 정보 조회
+ <p align="center">4. 이용권별 회원조회</p> 
+<p align="center"><img width="70%" src="https://user-images.githubusercontent.com/92718453/156762730-52432362-9481-4e4d-8cee-503cbd9597a7.png"/></p>
 
-<img width="40%"  src="https://user-images.githubusercontent.com/92718453/156765537-5935b3b8-9031-4157-977e-f0f2fc96aad3.png"/>
 
-- 기본 정보 조회 후 수정
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765586-51f2c0bd-8295-4dd5-a39e-8904029b5567.png"/>
+<p align="center">5. 헬스장 정보 등록/수정 페이지, 이용권 정보 추가</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922246-0a5d06fe-8174-40b6-b0d0-c737a4ba62f6.png"/><img width="40%" src="https://user-images.githubusercontent.com/92718453/156765586-51f2c0bd-8295-4dd5-a39e-8904029b5567.png"/><img width="40%" src="https://user-images.githubusercontent.com/92718453/156765608-d7bf2f9a-21f0-4609-b31b-9d082de4be64.png"/></p>
 
-- 이용권 정보 추가
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765608-d7bf2f9a-21f0-4609-b31b-9d082de4be64.png"/>
-
-- 1:1 문의
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
-
+<p align="center">6. 1:1 문의</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922347-82c3771c-6707-4ba3-8c0f-e5f562ba0ac9.png"/></p>
