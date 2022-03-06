@@ -136,28 +136,20 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 <p align="center">1. 판매자 로그인, 회원가입</p>
 <p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921884-56b17b0f-f587-4021-836d-f93a3739c3d6.png"/><img width="40%" src="https://user-images.githubusercontent.com/81364044/156921939-5c85ec5f-89ab-4b9b-a55d-2b20edcb7bab.png"/></p>
 
- - 판매자 메인 페이지
- <img width="40%" src="https://user-images.githubusercontent.com/92718453/156766872-fafda82f-46df-4807-b93e-255c331ccda9.png"/>
- 
- - 판매자 회원조회 페이지  
- 
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762183-7c620b18-93af-4b65-b009-20175834ec3d.png"/>
+<p align="center">2. 헬스장 등록</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922046-af391bd2-dbf0-4b0a-8e33-7f841c1e5f27.png"/></p>
 
- - 이용권별 회원조회 
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156762730-52432362-9481-4e4d-8cee-503cbd9597a7.png"/>
+<p align="center">3. 판매자 메인 페이지</p>
+ <p align="center"><img width="50%" src="https://user-images.githubusercontent.com/81364044/156922106-6c96784e-d44e-45e8-b1fe-ade6e7a173e6.png"/></p>
 
-- 헬스장 정보 등록/수정 페이지
-- 기본 정보 조회
+ <p align="center">4. 이용권별 회원조회</p> 
+<p align="center"><img width="70%" src="https://user-images.githubusercontent.com/92718453/156762730-52432362-9481-4e4d-8cee-503cbd9597a7.png"/></p>
 
-<img width="40%"  src="https://user-images.githubusercontent.com/92718453/156765537-5935b3b8-9031-4157-977e-f0f2fc96aad3.png"/>
 
-- 기본 정보 조회 후 수정
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765586-51f2c0bd-8295-4dd5-a39e-8904029b5567.png"/>
+<p align="center">5. 헬스장 정보 등록/수정 페이지, 이용권 정보 추가</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922246-0a5d06fe-8174-40b6-b0d0-c737a4ba62f6.png"/><img width="40%" src="https://user-images.githubusercontent.com/92718453/156765586-51f2c0bd-8295-4dd5-a39e-8904029b5567.png"/><img width="40%" src="https://user-images.githubusercontent.com/92718453/156765608-d7bf2f9a-21f0-4609-b31b-9d082de4be64.png"/></p>
 
-- 이용권 정보 추가
-<img width="40%" src="https://user-images.githubusercontent.com/92718453/156765608-d7bf2f9a-21f0-4609-b31b-9d082de4be64.png"/>
-
-- 1:1 문의
-<img width="40%" src="https://user-images.githubusercontent.com/95994880/156485449-978ab3a2-37ce-4a68-9180-092520089e6e.png"/>
+<p align="center">6. 1:1 문의</p>
+<p align="center"><img width="40%" src="https://user-images.githubusercontent.com/81364044/156922347-82c3771c-6707-4ba3-8c0f-e5f562ba0ac9.png"/></p>
 
 
