@@ -2,6 +2,7 @@
 passgymBack  
 백엔드프로젝트입니다.  
 프론트엔드 프로젝트: https://github.com/shiningUnderstanding/passgymFront
+Q&A백엔드 프로젝트 : https://github.com/shiningUnderstanding/passgymQna
 
 ## [What is PassGym?](#what-is-passgym)
 PassGym 프로젝트는 사용자와 피트니스, 헬스장 등을 연결해주는 플랫폼 프로젝트입니다.
