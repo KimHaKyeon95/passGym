@@ -1,0 +1,65 @@
+.ownersignup{
+    display: flex;
+    justify-content: center;
+    padding: 30px, 0px;
+}
+
+.ownersignup__form{
+    width: 460px;
+}
+
+.ownersignup__id{
+    display: flex;
+}
+
+.ownersignup__id-input{
+    margin: 0px 10px 10px;
+}
+
+.ownersignup__pwd,
+.ownersignup__pwd-chk{
+    margin: 0px 10px 10px;
+}
+
+.ownersignup__submit,
+.ownersignup_ownerno-chk__btn,
+.ownersignup_iddupchk-btn{
+    margin: 0px 10px 10px;
+    height: 38px;
+}
+.ownersignup__submit{
+    margin-bottom: 60px;
+}
+
+.ownersignup__ownerno{
+    display: flex;
+}
+
+.ownersignup__ownername-chk,
+.ownersignup__ownerno-chk{
+    /* display: flex; */
+    width: 125px;
+    margin: 0px 10px 10px;
+    height: 38px;
+}
+
+.ownersignup__search-owneraddr{
+    display: flex;
+    flex-direction: row;
+}
+.ownersignup__search-owneraddr-btn{
+    display: flex;
+    width: 100px;
+    margin: 0px 10px 10px;
+    height: 38px;
+}
+
+.ownersignup__search-owneraddr-no,
+.ownersignup__owneraddr1,
+.ownersignup__owneraddr2{
+    margin: 0px 10px 10px;
+}
+
+.msg{
+    font-size: 0.8em;
+}
