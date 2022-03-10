@@ -90,12 +90,8 @@ Spring Boot, JPA를 사용하였고 DB는 ORACLE DB를 사용함. 사용 용도�
 --------------------------------------------------------
 ## Functional Specification
 
-- **기술명세서 작성**
-  - https://docs.google.com/spreadsheets/d/1KWoKs7q8w8CywX_KmKA10uDT3iW2dMSPw1QK_EhPTA8/edit#gid=0
-
 - **UseCase Diagram**
 <img width="80%" src="https://user-images.githubusercontent.com/95994880/156565179-1436a943-31a3-4cea-96d9-5f180a2b6317.PNG"/>
-
 
 
 --------------------------------------------------------
