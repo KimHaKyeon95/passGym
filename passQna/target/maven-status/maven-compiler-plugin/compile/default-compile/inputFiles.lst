@@ -1,0 +1,16 @@
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\exception\AddException.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\QnaApplication.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\exception\FindException.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\exception\StatusException.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\exception\ModifyException.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\ownerqna\controller\OwnerQnaController.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\userqna\controller\UserQnaController.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\ownerqna\service\OwnerQnaService.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\ServletInitializer.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\userqna\service\UserQnaService.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\repository\OwnerQnaRepository.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\ownerqna\entity\OwnerQna.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\config\DatabaseConfiguration.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\exception\RemoveException.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\repository\UserQnaRepository.java
+C:\java\passgymBack\passgymqna\src\main\java\com\passgym\userqna\entity\UserQna.java
